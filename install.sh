@@ -7,63 +7,55 @@ set -e
 REPO="Yoodule/nimbus"
 INSTALL_DIR="${NIMBUS_HOME:-$HOME/.nimbus}"
 
-# --- Aesthetics ---
-CYAN='\033[0;36m'
-GREEN='\033[0;32m'
-RED='\033[0;31m'
+# --- Aesthetics (Yoodule Style: High Contrast, Minimalist) ---
 BOLD='\033[1m'
 NC='\033[0m'
 
 clear
-echo -e "${CYAN}${BOLD}"
-echo "    _   _ _           _                 "
-echo "   | \ | (_)         | |                "
-echo "   |  \| |_ _ __ ___ | |__  _   _ ___   "
-echo "   | . \` | | '_ \` _ \| '_ \| | | / __|  "
-echo "   | |\  | | | | | | | |_) | |_| \__ \  "
-echo "   |_| \_|_|_| |_| |_|_.__/ \__,_|___/  "
-echo -e "${NC}"
-echo -e "  ${BOLD}Preparing your Nimbus environment...${NC}\n"
+echo ""
+echo -e "      ${BOLD}N  I  M  B  U  S${NC}"
+echo ""
+echo -e "  Preparing your environment..."
 
 # 1. System Check
-printf "  ${BOLD}Detecting system...${NC} "
+printf "  Detecting system... "
 OS=$(uname -s | tr '[:upper:]' '[:lower:]')
 ARCH=$(uname -m)
 [ "$ARCH" = "x86_64" ] && ARCH="amd64"
 [[ "$ARCH" == "arm64" || "$ARCH" == "aarch64" ]] && ARCH="arm64"
-echo -e "${GREEN}Done ($OS-$ARCH)${NC}"
+echo "Done ($OS-$ARCH)"
 
 # 2. Fetching Release
-printf "  ${BOLD}Fetching latest release...${NC} "
+printf "  Fetching latest release... "
 RELEASE_DATA=$(curl -s https://api.github.com/repos/$REPO/releases/latest)
 RELEASE_URL=$(echo "$RELEASE_DATA" | grep "browser_download_url" | grep "$OS-$ARCH" | cut -d '"' -f 4)
 VERSION=$(echo "$RELEASE_DATA" | grep "tag_name" | cut -d '"' -f 4)
 if [ -z "$RELEASE_URL" ]; then
-    echo -e "\n  ${RED}Error: Platform not supported ($OS-$ARCH)${NC}"
+    echo -e "\n  Error: Platform not supported ($OS-$ARCH)"
     exit 1
 fi
-echo -e "${GREEN}$VERSION${NC}"
+echo "$VERSION"
 
 # 3. Downloading
-echo -e "  ${BOLD}Downloading assets...${NC}"
+echo -e "  Downloading assets..."
 TMP_FILE="/tmp/nimbus.tar.gz"
 mkdir -p "$INSTALL_DIR"
 rm -f "$TMP_FILE"
 
 # Use curl's built-in progress bar
 if ! curl -# -L "$RELEASE_URL" -o "$TMP_FILE"; then
-    echo -e "\n  ${RED}Error: Download failed.${NC}"
+    echo -e "\n  Error: Download failed."
     exit 1
 fi
 
 # 4. Extracting
-printf "  ${BOLD}Installing Nimbus...${NC} "
+printf "  Installing Nimbus... "
 if ! tar -xzf "$TMP_FILE" -C "$INSTALL_DIR"; then
-    echo -e "\n  ${RED}Error: Extraction failed.${NC}"
+    echo -e "\n  Error: Extraction failed."
     exit 1
 fi
 rm -f "$TMP_FILE"
-echo -e "${GREEN}Success${NC}"
+echo "Success"
 
 # 5. Shell Setup
 BINARY_NAME="nimbus-$OS-$ARCH"
@@ -87,9 +79,9 @@ if ! grep -q "NIMBUS_HOME" "$SHELL_CONFIG" 2>/dev/null; then
     } >> "$SHELL_CONFIG"
 fi
 
-echo -e "\n  ----------------------------------------"
-echo -e "  ${GREEN}${BOLD}Nimbus is ready to go.${NC}"
-echo -e "  ----------------------------------------"
-echo -e "\n  To begin, please run:"
+echo ""
+echo -e "  ${BOLD}Nimbus is ready to go.${NC}"
+echo ""
+echo -e "  To start, please run:"
 echo -e "  ${BOLD}source $SHELL_CONFIG${NC}"
 echo -e "  ${BOLD}nimbus start${NC}\n"
