@@ -8,38 +8,19 @@ REPO="Yoodule/nimbus"
 INSTALL_DIR="${NIMBUS_HOME:-$HOME/.nimbus}"
 
 # --- Aesthetics ---
-BLUE='\033[0;34m'
+BLUE='\033[38;5;33m'
 GREEN='\033[0;32m'
 RED='\033[0;31m'
 BOLD='\033[1m'
 NC='\033[0m'
 
-# --- Spinner ---
-spinner() {
-    local pid=$1
-    local delay=0.1
-    local spinstr='|/-\'
-    while kill -0 $pid 2>/dev/null; do
-        local temp=${spinstr#?}
-        printf " [%c]  " "$spinstr"
-        local spinstr=$temp${spinstr%"$temp"}
-        sleep $delay
-        printf "\b\b\b\b\b\b"
-    done
-    printf "    \b\b\b\b"
-    wait $pid
-}
-
 clear
 echo -e "${BLUE}${BOLD}"
-echo "    _   _ _           _                 "
-echo "   | \ | (_)         | |                "
-echo "   |  \| |_ _ __ ___ | |__  _   _ ___   "
-echo "   | . \` | | '_ \` _ \| '_ \| | | / __|  "
-echo "   | |\  | | | | | | | |_) | |_| \__ \  "
-echo "   |_| \_|_|_| |_| |_|_.__/ \__,_|___/  "
+echo "  --------------------------------------------------"
+echo "    N  I  M  B  U  S    G  A  T  E  W  A  Y"
+echo "  --------------------------------------------------"
 echo -e "${NC}"
-echo -e "  ${BOLD}Preparing your Nimbus environment...${NC}\n"
+echo -e "  ${BOLD}Preparing your environment...${NC}\n"
 
 # 1. System Check
 printf "  Detecting system... "
@@ -47,7 +28,7 @@ OS=$(uname -s | tr '[:upper:]' '[:lower:]')
 ARCH=$(uname -m)
 [ "$ARCH" = "x86_64" ] && ARCH="amd64"
 [[ "$ARCH" == "arm64" || "$ARCH" == "aarch64" ]] && ARCH="arm64"
-echo -e "${GREEN}Done${NC}"
+echo -e "${GREEN}Done ($OS-$ARCH)${NC}"
 
 # 2. Fetching Release
 printf "  Fetching latest release... "
@@ -61,17 +42,16 @@ fi
 echo -e "${GREEN}$VERSION${NC}"
 
 # 3. Downloading
-printf "  Downloading assets... "
+echo -e "  Downloading assets..."
 TMP_FILE="/tmp/nimbus.tar.gz"
 mkdir -p "$INSTALL_DIR"
-# Remove old temp file if exists
 rm -f "$TMP_FILE"
-# Download with error capture
-if ! curl -sL "$RELEASE_URL" -o "$TMP_FILE"; then
+
+# Use curl's built-in progress bar
+if ! curl -# -L "$RELEASE_URL" -o "$TMP_FILE"; then
     echo -e "\n  ${RED}Error: Download failed.${NC}"
     exit 1
 fi
-echo -e "${GREEN}Complete${NC}"
 
 # 4. Extracting
 printf "  Installing platform... "
@@ -80,14 +60,11 @@ if ! tar -xzf "$TMP_FILE" -C "$INSTALL_DIR"; then
     exit 1
 fi
 rm -f "$TMP_FILE"
-echo -e "${GREEN}Ready${NC}"
+echo -e "${GREEN}Success${NC}"
 
 # 5. Shell Setup
-# Determine binary names based on the tarball structure
 BINARY_NAME="nimbus-$OS-$ARCH"
 GATEWAY_NAME="nimbus-gateway-$OS-$ARCH"
-
-# Fallback if names are simple
 [ ! -f "$INSTALL_DIR/$BINARY_NAME" ] && BINARY_NAME="nimbus"
 [ ! -f "$INSTALL_DIR/$GATEWAY_NAME" ] && GATEWAY_NAME="nimbus-gateway"
 
@@ -108,8 +85,8 @@ if ! grep -q "NIMBUS_HOME" "$SHELL_CONFIG" 2>/dev/null; then
 fi
 
 echo -e "\n  ----------------------------------------"
-echo -e "  ${GREEN}${BOLD}Nimbus is now ready.${NC}"
+echo -e "  ${GREEN}${BOLD}Nimbus Gateway is ready.${NC}"
 echo -e "  ----------------------------------------"
-echo -e "\n  To begin, please run:"
+echo -e "\n  To start, please run:"
 echo -e "  ${BOLD}source $SHELL_CONFIG${NC}"
 echo -e "  ${BOLD}nimbus start${NC}\n"
