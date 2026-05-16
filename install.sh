@@ -10,6 +10,7 @@ INSTALL_DIR="${NIMBUS_HOME:-$HOME/.nimbus}"
 # --- Aesthetics ---
 BLUE='\033[0;34m'
 GREEN='\033[0;32m'
+RED='\033[0;31m'
 BOLD='\033[1m'
 NC='\033[0m'
 
@@ -18,7 +19,7 @@ spinner() {
     local pid=$1
     local delay=0.1
     local spinstr='|/-\'
-    while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
+    while kill -0 $pid 2>/dev/null; do
         local temp=${spinstr#?}
         printf " [%c]  " "$spinstr"
         local spinstr=$temp${spinstr%"$temp"}
@@ -26,6 +27,7 @@ spinner() {
         printf "\b\b\b\b\b\b"
     done
     printf "    \b\b\b\b"
+    wait $pid
 }
 
 clear
@@ -53,7 +55,7 @@ RELEASE_DATA=$(curl -s https://api.github.com/repos/$REPO/releases/latest)
 RELEASE_URL=$(echo "$RELEASE_DATA" | grep "browser_download_url" | grep "$OS-$ARCH" | cut -d '"' -f 4)
 VERSION=$(echo "$RELEASE_DATA" | grep "tag_name" | cut -d '"' -f 4)
 if [ -z "$RELEASE_URL" ]; then
-    echo -e "\n  Error: Platform not supported ($OS-$ARCH)"
+    echo -e "\n  ${RED}Error: Platform not supported ($OS-$ARCH)${NC}"
     exit 1
 fi
 echo -e "${GREEN}$VERSION${NC}"
@@ -62,21 +64,35 @@ echo -e "${GREEN}$VERSION${NC}"
 printf "  Downloading assets... "
 TMP_FILE="/tmp/nimbus.tar.gz"
 mkdir -p "$INSTALL_DIR"
-(curl -sL "$RELEASE_URL" -o "$TMP_FILE") &
-spinner $!
+# Remove old temp file if exists
+rm -f "$TMP_FILE"
+# Download with error capture
+if ! curl -sL "$RELEASE_URL" -o "$TMP_FILE"; then
+    echo -e "\n  ${RED}Error: Download failed.${NC}"
+    exit 1
+fi
 echo -e "${GREEN}Complete${NC}"
 
 # 4. Extracting
 printf "  Installing platform... "
-(tar -xzf "$TMP_FILE" -C "$INSTALL_DIR") &
-spinner $!
-rm "$TMP_FILE"
+if ! tar -xzf "$TMP_FILE" -C "$INSTALL_DIR"; then
+    echo -e "\n  ${RED}Error: Extraction failed.${NC}"
+    exit 1
+fi
+rm -f "$TMP_FILE"
 echo -e "${GREEN}Ready${NC}"
 
 # 5. Shell Setup
+# Determine binary names based on the tarball structure
 BINARY_NAME="nimbus-$OS-$ARCH"
+GATEWAY_NAME="nimbus-gateway-$OS-$ARCH"
+
+# Fallback if names are simple
 [ ! -f "$INSTALL_DIR/$BINARY_NAME" ] && BINARY_NAME="nimbus"
+[ ! -f "$INSTALL_DIR/$GATEWAY_NAME" ] && GATEWAY_NAME="nimbus-gateway"
+
 chmod +x "$INSTALL_DIR/$BINARY_NAME" 2>/dev/null || true
+chmod +x "$INSTALL_DIR/$GATEWAY_NAME" 2>/dev/null || true
 
 SHELL_CONFIG="$HOME/.bashrc"
 [ "$OS" = "darwin" ] && SHELL_CONFIG="$HOME/.zshrc"
@@ -87,7 +103,7 @@ if ! grep -q "NIMBUS_HOME" "$SHELL_CONFIG" 2>/dev/null; then
         echo "# Nimbus Platform"
         echo "export NIMBUS_HOME=\"$INSTALL_DIR\""
         echo "export PATH=\"\$NIMBUS_HOME:\$PATH\""
-        echo "alias nimbus='nimbus-$OS-$ARCH'"
+        echo "alias nimbus='$INSTALL_DIR/$BINARY_NAME'"
     } >> "$SHELL_CONFIG"
 fi
 
