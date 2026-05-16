@@ -29,8 +29,8 @@ fi
 
 # Download and extract
 mkdir -p "$INSTALL_DIR"
-echo "Downloading $RELEASE_URL..."
-curl -L "$RELEASE_URL" | tar -xz -C "$INSTALL_DIR"
+echo "Fetching Nimbus v1.0.1..."
+curl --progress-bar -L "$RELEASE_URL" | tar -xz -C "$INSTALL_DIR"
 
 # Ensure binaries are executable
 chmod +x "$INSTALL_DIR/nimbus-$OS-$ARCH"
