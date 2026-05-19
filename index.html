@@ -338,6 +338,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="CLI Reference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuration-management-nimbus-config" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration Management (nimbus config)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mcp-server-management-nimbus-mcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MCP Server Management (nimbus mcp)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -437,6 +465,34 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="CLI Reference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuration-management-nimbus-config" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration Management (nimbus config)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mcp-server-management-nimbus-mcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MCP Server Management (nimbus mcp)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -548,22 +604,38 @@
 <td style="text-align: left;">Safely terminates all container services and frees system ports.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>nimbus status</code></td>
-<td style="text-align: left;">Health check</td>
-<td style="text-align: left;">Queries and displays the live health and port mappings of the running services.</td>
-</tr>
-<tr>
 <td style="text-align: left;"><code>nimbus upgrade</code></td>
 <td style="text-align: left;">Upgrade installation</td>
 <td style="text-align: left;">Pulls the latest binaries and upgrades the wrapper setup dynamically.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>nimbus logs</code></td>
-<td style="text-align: left;">Tail logs</td>
-<td style="text-align: left;">Streams live output from the semantic gateway and background MCP servers.</td>
+<td style="text-align: left;"><code>nimbus config &lt;subcommand&gt;</code></td>
+<td style="text-align: left;">Configure environment</td>
+<td style="text-align: left;">Manage configuration environment variables (list, get, set, unset).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>nimbus mcp &lt;subcommand&gt;</code></td>
+<td style="text-align: left;">Manage MCP servers</td>
+<td style="text-align: left;">Manage Model Context Protocol (MCP) server configurations (list, get, set, remove).</td>
 </tr>
 </tbody>
 </table>
+<h3 id="configuration-management-nimbus-config">Configuration Management (<code>nimbus config</code>)</h3>
+<p>Manage local environment variables stored in <code>~/.nimbus/.env</code>:</p>
+<ul>
+<li><strong><code>nimbus config list</code></strong>: Lists all active environment variables (e.g. <code>OPENROUTER_API_KEY</code>, <code>NIMBUS_URL</code>).</li>
+<li><strong><code>nimbus config get &lt;KEY&gt;</code></strong>: Retrieve the value of a specific configuration key.</li>
+<li><strong><code>nimbus config set &lt;KEY&gt; &lt;VALUE&gt;</code></strong>: Set or update a configuration key to a specific value.</li>
+<li><strong><code>nimbus config unset &lt;KEY&gt;</code></strong>: Remove a configuration key from the local environment.</li>
+</ul>
+<h3 id="mcp-server-management-nimbus-mcp">MCP Server Management (<code>nimbus mcp</code>)</h3>
+<p>Manage Model Context Protocol (MCP) servers defined in <code>~/.nimbus/mcp.json</code>:</p>
+<ul>
+<li><strong><code>nimbus mcp list</code></strong>: List all configured stdio or HTTP-based MCP servers and their execution details.</li>
+<li><strong><code>nimbus mcp get &lt;NAME&gt;</code></strong>: Retrieve the raw JSON configuration of a specific MCP server.</li>
+<li><strong><code>nimbus mcp set &lt;NAME&gt; &lt;CONFIG_JSON&gt;</code></strong>: Add or update an MCP server. The configuration must be a valid JSON object matching the MCP server schema.</li>
+<li><strong><code>nimbus mcp remove &lt;NAME&gt;</code></strong>: Remove an MCP server from the configuration.</li>
+</ul>
 <hr />
 <h2 id="the-semantic-gateway-mcpjson">The Semantic Gateway (mcp.json)</h2>
 <p>Nimbus aggregates all your stdio and HTTP-based MCP servers into a single interface. When an AI model requests a capability, Nimbus dynamically discovers and executes the appropriate tool using vector embeddings stored in Qdrant.</p>
