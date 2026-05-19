@@ -53,6 +53,7 @@ The `nimbus` CLI allows you to control the lifecycle of your local containerized
 | `nimbus start --build` | Re-build & Boot | Pulls code modifications, rebuilds docker images, and boots services cleanly. |
 | `nimbus stop` | Tear down | Safely terminates all container services and frees system ports. |
 | `nimbus upgrade` | Upgrade installation | Pulls the latest binaries and upgrades the wrapper setup dynamically. |
+| `nimbus uninstall` | Uninstall | Removes the Nimbus CLI, containers, and cleans up all associated configurations. |
 | `nimbus config <subcommand>` | Configure environment | Manage configuration environment variables (list, get, set, unset). |
 | `nimbus mcp <subcommand>` | Manage MCP servers | Manage Model Context Protocol (MCP) server configurations (list, get, set, remove). |
 
@@ -106,11 +107,12 @@ Configure your active servers by modifying `mcp.json` in your Nimbus home direct
 
 ## Semantic Routing Capabilities
 
-The gateway exposes three main endpoints to models (under the namespace `nimbus-utility-mcp`):
+The gateway exposes four main endpoints to models (under the namespace `nimbus-utility-mcp`):
 
-1. **find_tools**: Searches across all servers semantically. Instead of sending hundreds of tools to a model, the model queries `find_tools` with a prompt like "browse linkedin" to fetch only the relevant tool schemas.
-2. **execute_tool**: Executes any tool on any registered server dynamically.
-3. **chain_tools**: Chains multiple steps together sequentially (e.g. searching google -> reading text -> sending a whatsapp message) in a single API roundtrip.
+1. **list_servers**: Lists all configured MCP backend servers with their connection status and tool count.
+2. **find_tools**: Searches across all servers semantically. Instead of sending hundreds of tools to a model, the model queries `find_tools` with a prompt like "browse linkedin" to fetch only the relevant tool schemas.
+3. **execute_tool**: Executes any tool on any registered server dynamically.
+4. **chain_tools**: Chains multiple steps together sequentially (e.g. searching google -> reading text -> sending a whatsapp message) in a single API roundtrip.
 
 ---
 
