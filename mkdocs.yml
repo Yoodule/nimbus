@@ -1,0 +1,31 @@
+site_name: Nimbus
+site_url: https://nimbus.yoodule.com
+site_description: Your 24/7 Employee
+
+theme:
+  name: material
+  logo: static/favicon.svg
+  favicon: static/favicon.svg
+  palette:
+    # Default to beautiful dark mode
+    - scheme: slate
+      primary: black
+      accent: white
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - search.suggest
+    - search.highlight
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - admonition
+  - pymdownx.details
+
+nav:
+  - Home: index.md
