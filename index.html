@@ -311,7 +311,7 @@
   <a href="#overview-video" class="md-nav__link">
     <span class="md-ellipsis">
       
-        📺 Overview Video
+        Overview Video
       
     </span>
   </a>
@@ -322,7 +322,7 @@
   <a href="#quick-start" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ⚡ Quick Start
+        Quick Start
       
     </span>
   </a>
@@ -333,7 +333,7 @@
   <a href="#cli-reference" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🛠️ CLI Reference
+        CLI Reference
       
     </span>
   </a>
@@ -344,7 +344,7 @@
   <a href="#the-semantic-gateway-mcpjson" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🌐 The Semantic Gateway (mcp.json)
+        The Semantic Gateway (mcp.json)
       
     </span>
   </a>
@@ -355,7 +355,7 @@
   <a href="#semantic-routing-capabilities" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🧠 Semantic Routing Capabilities
+        Semantic Routing Capabilities
       
     </span>
   </a>
@@ -366,7 +366,7 @@
   <a href="#stateful-oauth-flow" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🔐 Stateful OAuth Flow
+        Stateful OAuth Flow
       
     </span>
   </a>
@@ -411,7 +411,7 @@
   <a href="#overview-video" class="md-nav__link">
     <span class="md-ellipsis">
       
-        📺 Overview Video
+        Overview Video
       
     </span>
   </a>
@@ -422,7 +422,7 @@
   <a href="#quick-start" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ⚡ Quick Start
+        Quick Start
       
     </span>
   </a>
@@ -433,7 +433,7 @@
   <a href="#cli-reference" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🛠️ CLI Reference
+        CLI Reference
       
     </span>
   </a>
@@ -444,7 +444,7 @@
   <a href="#the-semantic-gateway-mcpjson" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🌐 The Semantic Gateway (mcp.json)
+        The Semantic Gateway (mcp.json)
       
     </span>
   </a>
@@ -455,7 +455,7 @@
   <a href="#semantic-routing-capabilities" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🧠 Semantic Routing Capabilities
+        Semantic Routing Capabilities
       
     </span>
   </a>
@@ -466,7 +466,7 @@
   <a href="#stateful-oauth-flow" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🔐 Stateful OAuth Flow
+        Stateful OAuth Flow
       
     </span>
   </a>
@@ -496,7 +496,7 @@
 </p>
 
 <hr />
-<h2 id="overview-video">📺 Overview Video</h2>
+<h2 id="overview-video">Overview Video</h2>
 <p>Here is a quick walkthrough of Nimbus in action, displaying how it provisions a virtual browser workspace, connects your MCP servers, and operates as your autonomous agent gateway.</p>
 <div class="video-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; border-radius: 12px; margin: 24px 0;box-shadow: 0 4px 20px rgba(0,0,0,0.35);">
     <!-- Replace "YOUR_VIDEO_ID" with your actual YouTube Video ID -->
@@ -504,7 +504,7 @@
 </div>
 
 <hr />
-<h2 id="quick-start">⚡ Quick Start</h2>
+<h2 id="quick-start">Quick Start</h2>
 <p>Installing the Nimbus environment takes just a single command. The installer automatically checks your system architecture, installs Astral's <code>uv</code> (if missing), configures your paths, and prepares your runtime.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://nimbus.yoodule.com/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
 </code></pre></div>
@@ -513,13 +513,13 @@
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>nimbus<span class="w"> </span>start
 </code></pre></div>
 <p>This boots up the complete containerized stack in the background:
-- <strong>Agent Dashboard</strong>: <code>http://localhost:3000</code>
-- <strong>Semantic Gateway (MCP)</strong>: <code>http://localhost:8088/mcp</code>
-- <strong>Virtual Browser Workspace (VNC)</strong>: <code>http://localhost:6080/vnc.html?autoconnect=true</code> (Password: <code>nimbusvnc</code>)
-- <strong>Vector Search Database (Qdrant)</strong>: <code>http://localhost:6333</code>
-- <strong>Relational Storage (PostgreSQL)</strong>: Running on port <code>5433</code></p>
+- <strong>Agent Dashboard</strong>: http://localhost:3000
+- <strong>Semantic Gateway (MCP)</strong>: http://localhost:8088/mcp
+- <strong>Virtual Browser Workspace (VNC)</strong>: http://localhost:6080/vnc.html?autoconnect=true (Password: nimbusvnc)
+- <strong>Vector Search Database (Qdrant)</strong>: http://localhost:6333
+- <strong>Relational Storage (PostgreSQL)</strong>: Running on port 5433</p>
 <hr />
-<h2 id="cli-reference">🛠️ CLI Reference</h2>
+<h2 id="cli-reference">CLI Reference</h2>
 <p>The <code>nimbus</code> CLI allows you to control the lifecycle of your local containerized employee workspace easily.</p>
 <table>
 <thead>
@@ -533,7 +533,7 @@
 <tr>
 <td style="text-align: left;"><code>nimbus start</code></td>
 <td style="text-align: left;">Boot services</td>
-<td style="text-align: left;">Provisions and starts all Docker containers (<code>postgres</code>, <code>qdrant</code>, <code>gateway</code>, <code>dashboard</code>).</td>
+<td style="text-align: left;">Provisions and starts all Docker containers (postgres, qdrant, gateway, dashboard).</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>nimbus start --build</code></td>
@@ -563,7 +563,7 @@
 </tbody>
 </table>
 <hr />
-<h2 id="the-semantic-gateway-mcpjson">🌐 The Semantic Gateway (<code>mcp.json</code>)</h2>
+<h2 id="the-semantic-gateway-mcpjson">The Semantic Gateway (mcp.json)</h2>
 <p>Nimbus aggregates all your stdio and HTTP-based MCP servers into a single interface. When an AI model requests a capability, Nimbus dynamically discovers and executes the appropriate tool using vector embeddings stored in Qdrant.</p>
 <p>Configure your active servers by modifying <code>mcp.json</code> in your Nimbus home directory:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">{</span>
@@ -585,15 +585,15 @@
 <a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="p">}</span>
 </code></pre></div>
 <hr />
-<h2 id="semantic-routing-capabilities">🧠 Semantic Routing Capabilities</h2>
+<h2 id="semantic-routing-capabilities">Semantic Routing Capabilities</h2>
 <p>The gateway exposes three main endpoints to models (under the namespace <code>nimbus-utility-mcp</code>):</p>
 <ol>
-<li><strong><code>find_tools</code></strong>: Searches across all servers semantically. Instead of sending hundreds of tools to a model, the model queries <code>find_tools</code> with a prompt like <em>"browse linkedin"</em> to fetch only the relevant tool schemas.</li>
-<li><strong><code>execute_tool</code></strong>: Executes any tool on any registered server dynamically.</li>
-<li><strong><code>chain_tools</code></strong>: Chains multiple steps together sequentially (e.g. searching google -&gt; reading text -&gt; sending a whatsapp message) in a single API roundtrip.</li>
+<li><strong>find_tools</strong>: Searches across all servers semantically. Instead of sending hundreds of tools to a model, the model queries <code>find_tools</code> with a prompt like "browse linkedin" to fetch only the relevant tool schemas.</li>
+<li><strong>execute_tool</strong>: Executes any tool on any registered server dynamically.</li>
+<li><strong>chain_tools</strong>: Chains multiple steps together sequentially (e.g. searching google -&gt; reading text -&gt; sending a whatsapp message) in a single API roundtrip.</li>
 </ol>
 <hr />
-<h2 id="stateful-oauth-flow">🔐 Stateful OAuth Flow</h2>
+<h2 id="stateful-oauth-flow">Stateful OAuth Flow</h2>
 <p>Nimbus natively handles OAuth 2.1 authentication (PKCE, token exchanges, callback lifespans) for tools requiring user verification (e.g. Notion, Apollo, Zoho). The gateway automatically halts execution, prompts authorization in a beautiful custom-branded template, and resumes tool execution seamlessly once token verification succeeds.</p>
 
 
