@@ -1,0 +1,27 @@
+Business Source License 1.1
+
+Parameters:
+
+Licensor:             Yoodule Inc.
+Licensed Work:        Nimbus (including Nimbus Gateway, Nimbus CLI, and all associated components, scripts, and documentation)
+Change Date:          May 19, 2029
+Change License:       Apache License, Version 2.0 (as published by the Apache Software Foundation)
+Additional Use Grant: You are hereby granted the right to make Production Use of the Licensed Work for any purpose, EXCEPT that you may not run the Licensed Work as a commercial, paid, multi-tenant hosted "Model Context Protocol (MCP) gateway-as-a-service" or "cognitive automation-as-a-service" where third-party customers pay for direct access to the hosted gateway or agent dashboard infrastructure managed by you.
+
+--------------------------------------------------------------------------------
+
+Terms of the License:
+
+1. Grant of License. The Licensor hereby grants you a non-exclusive, royalty-free, worldwide, non-transferable license to copy, modify, create derivative works, redistribute, and run the Licensed Work, subject to the conditions and limitations set forth below.
+
+2. Use Limit. You may make Production Use of the Licensed Work only to the extent that such use does not violate the Use Limit. "Production Use" means any use of the Licensed Work in a production environment, or any other use that is not solely for personal, internal research, testing, or development.
+
+3. Conversion on Change Date. On the Change Date, this License shall automatically convert to the Change License, and your rights thereafter shall be governed solely by the terms of the Change License.
+
+4. Notices. You must include this License, including the parameters above, in all copies of the Licensed Work or any portion thereof that you redistribute.
+
+5. Intellectual Property. The Licensor retains all ownership, copyright, and other intellectual property rights in and to the Licensed Work, subject only to the rights explicitly granted herein.
+
+6. DISCLAIMER OF WARRANTIES. THE LICENSED WORK IS PROVIDED "AS IS" AND "AS AVAILABLE", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. IN NO EVENT SHALL THE LICENSOR OR THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE LICENSED WORK.
+
+7. LIMITATION OF LIABILITY. IN NO EVENT SHALL THE LICENSOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR EXEMPLARY DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS LICENSED WORK, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
