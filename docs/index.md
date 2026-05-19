@@ -63,14 +63,14 @@ function copyInstallCommand() {
     const btn = document.getElementById('copy-btn');
     const icon = document.getElementById('copy-icon');
     const textEl = document.getElementById('copy-text');
-    
+
     btn.style.background = 'rgba(34, 197, 94, 0.2)';
     btn.style.borderColor = 'rgba(34, 197, 94, 0.4)';
     btn.style.color = '#4ade80';
     textEl.textContent = 'Copied!';
-    
+
     icon.innerHTML = '<polyline points="20 6 9 17 4 12"></polyline>';
-    
+
     setTimeout(() => {
       btn.style.background = 'rgba(255, 255, 255, 0.08)';
       btn.style.borderColor = 'rgba(255, 255, 255, 0.15)';
@@ -92,10 +92,11 @@ nimbus start
 ```
 
 This boots up the complete containerized stack in the background:
-- **Agent Dashboard**: http://localhost:3000
-- **Semantic Gateway (MCP)**: http://localhost:8088/mcp
-- **Virtual Browser Workspace (VNC)**: http://localhost:6080/vnc.html?autoconnect=true (Password: nimbusvnc)
-- **Vector Search Database (Qdrant)**: http://localhost:6333
+
+- **Agent Dashboard**: <http://localhost:3000>
+- **Semantic Gateway (MCP)**: <http://localhost:8088/mcp>
+- **Virtual Browser Workspace (VNC)**: <http://localhost:6080/vnc.html?autoconnect=true> (Password: nimbusvnc)
+- **Vector Search Database (Qdrant)**: <http://localhost:6333>
 - **Relational Storage (PostgreSQL)**: Running on port 5433
 
 ---
@@ -118,19 +119,19 @@ The `nimbus` CLI allows you to control the lifecycle of your local containerized
 
 Manage local environment variables stored in `~/.nimbus/.env`:
 
-*   **`nimbus config list`**: Lists all active environment variables (e.g. `OPENROUTER_API_KEY`, `NIMBUS_URL`).
-*   **`nimbus config get <KEY>`**: Retrieve the value of a specific configuration key.
-*   **`nimbus config set <KEY> <VALUE>`**: Set or update a configuration key to a specific value.
-*   **`nimbus config unset <KEY>`**: Remove a configuration key from the local environment.
+- **`nimbus config list`**: Lists all active environment variables (e.g. `OPENROUTER_API_KEY`, `NIMBUS_URL`).
+- **`nimbus config get <KEY>`**: Retrieve the value of a specific configuration key.
+- **`nimbus config set <KEY> <VALUE>`**: Set or update a configuration key to a specific value.
+- **`nimbus config unset <KEY>`**: Remove a configuration key from the local environment.
 
 ### MCP Server Management (`nimbus mcp`)
 
 Manage Model Context Protocol (MCP) servers defined in `~/.nimbus/mcp.json`:
 
-*   **`nimbus mcp list`**: List all configured stdio or HTTP-based MCP servers and their execution details.
-*   **`nimbus mcp get <NAME>`**: Retrieve the raw JSON configuration of a specific MCP server.
-*   **`nimbus mcp set <NAME> <CONFIG_JSON>`**: Add or update an MCP server. The configuration must be a valid JSON object matching the MCP server schema.
-*   **`nimbus mcp remove <NAME>`**: Remove an MCP server from the configuration.
+- **`nimbus mcp list`**: List all configured stdio or HTTP-based MCP servers and their execution details.
+- **`nimbus mcp get <NAME>`**: Retrieve the raw JSON configuration of a specific MCP server.
+- **`nimbus mcp set <NAME> <CONFIG_JSON>`**: Add or update an MCP server. The configuration must be a valid JSON object matching the MCP server schema.
+- **`nimbus mcp remove <NAME>`**: Remove an MCP server from the configuration.
 
 ---
 
