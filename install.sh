@@ -151,9 +151,23 @@ echo -e "  ${CYAN}Note:${NC} The Dashboard is a separate optional component."
 echo ""
 
 # 6. Auto-start option
-read -p "  Would you like to start Nimbus now? (y/N) " -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]; then
+SHOULD_START="n"
+if [ -t 0 ]; then
+    read -p "  Would you like to start Nimbus now? (y/N) " -n 1 -r REPLY
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        SHOULD_START="y"
+    fi
+elif [ -c /dev/tty ]; then
+    if read -p "  Would you like to start Nimbus now? (y/N) " -n 1 -r REPLY < /dev/tty 2>/dev/null; then
+        echo
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+            SHOULD_START="y"
+        fi
+    fi
+fi
+
+if [ "$SHOULD_START" = "y" ]; then
     echo -e "  Starting Nimbus..."
     export NIMBUS_HOME="$INSTALL_DIR"
     export PATH="$INSTALL_DIR:$PATH"
