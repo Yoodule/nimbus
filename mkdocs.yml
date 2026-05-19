@@ -1,7 +1,7 @@
 site_name: Nimbus
 site_url: https://nimbus.yoodule.com
 site_description: Your 24/7 Employee
-copyright: Built by <a href="https://www.linkedin.com/in/sundayj1213/" target="_blank">Sunday Johnson</a> at <a href="https://yoodule.com?utm_source=nimbus&utm_medium=docs&utm_campaign=footer">Yoodule</a>
+copyright: Built by <a href="https://www.linkedin.com/in/sundayj1213/?utm_source=nimbus&utm_medium=docs&utm_campaign=footer" target="_blank">Sunday Johnson</a> at <a href="https://yoodule.com?utm_source=nimbus&utm_medium=docs&utm_campaign=footer">Yoodule</a>
 
 theme:
   name: material

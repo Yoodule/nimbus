@@ -1,7 +1,7 @@
 # Nimbus
 
 <p align="center">
-  <strong>Your 24/7 Employee</strong> — Built by <a href="https://www.linkedin.com/in/sundayj1213/" target="_blank">Sunday Johnson</a> at <a href="https://yoodule.com?utm_source=nimbus&utm_medium=docs&utm_campaign=homepage" target="_blank">Yoodule</a>.
+  <strong>Your 24/7 Employee</strong> — Built by <a href="https://www.linkedin.com/in/sundayj1213/?utm_source=nimbus&utm_medium=docs&utm_campaign=homepage" target="_blank">Sunday Johnson</a> at <a href="https://yoodule.com?utm_source=nimbus&utm_medium=docs&utm_campaign=homepage" target="_blank">Yoodule</a>.
   <br>
   The ultimate containerized orchestrator and unified semantic gateway for Model Context Protocol (MCP) servers.
 </p>
