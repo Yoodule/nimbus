@@ -1,7 +1,9 @@
 # Nimbus
 
 <p align="center">
-  <strong>Your 24/7 Employee</strong> — The ultimate containerized orchestrator and unified semantic gateway for Model Context Protocol (MCP) servers.
+  <strong>Your 24/7 Employee</strong> — A product of <a href="https://yoodule.com" target="_blank">yoodule.com</a>.
+  <br>
+  The ultimate containerized orchestrator and unified semantic gateway for Model Context Protocol (MCP) servers.
 </p>
 
 ---
