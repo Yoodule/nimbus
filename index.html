@@ -609,6 +609,11 @@
 <td style="text-align: left;">Pulls the latest binaries and upgrades the wrapper setup dynamically.</td>
 </tr>
 <tr>
+<td style="text-align: left;"><code>nimbus uninstall</code></td>
+<td style="text-align: left;">Uninstall</td>
+<td style="text-align: left;">Removes the Nimbus CLI, containers, and cleans up all associated configurations.</td>
+</tr>
+<tr>
 <td style="text-align: left;"><code>nimbus config &lt;subcommand&gt;</code></td>
 <td style="text-align: left;">Configure environment</td>
 <td style="text-align: left;">Manage configuration environment variables (list, get, set, unset).</td>
@@ -660,8 +665,9 @@
 </code></pre></div>
 <hr />
 <h2 id="semantic-routing-capabilities">Semantic Routing Capabilities</h2>
-<p>The gateway exposes three main endpoints to models (under the namespace <code>nimbus-utility-mcp</code>):</p>
+<p>The gateway exposes four main endpoints to models (under the namespace <code>nimbus-utility-mcp</code>):</p>
 <ol>
+<li><strong>list_servers</strong>: Lists all configured MCP backend servers with their connection status and tool count.</li>
 <li><strong>find_tools</strong>: Searches across all servers semantically. Instead of sending hundreds of tools to a model, the model queries <code>find_tools</code> with a prompt like "browse linkedin" to fetch only the relevant tool schemas.</li>
 <li><strong>execute_tool</strong>: Executes any tool on any registered server dynamically.</li>
 <li><strong>chain_tools</strong>: Chains multiple steps together sequentially (e.g. searching google -&gt; reading text -&gt; sending a whatsapp message) in a single API roundtrip.</li>
