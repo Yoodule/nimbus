@@ -1,0 +1,50 @@
+name: Test CLI Installation
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  test-install:
+    name: Test Install on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Test Unix Installation
+        if: runner.os != 'Windows'
+        run: |
+          # Make the script executable
+          chmod +x ./install.sh
+          
+          # Run the install script
+          ./install.sh
+          
+          # The install script puts the binary in ~/.nimbus/bin by default
+          # We need to add it to PATH to test it
+          export PATH="$HOME/.nimbus:$PATH"
+          
+          # Test if the CLI runs successfully
+          nimbus --help
+
+      - name: Test Windows Installation (Git Bash)
+        if: runner.os == 'Windows'
+        shell: bash
+        run: |
+          # Run the install script in Git Bash
+          ./install.sh
+          
+          # The install script puts the binary in ~/.nimbus
+          export PATH="$HOME/.nimbus:$PATH"
+          
+          # Test if the CLI runs successfully
+          nimbus --help

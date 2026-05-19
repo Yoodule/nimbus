@@ -22,6 +22,9 @@ echo -e "  Preparing your environment..."
 # 1. System Check
 printf "  Detecting system... "
 OS=$(uname -s | tr '[:upper:]' '[:lower:]')
+case "$OS" in
+  msys*|mingw*|cygwin*) OS="windows" ;;
+esac
 ARCH=$(uname -m)
 [ "$ARCH" = "x86_64" ] && ARCH="amd64"
 [[ "$ARCH" == "arm64" || "$ARCH" == "aarch64" ]] && ARCH="arm64"
@@ -103,7 +106,9 @@ else
     echo -e "${BLUE}Success${NC}"
     
     BINARY_NAME="nimbus-$OS-$ARCH"
+    [ "$OS" = "windows" ] && BINARY_NAME="${BINARY_NAME}.exe"
     [ ! -f "$INSTALL_DIR/$BINARY_NAME" ] && BINARY_NAME="nimbus"
+    [ "$OS" = "windows" ] && [ ! -f "$INSTALL_DIR/$BINARY_NAME" ] && BINARY_NAME="nimbus.exe"
     IS_SOURCE=false
 fi
 
