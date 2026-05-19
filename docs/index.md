@@ -1,44 +1,72 @@
-# Nimbus Gateway
+# Nimbus
 
-Unified MCP proxy gateway with semantic tool discovery and OAuth management. Aggregates multiple MCP servers (HTTP and stdio) into a single endpoint with Qdrant-powered vector search.
+<p align="center">
+  <strong>Your 24/7 Employee</strong> — The ultimate containerized orchestrator and unified semantic gateway for Model Context Protocol (MCP) servers.
+</p>
 
-## Quick Start
+---
+
+## 📺 Overview Video
+
+Here is a quick walkthrough of Nimbus in action, displaying how it provisions a virtual browser workspace, connects your MCP servers, and operates as your autonomous agent gateway.
+
+<div class="video-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; border-radius: 12px; margin: 24px 0;box-shadow: 0 4px 20px rgba(0,0,0,0.35);">
+    <!-- Replace "YOUR_VIDEO_ID" with your actual YouTube Video ID -->
+    <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"></iframe>
+</div>
+
+---
+
+## ⚡ Quick Start
+
+Installing the Nimbus environment takes just a single command. The installer automatically checks your system architecture, installs Astral's `uv` (if missing), configures your paths, and prepares your runtime.
 
 ```bash
-# 1. Setup
-cp .env.example .env   # add OPENROUTER_API_KEY, QDRANT_URL
-
-# 2. Start everything (Qdrant + Playwright + LinkedIn + Gateway)
-make dev
-
-# 3. Approve OAuth prompts in browser (Notion, Apollo, Zoho)
-#    Tokens are in-memory — re-approve on restart until persistent storage is added
+curl -fsSL https://nimbus.yoodule.com/install.sh | bash
 ```
 
-The gateway will be available at `http://localhost:8088/mcp`.
-
-## Manual Start
+Once installed, reload your shell and launch the entire stack:
 
 ```bash
-# Start dependencies individually
-docker start qdrant || docker run -d --name qdrant -p 6333:6333 qdrant/qdrant:latest
-npx @playwright/mcp@latest --port 3100 &
-
-# Start gateway
-source .env && uv run python -m nimbus_gateway.server
+source ~/.zshrc  # or ~/.bashrc
+nimbus start
 ```
 
-## Configuration
+This boots up the complete containerized stack in the background:
+- **Agent Dashboard**: `http://localhost:3000`
+- **Semantic Gateway (MCP)**: `http://localhost:8088/mcp`
+- **Virtual Browser Workspace (VNC)**: `http://localhost:6080/vnc.html?autoconnect=true` (Password: `nimbusvnc`)
+- **Vector Search Database (Qdrant)**: `http://localhost:6333`
+- **Relational Storage (PostgreSQL)**: Running on port `5433`
 
-### `mcp.json` — Server Registry
+---
 
-Supports both HTTP (`url`) and stdio (`command`) servers:
+## 🛠️ CLI Reference
+
+The `nimbus` CLI allows you to control the lifecycle of your local containerized employee workspace easily.
+
+| Command | Action | Description |
+|:---|:---|:---|
+| `nimbus start` | Boot services | Provisions and starts all Docker containers (`postgres`, `qdrant`, `gateway`, `dashboard`). |
+| `nimbus start --build` | Re-build & Boot | Pulls code modifications, rebuilds docker images, and boots services cleanly. |
+| `nimbus stop` | Tear down | Safely terminates all container services and frees system ports. |
+| `nimbus status` | Health check | Queries and displays the live health and port mappings of the running services. |
+| `nimbus upgrade` | Upgrade installation | Pulls the latest binaries and upgrades the wrapper setup dynamically. |
+| `nimbus logs` | Tail logs | Streams live output from the semantic gateway and background MCP servers. |
+
+---
+
+## 🌐 The Semantic Gateway (`mcp.json`)
+
+Nimbus aggregates all your stdio and HTTP-based MCP servers into a single interface. When an AI model requests a capability, Nimbus dynamically discovers and executes the appropriate tool using vector embeddings stored in Qdrant.
+
+Configure your active servers by modifying `mcp.json` in your Nimbus home directory:
 
 ```json
 {
   "mcpServers": {
-    "upwork-mcp": {
-      "url": "http://localhost:8006/mcp",
+    "playwright-mcp": {
+      "url": "http://localhost:3100/mcp",
       "transport": "streamable-http"
     },
     "notion-mcp": {
@@ -47,101 +75,25 @@ Supports both HTTP (`url`) and stdio (`command`) servers:
       "auth": "oauth"
     },
     "linkedin-mcp": {
-      "command": "/path/to/uv",
+      "command": "uv",
       "args": ["run", "-m", "linkedin_mcp_server", "--transport", "stdio"]
     }
   }
 }
 ```
 
-### `.env` — Environment
+---
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `OPENROUTER_API_KEY` | Embeddings API key | Required |
-| `QDRANT_URL` | Qdrant endpoint | `http://qdrant:6333` |
-| `GATEWAY_PORT` | Gateway port | `8088` |
-| `EMBEDDING_MODEL` | Model for tool embeddings | `openai/text-embedding-3-small` |
+## 🧠 Semantic Routing Capabilities
 
-## Architecture
+The gateway exposes three main endpoints to models (under the namespace `nimbus-utility-mcp`):
 
-```
-┌──────────────────────────────────────────┐
-│            Nimbus Gateway :8088          │
-│                                          │
-│  ┌────────────┐  ┌───────────────────┐   │
-│  │ find_tools │  │   create_proxy()  │   │
-│  │ execute    │  │                   │   │
-│  │ chain      │  │  upwork    :8006  │   │
-│  └────────────┘  │  whatsapp  :8007  │   │
-│                  │  notion    oauth  │   │
-│  ┌────────────┐  │  apollo    oauth  │   │
-│  │  Qdrant    │  │  zoho_crm  stdio │   │
-│  │  Indexer   │  │  playwright:3100  │   │
-│  │  (search)  │  │  linkedin  stdio  │   │
-│  └────────────┘  └───────────────────┘   │
-└──────────────────────────────────────────┘
-         │
-         ▼
-┌──────────────┐
-│   Qdrant     │
-│   :6333      │
-│  (vectors)   │
-└──────────────┘
-```
+1. **`find_tools`**: Searches across all servers semantically. Instead of sending hundreds of tools to a model, the model queries `find_tools` with a prompt like *"browse linkedin"* to fetch only the relevant tool schemas.
+2. **`execute_tool`**: Executes any tool on any registered server dynamically.
+3. **`chain_tools`**: Chains multiple steps together sequentially (e.g. searching google -> reading text -> sending a whatsapp message) in a single API roundtrip.
 
-## Tools
+---
 
-| Tool | Description |
-|------|-------------|
-| `find_tools` | Semantic search across all servers. Pass `*` for all, or a natural query like `"send whatsapp message"` |
-| `execute_tool` | Execute any tool on any connected server by name |
-| `chain_tools` | Chain multiple tools sequentially with `${step.key}` references between steps |
+## 🔐 Stateful OAuth Flow
 
-## Auth
-
-- **OAuth servers** (Notion, Apollo, Zoho): Set `"auth": "oauth"` in `mcp.json`. FastMCP handles the full OAuth 2.1 flow (RFC 9728 discovery, PKCE, token exchange).
-- **Local servers** (Upwork, WhatsApp): No auth needed — they run locally with their own session management.
-- **Callback branding**: OAuth pages show the Nimbus logo and title.
-
-## Makefile
-
-```bash
-make dev          # Start deps + gateway (full local stack)
-make dev-deps     # Start Qdrant, Playwright, LinkedIn only
-make dev-stop     # Stop all dependencies
-make test         # Run 33 unit tests
-make test-gitops  # Validate K8s manifests (kustomize + kubeconform + conftest)
-make test-all     # Run all tests
-```
-
-## Production (GitOps)
-
-Deployed via ArgoCD + Kustomize on AKS.
-
-| Subdomain | Service |
-|-----------|---------|
-| `gateway.nimbus.yoodule.com` | MCP endpoint |
-| `qdrant.nimbus.yoodule.com` | Qdrant dashboard |
-
-```bash
-kubectl apply -f gitops/argocd/app-gateway.yaml
-kubectl apply -f gitops/argocd/app-qdrant.yaml
-```
-
-## Project Structure
-
-```
-nimbus-gateway/
-├── src/nimbus_gateway/
-│   ├── server.py        # FastMCP gateway + lifespan + branding
-│   ├── config.py        # Settings + mcp.json loader
-│   ├── indexer.py        # Qdrant tool indexer + embeddings
-│   └── tools.py          # find/execute/chain tool implementations
-├── servers/              # Bundled MCP servers (e.g. whatsapp-mcp)
-├── static/favicon.svg    # Nimbus logo
-├── gitops/               # K8s manifests + policies
-├── tests/                # 33 unit tests
-├── mcp.json              # Server registry
-└── Makefile              # Dev workflow
-```
+Nimbus natively handles OAuth 2.1 authentication (PKCE, token exchanges, callback lifespans) for tools requiring user verification (e.g. Notion, Apollo, Zoho). The gateway automatically halts execution, prompts authorization in a beautiful custom-branded template, and resumes tool execution seamlessly once token verification succeeds.
