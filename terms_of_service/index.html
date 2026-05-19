@@ -710,32 +710,40 @@
 
 <h1 id="terms-of-service">Terms of Service</h1>
 <p><strong>Effective Date:</strong> May 19, 2026</p>
-<p>Welcome to <strong>Nimbus</strong> ("Software"), a containerized semantic orchestrator gateway, agent dashboard, and virtual workspace suite developed by <strong>Yoodule</strong> ("Yoodule," "we," "us," or "our"). </p>
+<p>Welcome to <strong>Nimbus</strong> ("Software"), a containerized semantic orchestrator gateway, agent dashboard, and virtual workspace suite developed by <strong>Yoodule</strong> ("Yoodule," "we," "us," or "our").</p>
 <p>By installing, running, or utilizing Nimbus, you ("User" or "you") agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, do not install or use the Software.</p>
 <hr />
 <h2 id="1-description-of-software-architecture">1. Description of Software &amp; Architecture</h2>
-<p>Nimbus is an orchestration suite designed to run local and remote Model Context Protocol (MCP) servers, databases, and dashboard environments. 
-* <strong>Containerized Isolation:</strong> The Software runs containerized on your local host machine using Docker. Apart from explicitly mapped data directories (such as <code>~/.nimbus</code> or local repository folders for session storage, Qdrant indexes, and PostgreSQL data), the Software is isolated from your host operating system and host files.
-* <strong>Open-Source &amp; Source-Available Components:</strong> The core gateway and associated CLI are licensed under our project license (see <code>LICENSE</code> in the root repository).</p>
+<p>Nimbus is an orchestration suite designed to run local and remote Model Context Protocol (MCP) servers, databases, and dashboard environments.</p>
+<ul>
+<li><strong>Containerized Isolation:</strong> The Software runs containerized on your local host machine using Docker. Apart from explicitly mapped data directories (such as <code>~/.nimbus</code> or local repository folders for session storage, Qdrant indexes, and PostgreSQL data), the Software is isolated from your host operating system and host files.</li>
+<li><strong>Open-Source &amp; Source-Available Components:</strong> The core gateway and associated CLI are licensed under our project license (see <code>LICENSE</code> in the root repository).</li>
+</ul>
 <h2 id="2-onboarding-registration-telemetry">2. Onboarding &amp; Registration Telemetry</h2>
-<p>To initialize your workspace, Nimbus requires a first-time registration and consent flow.
-* <strong>Collected Data:</strong> During onboarding, the CLI prompts you to enter your Full Name and Email Address. The CLI also automatically collects basic operational system metadata, specifically your operating system, CPU architecture, and local CLI version.
-* <strong>Purpose:</strong> This registration data is securely transmitted to Yoodule's registration database to:
-  1. Initialize your local dashboard administrator credentials.
-  2. Send you security patches, developer notifications, and community update emails.
-  3. Register your workspace instance for analytics and product improvements.
-* <strong>Uninstall Feedback:</strong> If you run <code>nimbus uninstall</code>, the CLI provides an optional feedback form allowing you to share reasons for uninstalling and optionally consent to follow-up developer outreach.</p>
+<p>To initialize your workspace, Nimbus requires a first-time registration and consent flow.</p>
+<ul>
+<li><strong>Collected Data:</strong> During onboarding, the CLI prompts you to enter your Full Name and Email Address. The CLI also automatically collects basic operational system metadata, specifically your operating system, CPU architecture, and local CLI version.</li>
+<li><strong>Purpose:</strong> This registration data is securely transmitted to Yoodule's registration database to:</li>
+<li>Initialize your local dashboard administrator credentials.</li>
+<li>Send you security patches, developer notifications, and community update emails.</li>
+<li>Register your workspace instance for analytics and product improvements.</li>
+<li><strong>Uninstall Feedback:</strong> If you run <code>nimbus uninstall</code>, the CLI provides an optional feedback form allowing you to share reasons for uninstalling and optionally consent to follow-up developer outreach.</li>
+</ul>
 <h2 id="3-third-party-api-keys-model-providers-openrouter-gemini-claude-openai-etc">3. Third-Party API Keys &amp; Model Providers (OpenRouter, Gemini, Claude, OpenAI, etc.)</h2>
-<p>Nimbus relies on user-provided keys for external Large Language Models (LLMs) and cognitive task delegation.
-* <strong>User-Provided Keys:</strong> To execute semantic tasks, you must supply your own valid API keys or credentials for external model endpoints or aggregators (including but not limited to <strong>OpenRouter, Google Gemini, Anthropic Claude, OpenAI, and DeepSeek</strong>).
-* <strong>Zero Transmission to Yoodule:</strong> Your API keys are stored <strong>strictly locally</strong> on your host machine (within persistent local environment files or in-memory inside your local containers). Yoodule never intercepts, collects, logs, or transmits your API keys, model prompt text, system logs, or response payloads to our servers.
-* <strong>Billing, API Charges &amp; Rate Limits:</strong> You are entirely and solely responsible for all financial costs, billing charges, subscription fees, token usage limits, or platform rate-limiting incurred on your respective external developer accounts. Yoodule assumes no responsibility for any charges incurred on your third-party API accounts due to automated loops, continuous task execution, or agent operations triggered by Nimbus.
-* <strong>No Affiliation:</strong> Nimbus is an independent open-source orchestration tool and is not officially affiliated, partnered, sponsored, or endorsed by OpenRouter, Anthropic, Google, OpenAI, or any other model provider. All product names, logos, and brands are the property of their respective owners.
-* <strong>Compliance &amp; Usage Rules:</strong> Your interactions with external APIs via Nimbus must strictly comply with the developer terms, use-case policies, and acceptable-use guidelines of each respective model provider.</p>
+<p>Nimbus relies on user-provided keys for external Large Language Models (LLMs) and cognitive task delegation.</p>
+<ul>
+<li><strong>User-Provided Keys:</strong> To execute semantic tasks, you must supply your own valid API keys or credentials for external model endpoints or aggregators (including but not limited to <strong>OpenRouter, Google Gemini, Anthropic Claude, OpenAI, and DeepSeek</strong>).</li>
+<li><strong>Zero Transmission to Yoodule:</strong> Your API keys are stored <strong>strictly locally</strong> on your host machine (within persistent local environment files or in-memory inside your local containers). Yoodule never intercepts, collects, logs, or transmits your API keys, model prompt text, system logs, or response payloads to our servers.</li>
+<li><strong>Billing, API Charges &amp; Rate Limits:</strong> You are entirely and solely responsible for all financial costs, billing charges, subscription fees, token usage limits, or platform rate-limiting incurred on your respective external developer accounts. Yoodule assumes no responsibility for any charges incurred on your third-party API accounts due to automated loops, continuous task execution, or agent operations triggered by Nimbus.</li>
+<li><strong>No Affiliation:</strong> Nimbus is an independent open-source orchestration tool and is not officially affiliated, partnered, sponsored, or endorsed by OpenRouter, Anthropic, Google, OpenAI, or any other model provider. All product names, logos, and brands are the property of their respective owners.</li>
+<li><strong>Compliance &amp; Usage Rules:</strong> Your interactions with external APIs via Nimbus must strictly comply with the developer terms, use-case policies, and acceptable-use guidelines of each respective model provider.</li>
+</ul>
 <h2 id="4-acceptable-use-automated-browser-interactions">4. Acceptable Use &amp; Automated Browser Interactions</h2>
-<p>Nimbus provides built-in browser automation capabilities (e.g., Playwright/Patchright headless browser agents, automated LinkedIn or WhatsApp MCP servers).
-* <strong>Compliance:</strong> You agree not to use the automated browser capabilities of Nimbus to engage in malicious spam, platform abuse, data scraping in violation of third-party policies, or any activity that violates local, state, national, or international laws.
-* <strong>Platform Penalties:</strong> Because Nimbus performs automated browser interactions on your behalf, your account on third-party platforms could be subject to rate-limiting, temporary suspensions, or permanent bans (e.g., LinkedIn automated outreach policies). <strong>Yoodule assumes absolutely no liability for any action taken against your accounts by third-party platforms as a result of using this Software.</strong></p>
+<p>Nimbus provides built-in browser automation capabilities (e.g., Playwright/Patchright headless browser agents, automated LinkedIn or WhatsApp MCP servers).</p>
+<ul>
+<li><strong>Compliance:</strong> You agree not to use the automated browser capabilities of Nimbus to engage in malicious spam, platform abuse, data scraping in violation of third-party policies, or any activity that violates local, state, national, or international laws.</li>
+<li><strong>Platform Penalties:</strong> Because Nimbus performs automated browser interactions on your behalf, your account on third-party platforms could be subject to rate-limiting, temporary suspensions, or permanent bans (e.g., LinkedIn automated outreach policies). <strong>Yoodule assumes absolutely no liability for any action taken against your accounts by third-party platforms as a result of using this Software.</strong></li>
+</ul>
 <h2 id="5-disclaimer-of-warranties">5. Disclaimer of Warranties</h2>
 <p>THE SOFTWARE IS PROVIDED "AS IS" AND "AS AVAILABLE", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. IN NO EVENT SHALL YOODULE, THE AUTHORS, OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
 <h2 id="6-limitation-of-liability">6. Limitation of Liability</h2>
