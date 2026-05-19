@@ -36,17 +36,20 @@ Below is a detailed analysis of the most suitable open-source and source-availab
 
 ---
 
-## 🏆 Final Recommendation for Nimbus
+## 🏆 Selected Licensing Strategy: Business Source License 1.1 (BSL 1.1)
 
-We recommend a **Dual-License** or **AGPLv3** approach, depending on your primary business model:
+Nimbus has **officially adopted the Business Source License 1.1 (BSL 1.1)**. This licensing model perfectly balances Yoodule's commitment to community self-hosting with the protection of our commercial enterprise cloud channels.
 
-### Option A: The AGPLv3 License (Recommended for Open-Source Dev Tooling)
-If your goal is to build a massive, collaborative developer community while preventing competitors from hosting your gateway for profit in the cloud, **AGPLv3 is the standard industry choice**. It ensures that any cloud-hosted adaptation of the Nimbus Gateway must remain open-source.
-
-### Option B: The Business Source License 1.1 (BSL 1.1) (Recommended if venture-backed or seeking active SaaS sales)
-If Yoodule plans to actively monetize "Nimbus Cloud" (a hosted semantic orchestrator and dashboard service), licensing Nimbus under **BSL 1.1** (transitioning to Apache 2.0 after 36 months) is the most robust commercial path. It protects your enterprise SaaS channel while giving local self-hosted developers 100% free use.
+### Why BSL 1.1 was Selected
+1. **SaaS Revenue Protection:** BSL 1.1 legally blocks cloud providers or competitors from offering "Managed Nimbus Gateway" as a paid, multi-tenant commercial service.
+2. **Local Developer Freedom:** Individual developers and enterprise teams have 100% free rights to download, modify, compile, run, and self-host the gateway locally for any internal production or non-production environment.
+3. **Commitment to Open Source:** On **May 19, 2029** (the Change Date), the license automatically converts to the highly permissive **Apache License, Version 2.0**, ensuring Nimbus eventually becomes fully open-source.
 
 ---
 
-### 🚀 Immediate Action Item: Apply Apache 2.0 or AGPLv3
-If you want to keep it fully open-source today with trademark protection, we should write an **Apache 2.0** or **AGPLv3** `LICENSE` file in the root directory. 
+### 🚀 Active BSL 1.1 Parameters
+* **Licensor:** Yoodule Inc.
+* **Licensed Work:** Nimbus (including Nimbus Gateway, Nimbus CLI, and all associated components, scripts, and documentation)
+* **Change Date:** May 19, 2029
+* **Change License:** Apache License, Version 2.0 (as published by the Apache Software Foundation)
+* **Additional Use Grant:** You are hereby granted the right to make Production Use of the Licensed Work for any purpose, EXCEPT that you may not run the Licensed Work as a commercial, paid, multi-tenant hosted "Model Context Protocol (MCP) gateway-as-a-service" or "cognitive automation-as-a-service" where third-party customers pay for direct access to the hosted gateway or agent dashboard infrastructure managed by you. 
