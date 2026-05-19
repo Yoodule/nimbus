@@ -52,9 +52,27 @@ The `nimbus` CLI allows you to control the lifecycle of your local containerized
 | `nimbus start` | Boot services | Provisions and starts all Docker containers (postgres, qdrant, gateway, dashboard). |
 | `nimbus start --build` | Re-build & Boot | Pulls code modifications, rebuilds docker images, and boots services cleanly. |
 | `nimbus stop` | Tear down | Safely terminates all container services and frees system ports. |
-| `nimbus status` | Health check | Queries and displays the live health and port mappings of the running services. |
 | `nimbus upgrade` | Upgrade installation | Pulls the latest binaries and upgrades the wrapper setup dynamically. |
-| `nimbus logs` | Tail logs | Streams live output from the semantic gateway and background MCP servers. |
+| `nimbus config <subcommand>` | Configure environment | Manage configuration environment variables (list, get, set, unset). |
+| `nimbus mcp <subcommand>` | Manage MCP servers | Manage Model Context Protocol (MCP) server configurations (list, get, set, remove). |
+
+### Configuration Management (`nimbus config`)
+
+Manage local environment variables stored in `~/.nimbus/.env`:
+
+*   **`nimbus config list`**: Lists all active environment variables (e.g. `OPENROUTER_API_KEY`, `NIMBUS_URL`).
+*   **`nimbus config get <KEY>`**: Retrieve the value of a specific configuration key.
+*   **`nimbus config set <KEY> <VALUE>`**: Set or update a configuration key to a specific value.
+*   **`nimbus config unset <KEY>`**: Remove a configuration key from the local environment.
+
+### MCP Server Management (`nimbus mcp`)
+
+Manage Model Context Protocol (MCP) servers defined in `~/.nimbus/mcp.json`:
+
+*   **`nimbus mcp list`**: List all configured stdio or HTTP-based MCP servers and their execution details.
+*   **`nimbus mcp get <NAME>`**: Retrieve the raw JSON configuration of a specific MCP server.
+*   **`nimbus mcp set <NAME> <CONFIG_JSON>`**: Add or update an MCP server. The configuration must be a valid JSON object matching the MCP server schema.
+*   **`nimbus mcp remove <NAME>`**: Remove an MCP server from the configuration.
 
 ---
 
