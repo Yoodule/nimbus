@@ -9,7 +9,7 @@ At **Nimbus** ("Software"), built by **Yoodule** ("Yoodule," "we," "us," or "our
 ## 1. Core Philosophy: "Local-First & Private-by-Design"
 Nimbus is built on a **local-first architecture**. This means that almost all data generated, processed, or utilized by the Software remains **strictly on your host machine** inside isolated Docker containers. 
 * **No Cloud Hosting:** Yoodule does not run cloud databases, central storage logs, or tracking servers for your active workflows.
-* **Credentials Isolation:** All API keys, vector database embeddings, session state, databases, and logs are kept in-memory or on local persistent disks (`~/.nimbus`) under your direct custody and control.
+* **Credentials Isolation & Third-Party LLM Keys:** All user-provided API keys (including those for **OpenRouter, Google Gemini, Anthropic Claude, OpenAI, and DeepSeek**), OAuth tokens, vector database embeddings, local database tables, session states, and execution logs are kept in-memory or on local persistent disks (`~/.nimbus`) under your direct custody and control. **Yoodule does not host, transfer, view, or have access to any of your third-party API keys, nor do we intercept, log, or monitor your prompt contents or model request/response payloads.**
 
 ---
 

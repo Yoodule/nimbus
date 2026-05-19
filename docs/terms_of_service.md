@@ -22,11 +22,13 @@ To initialize your workspace, Nimbus requires a first-time registration and cons
   3. Register your workspace instance for analytics and product improvements.
 * **Uninstall Feedback:** If you run `nimbus uninstall`, the CLI provides an optional feedback form allowing you to share reasons for uninstalling and optionally consent to follow-up developer outreach.
 
-## 3. API Keys & Third-Party Integrations
-Nimbus aggregates and communicates with third-party application programming interfaces (APIs) and tools (e.g., OpenRouter, Notion, Zoho CRM, Apollo, WhatsApp, LinkedIn).
-* **Local Key Ownership:** You are required to supply your own API keys and session credentials (such as an OpenRouter API key) to execute semantic tasks.
-* **In-Memory & Local Storage:** All user-provided API keys, OAuth tokens, and session databases are stored **strictly locally** on your host PC (within the `~/.nimbus` directory or in-memory inside running containers). **Yoodule does not host, transfer, view, or have access to any of your API keys, vector databases, or credentials.**
-* **Third-Party Terms:** You are solely responsible for ensuring that your use of third-party integrations via Nimbus complies with the respective terms of service of those platforms.
+## 3. Third-Party API Keys & Model Providers (OpenRouter, Gemini, Claude, OpenAI, etc.)
+Nimbus relies on user-provided keys for external Large Language Models (LLMs) and cognitive task delegation.
+* **User-Provided Keys:** To execute semantic tasks, you must supply your own valid API keys or credentials for external model endpoints or aggregators (including but not limited to **OpenRouter, Google Gemini, Anthropic Claude, OpenAI, and DeepSeek**).
+* **Zero Transmission to Yoodule:** Your API keys are stored **strictly locally** on your host machine (within persistent local environment files or in-memory inside your local containers). Yoodule never intercepts, collects, logs, or transmits your API keys, model prompt text, system logs, or response payloads to our servers.
+* **Billing, API Charges & Rate Limits:** You are entirely and solely responsible for all financial costs, billing charges, subscription fees, token usage limits, or platform rate-limiting incurred on your respective external developer accounts. Yoodule assumes no responsibility for any charges incurred on your third-party API accounts due to automated loops, continuous task execution, or agent operations triggered by Nimbus.
+* **No Affiliation:** Nimbus is an independent open-source orchestration tool and is not officially affiliated, partnered, sponsored, or endorsed by OpenRouter, Anthropic, Google, OpenAI, or any other model provider. All product names, logos, and brands are the property of their respective owners.
+* **Compliance & Usage Rules:** Your interactions with external APIs via Nimbus must strictly comply with the developer terms, use-case policies, and acceptable-use guidelines of each respective model provider.
 
 ## 4. Acceptable Use & Automated Browser Interactions
 Nimbus provides built-in browser automation capabilities (e.g., Playwright/Patchright headless browser agents, automated LinkedIn or WhatsApp MCP servers).
