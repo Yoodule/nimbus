@@ -5,6 +5,7 @@ copyright: Built by <a href="https://www.linkedin.com/in/sundayj1213/?utm_source
 
 theme:
   name: material
+  custom_dir: overrides
   logo: static/favicon.svg
   favicon: static/favicon.svg
   palette:
@@ -18,6 +19,7 @@ theme:
     - navigation.tabs
     - search.suggest
     - search.highlight
+    - content.code.copy
 
 markdown_extensions:
   - pymdownx.highlight:
