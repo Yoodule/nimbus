@@ -1,0 +1,3 @@
+@echo off
+echo Installing Nimbus for Windows...
+powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/Yoodule/nimbus/main/install.ps1 | iex"
