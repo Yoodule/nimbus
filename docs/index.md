@@ -21,11 +21,9 @@ Here is a quick walkthrough of Nimbus in action, displaying how it provisions a 
 
 ## Early Access Onboarding
 
-<div class="early-access-card" style="background: linear-gradient(145deg, rgba(30, 30, 35, 0.9) 0%, rgba(20, 20, 25, 0.95) 100%); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 16px; padding: 40px 32px; margin: 32px 0; box-shadow: 0 12px 40px rgba(99, 102, 241, 0.15); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); text-align: center; position: relative; overflow: hidden;">
+<div class="early-access-card" style="background: #000000; border: 1px solid #333333; border-radius: 12px; padding: 40px 32px; margin: 32px 0; text-align: center; position: relative; overflow: hidden;">
   
-  <div style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.12) 0%, transparent 40%); pointer-events: none;"></div>
-
-  <div style="display: inline-flex; align-items: center; justify-content: center; width: 64px; height: 64px; border-radius: 50%; background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.2); margin-bottom: 24px; color: #818cf8;">
+  <div style="display: inline-flex; align-items: center; justify-content: center; width: 64px; height: 64px; border-radius: 50%; background: #111111; border: 1px solid #333333; margin-bottom: 24px; color: #ffffff;">
     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
       <polyline points="22,6 12,13 2,6"></polyline>
@@ -34,29 +32,28 @@ Here is a quick walkthrough of Nimbus in action, displaying how it provisions a 
   
   <h3 style="color: #ffffff; font-size: 1.7em; font-weight: 700; margin: 0 0 16px 0; letter-spacing: -0.02em;">Direct Downloads Disabled</h3>
   
-  <p style="color: #94a3b8; font-size: 1.1em; line-height: 1.6; margin: 0 auto 20px auto; max-width: 540px;">
+  <p style="color: #a3a3a3; font-size: 1.1em; line-height: 1.6; margin: 0 auto 20px auto; max-width: 540px;">
     To ensure everyone gets the absolute best out of Nimbus, we conduct personalized 1-on-1 onboarding sessions to understand your goals and optimize your workspace environment.
   </p>
   
-  <p style="color: #94a3b8; font-size: 1.05em; line-height: 1.6; margin: 0 auto 32px auto; max-width: 540px;">
-    You can reach out to us anytime at <strong style="color: #e2e8f0;">hello.nimbus@yoodule.com</strong> or schedule your session directly below:
+  <p style="color: #a3a3a3; font-size: 1.05em; line-height: 1.6; margin: 0 auto 32px auto; max-width: 540px;">
+    You can reach out to us anytime at <strong style="color: #ffffff;">hello.nimbus@yoodule.com</strong> or schedule your session directly below:
   </p>
   
-  <a href="https://calendly.com/sundayj/30min?month=2026-05" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; background: #4f46e5; color: #ffffff; text-decoration: none; font-weight: 600; padding: 14px 32px; border-radius: 8px; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4); font-size: 1.05em;">
+  <a href="https://calendly.com/sundayj/30min?month=2026-05" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; background: #ffffff; color: #000000; text-decoration: none; font-weight: 600; padding: 14px 32px; border-radius: 8px; transition: all 0.2s ease; font-size: 1.05em;">
     Schedule Onboarding Session
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
   </a>
   
-  <p style="color: #64748b; font-size: 0.9em; margin: 28px 0 0 0; font-style: italic;">
+  <p style="color: #737373; font-size: 0.9em; margin: 28px 0 0 0; font-style: italic;">
     Once your session is complete, you will receive your secure installation commands and API access.
   </p>
 </div>
 
 <style>
 .early-access-card a:hover {
-  background: #4338ca !important;
+  background: #e5e5e5 !important;
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(79, 70, 229, 0.5) !important;
 }
 .early-access-card a:active {
   transform: scale(0.98);
