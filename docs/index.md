@@ -19,43 +19,16 @@ Here is a quick walkthrough of Nimbus in action, displaying how it provisions a 
 
 ---
 
-## Quick Start
+## Early Access Onboarding
 
+!!! important "Direct Downloads Disabled"
+    Direct downloads of the Nimbus installation scripts are currently disabled.
 
-=== "macOS, Linux, WSL"
+    To ensure everyone interested gets the best out of the tool, we would love to have a session with you to understand your goals and help set things up to maximize the best results.
 
-    ```bash
-    curl -fsSL https://nimbus.yoodule.com/install.sh | bash
-    ```
+    To schedule your onboarding session, please send an email to: **[hello.nimbus@yoodule.com](mailto:hello.nimbus@yoodule.com)**
 
-=== "Windows PowerShell"
-
-    ```powershell
-    irm https://nimbus.yoodule.com/install.ps1 | iex
-    ```
-
-=== "Windows CMD"
-
-    ```cmd
-    curl -fsSL https://nimbus.yoodule.com/install.cmd -o install.cmd && install.cmd && del install.cmd
-    ```
-
-*(Note for Windows Users: If you see "The token '&&' is not a valid statement separator", you’re in PowerShell. If you see "'irm' is not recognized", you’re in CMD.)*
-
-Once installed, reload your shell and launch the entire stack:
-
-```bash
-source ~/.zshrc  # or ~/.bashrc
-nimbus start
-```
-
-This boots up the complete containerized stack in the background:
-
-- **Agent Dashboard**: <http://localhost:3000>
-- **Semantic Gateway (MCP)**: <http://localhost:8088/mcp>
-- **Virtual Browser Workspace (VNC)**: <http://localhost:6080/vnc.html?autoconnect=true> (Password: nimbusvnc)
-- **Vector Search Database (Qdrant)**: <http://localhost:6333>
-- **Relational Storage (PostgreSQL)**: Running on port 5433
+*(Once your onboarding is complete, you will be provided with your personalized API access and installation commands).*
 
 ---
 
