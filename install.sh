@@ -72,7 +72,9 @@ DASHBOARD_URL="${RELEASE_BASE}/$DASHBOARD_ASSET"
 echo -e "${BLUE}$NIMBUS_VERSION${NC}"
 
 # 3. Downloading + verifying
-echo -e "  Downloading assets..."
+# Each asset gets its own per-file progress bar (printed by
+# download_with_progress), so we don't need a generic "Downloading assets..."
+# banner here — it would just add noise.
 TMP_DIR=$(mktemp -d)
 TMP_FILE="$TMP_DIR/$ASSET_NAME"
 TMP_DASHBOARD="$TMP_DIR/$DASHBOARD_ASSET"
@@ -87,13 +89,112 @@ if ! curl -fsSL "${RELEASE_BASE}/SHA256SUMS" -o "$TMP_SUMS"; then
     exit 1
 fi
 
+# Human-readable byte counter. bash doesn't do floats, so we drop to awk.
+fmt_bytes() {
+    awk -v b="$1" 'BEGIN {
+        split("B KB MB GB TB", u, " ");
+        i = 1;
+        while (b >= 1024 && i < 5) { b /= 1024; i++ }
+        printf "%.1f %s", b, u[i]
+    }'
+}
+
+# Progress-bar download.
+# curl's built-in -# / --progress-bar triggers HTTP/2 PROTOCOL_ERROR (err 92)
+# against GitHub's release-assets CDN, so we can't use it. Instead we fetch
+# the Content-Length up front (the same URL, but a cheap HEAD-equivalent via
+# -I), kick off the actual GET in the background writing to $out, and poll
+# the file size every 200ms to render a single-line progress bar in place.
+download_with_progress() {
+    local url="$1" name="$2" out="$3"
+
+    # Sniff the total file size. We do a 0-0 range GET and read the
+    # Content-Range header, which the server reports as "bytes 0-0/TOTAL"
+    # — the number after the slash is the real file size. This works
+    # through GitHub's redirect chain (origin → S3 presigned URL), where
+    # a plain HEAD only sees the GitHub hop and gets Content-Length: 0,
+    # and a full GET can't be measured for length without reading it all.
+    local total
+    total=$(curl -fsSL -r 0-0 -D - -o /dev/null "$url" 2>/dev/null \
+        | awk 'BEGIN{IGNORECASE=1} /^content-range: bytes [0-9]+-[0-9]+\//{
+            gsub(/\r/,""); split($0,a,"/"); print a[2]+0; exit
+        }')
+    if [ -z "$total" ] || [ "$total" -le 0 ] 2>/dev/null; then
+        total=0
+    fi
+
+    # Kick off the real download in the background. -s keeps it quiet so
+    # we can render our own bar; -f fails on HTTP >= 400; -L follows the
+    # GitHub → CDN redirect chain.
+    curl -fsSL "$url" -o "$out" &
+    local curl_pid=$!
+
+    printf "  %-22s " "$name"
+    local last_drawn=0
+    local last_size=0
+    local last_t=$(date +%s)
+
+    while kill -0 "$curl_pid" 2>/dev/null; do
+        local now=$(date +%s)
+        local size=0
+        [ -f "$out" ] && size=$(stat -f%z "$out" 2>/dev/null || stat -c%s "$out" 2>/dev/null || echo 0)
+        # Render at most ~5 times/sec; we redraw on size change or every 200ms
+        if [ "$size" -ne "$last_size" ] || [ $((now - last_t)) -ge 1 ]; then
+            local elapsed=$((now - last_t))
+            local delta=$((size - last_size))
+            local speed=0
+            [ "$elapsed" -gt 0 ] && speed=$((delta / elapsed))
+            last_size=$size
+            last_t=$now
+
+            if [ "$total" -gt 0 ]; then
+                local pct=$((size * 100 / total))
+                local filled=$((pct / 5))   # 20-char bar
+                local empty=$((20 - filled))
+                local bar
+                bar=$(printf '%0.s#' $(seq 1 $filled 2>/dev/null) || true)
+                [ -z "$bar" ] && bar=""
+                local spc
+                spc=$(printf '%0.s-' $(seq 1 $empty 2>/dev/null) || true)
+                [ -z "$spc" ] && spc=""
+                printf "\r  %-22s [%s%s] %3d%%  %s / %s  %s/s" \
+                    "$name" "$bar" "$spc" "$pct" \
+                    "$(fmt_bytes "$size")" "$(fmt_bytes "$total")" \
+                    "$(fmt_bytes "$speed")"
+            else
+                # Unknown size: spinner + bytes so far
+                local spinchars='|/-\'
+                local sidx=$(( (now % 4) + 1 ))
+                local spin=$(printf '%s' "$spinchars" | cut -c"$sidx")
+                printf "\r  %-22s %s %s downloaded" \
+                    "$name" "$spin" "$(fmt_bytes "$size")"
+            fi
+            last_drawn=1
+        fi
+        sleep 0.2
+    done
+
+    # Reap the curl process; non-zero exit means the download failed.
+    if ! wait "$curl_pid"; then
+        printf "\n"
+        return 1
+    fi
+    # Final 100% line (or final byte count)
+    local final_size=0
+    [ -f "$out" ] && final_size=$(stat -f%z "$out" 2>/dev/null || stat -c%s "$out" 2>/dev/null || echo 0)
+    if [ "$total" -gt 0 ]; then
+        printf "\r  %-22s [####################] 100%%  %s / %s        \n" \
+            "$name" "$(fmt_bytes "$final_size")" "$(fmt_bytes "$total")"
+    else
+        printf "\r  %-22s done  %s                       \n" \
+            "$name" "$(fmt_bytes "$final_size")"
+    fi
+    return 0
+}
+
 download_and_verify() {
     local url="$1" name="$2" out="$3"
-    # curl -# (interactive progress bar) breaks against HTTP/2 servers with
-    # curl error 92 PROTOCOL_ERROR — use -sS for silent transfer with errors
-    # on failure. The "Downloading assets..." banner above tells the user
-    # something is happening.
-    if ! curl -sSfL "$url" -o "$out"; then
+    if ! download_with_progress "$url" "$name" "$out"; then
         echo -e "\n  ${BOLD}Error:${NC} Download failed ($name)."
         echo "  URL: $url"
         return 1
@@ -183,7 +284,7 @@ if [ -t 0 ]; then
     if [[ $REPLY =~ ^[Yy]$ ]]; then
         SHOULD_START="y"
     fi
-elif [ -c /dev/tty ]; then
+elif [ -c /dev/tty ] 2>/dev/null; then
     if read -p "  Would you like to start Nimbus now? (y/N) " -n 1 -r REPLY < /dev/tty 2>/dev/null; then
         echo
         if [[ $REPLY =~ ^[Yy]$ ]]; then
