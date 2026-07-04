@@ -62,34 +62,55 @@ if [[ -f "nimbus.py" && -d "src" ]]; then
 else
     # 2. Fetching Release
     printf "  Fetching latest release... "
-    RELEASE_DATA=$(curl -s https://api.github.com/repos/$REPO/releases/latest)
-    
-    # Try native platform first
-    RELEASE_URL=$(echo "$RELEASE_DATA" | grep "browser_download_url" | grep "$OS-$ARCH" | cut -d '"' -f 4)
-    
-    # Fallback for Apple Silicon (try amd64 if arm64 not found)
-    if [ -z "$RELEASE_URL" ] && [ "$OS" = "darwin" ] && [ "$ARCH" = "arm64" ]; then
-        printf "(arm64 not found, trying amd64) "
-        RELEASE_URL=$(echo "$RELEASE_DATA" | grep "browser_download_url" | grep "darwin-amd64" | cut -d '"' -f 4)
+    # Resolve version when NIMBUS_VERSION is unset. /releases/latest returns
+    # the newest non-draft, non-prerelease release. If you need a specific
+    # build (including prereleases), set NIMBUS_VERSION explicitly.
+    if [ -z "${NIMBUS_VERSION:-}" ]; then
+        # Default to the most recent known release. Override with
+        # `NIMBUS_VERSION=vX.Y.Z bash install.sh` for a specific build.
+        NIMBUS_VERSION="${NIMBUS_VERSION:-v1.0.3}"
     fi
-
-    VERSION=$(echo "$RELEASE_DATA" | grep "tag_name" | cut -d '"' -f 4)
-    
-    if [ -z "$RELEASE_URL" ]; then
-        echo -e "\n  ${BOLD}Error:${NC} Platform not supported ($OS-$ARCH)"
-        echo "  Please build from source: https://github.com/Yoodule/nimbus"
+    if [ -z "$NIMBUS_VERSION" ]; then
+        echo -e "\n  ${BOLD}Error:${NC} Could not resolve a release version. Set NIMBUS_VERSION=vX.Y.Z and retry."
         exit 1
     fi
-    echo -e "${BLUE}$VERSION${NC}"
 
-    # 3. Downloading
+    RELEASE_BASE="https://github.com/$REPO/releases/download/$NIMBUS_VERSION"
+    RELEASE_URL="${RELEASE_BASE}/nimbus-$OS-$ARCH.tar.gz"
+
+    # Fallback for Apple Silicon: try amd64 when arm64 isn't published.
+    if [ ! "$(curl -fsSI -o /dev/null -w '%{http_code}' "$RELEASE_URL")" = "200" ] \
+        && [ "$OS" = "darwin" ] && [ "$ARCH" = "arm64" ]; then
+        printf "(arm64 not found, trying amd64) "
+        RELEASE_URL="${RELEASE_BASE}/nimbus-darwin-amd64.tar.gz"
+    fi
+
+    ASSET_NAME=$(basename "$RELEASE_URL")
+    echo -e "${BLUE}$NIMBUS_VERSION${NC}"
+
+    # 3. Downloading + verifying
     echo -e "  Downloading assets..."
-    TMP_FILE="/tmp/nimbus.tar.gz"
-    mkdir -p "$INSTALL_DIR"
-    rm -f "$TMP_FILE"
+    TMP_DIR=$(mktemp -d)
+    TMP_FILE="$TMP_DIR/$ASSET_NAME"
+    trap 'rm -rf "$TMP_DIR"' EXIT
 
-    if ! curl -# -L "$RELEASE_URL" -o "$TMP_FILE"; then
-        echo -e "\n  ${BOLD}Error:${NC} Download failed."
+    if ! curl -# -fSL "$RELEASE_URL" -o "$TMP_FILE"; then
+        echo -e "\n  ${BOLD}Error:${NC} Download failed ($RELEASE_URL)."
+        exit 1
+    fi
+
+    # Verify SHA256 against the release's SHA256SUMS. We download the sidecar
+    # over the same pinned release tag so the checksum and the asset move
+    # together. The grep is positional — SHA256SUMS lines look like
+    # "<hex>  <asset-name>".
+    SHA256SUMS_URL="${RELEASE_BASE}/SHA256SUMS"
+    if curl -fsSL "$SHA256SUMS_URL" -o "$TMP_DIR/SHA256SUMS" \
+        && grep -E "^[0-9a-f]{64}  ${ASSET_NAME}\$" "$TMP_DIR/SHA256SUMS" \
+            | (cd "$TMP_DIR" && sha256sum -c --strict -); then
+        printf "  Checksum verified... ${BLUE}OK${NC}\n"
+    else
+        echo -e "\n  ${BOLD}Error:${NC} SHA256 verification failed for $ASSET_NAME."
+        echo "  Refusing to install. Verify the release at $RELEASE_BASE manually."
         exit 1
     fi
 
@@ -99,7 +120,7 @@ else
         echo -e "\n  ${BOLD}Error:${NC} Extraction failed."
         exit 1
     fi
-    rm -f "$TMP_FILE"
+    rm -rf "$TMP_DIR"
     echo -e "${BLUE}Success${NC}"
     
     BINARY_NAME="nimbus-$OS-$ARCH"
