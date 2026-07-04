@@ -1,6 +1,7 @@
 #!/bin/bash
 # Nimbus Installer - Premium Edition
-# Usage: curl -fsSL https://raw.githubusercontent.com/Yoodule/nimbus/main/install.sh | bash
+# Usage: curl -fsSL https://nimbus.yoodule.com/install.sh | bash
+#   Pin a version:  NIMBUS_VERSION=vX.Y.Z bash  (i.e. before the `bash` at the end of the pipe)
 
 set -e
 
@@ -66,9 +67,18 @@ else
     # the newest non-draft, non-prerelease release. If you need a specific
     # build (including prereleases), set NIMBUS_VERSION explicitly.
     if [ -z "${NIMBUS_VERSION:-}" ]; then
-        # Default to the most recent known release. Override with
-        # `NIMBUS_VERSION=vX.Y.Z bash install.sh` for a specific build.
-        NIMBUS_VERSION="${NIMBUS_VERSION:-v1.0.3}"
+        # Hit the GitHub API for the most recent non-prerelease tag. The
+        # fallback below is a frozen-in-time version used only when the API
+        # is unreachable (offline install, rate limit, etc.).
+        RESOLVED=$(curl -fsSL "https://api.github.com/repos/$REPO/releases/latest" \
+            2>/dev/null | grep '"tag_name"' | head -1 | sed -E 's/.*"tag_name"[[:space:]]*:[[:space:]]*"([^"]+)".*/\1/')
+        if [ -n "$RESOLVED" ]; then
+            NIMBUS_VERSION="$RESOLVED"
+        else
+            # Frozen-in-time fallback used only when the API is unreachable
+            # (offline install, rate limit, etc.). Update when cutting releases.
+            NIMBUS_VERSION="v1.0.3"
+        fi
     fi
     if [ -z "$NIMBUS_VERSION" ]; then
         echo -e "\n  ${BOLD}Error:${NC} Could not resolve a release version. Set NIMBUS_VERSION=vX.Y.Z and retry."
@@ -78,11 +88,24 @@ else
     RELEASE_BASE="https://github.com/$REPO/releases/download/$NIMBUS_VERSION"
     RELEASE_URL="${RELEASE_BASE}/nimbus-$OS-$ARCH.tar.gz"
 
-    # Fallback for Apple Silicon: try amd64 when arm64 isn't published.
-    if [ ! "$(curl -fsSI -o /dev/null -w '%{http_code}' "$RELEASE_URL")" = "200" ] \
-        && [ "$OS" = "darwin" ] && [ "$ARCH" = "arm64" ]; then
-        printf "(arm64 not found, trying amd64) "
-        RELEASE_URL="${RELEASE_BASE}/nimbus-darwin-amd64.tar.gz"
+    # Ensure the install dir exists before any download/extract, so a fresh
+    # user (no ~/.nimbus yet) doesn't fail on the first tar.
+    mkdir -p "$INSTALL_DIR"
+
+    # Probe the asset. -L follows GitHub's redirect to the S3-backed CDN,
+    # so we get the real 200/404 instead of the 302 that GitHub returns at
+    # the origin. Without -L, the arm64 probe would always look "missing"
+    # and the script would fall through to a nonexistent amd64 asset.
+    ASSET_STATUS=$(curl -fsSLI -o /dev/null -w '%{http_code}' "$RELEASE_URL" || echo "000")
+    if [ "$ASSET_STATUS" != "200" ] && [ "$OS" = "darwin" ] && [ "$ARCH" = "arm64" ]; then
+        # Apple Silicon under Rosetta can run the Intel binary, but we don't
+        # currently ship one. Fail fast with the actionable URL rather than
+        # burning another 404 on an asset that doesn't exist.
+        echo ""
+        echo -e "  ${BOLD}Error:${NC} No darwin-arm64 asset found for $NIMBUS_VERSION."
+        echo "  Check available assets at: $RELEASE_BASE"
+        echo "  To install via Rosetta instead, set NIMBUS_HOST_ARCH=amd64."
+        exit 1
     fi
 
     ASSET_NAME=$(basename "$RELEASE_URL")
