@@ -19,59 +19,21 @@ Here is a quick walkthrough of Nimbus in action, displaying how it provisions a 
 
 ---
 
-## Get Started
+## Get Nimbus
 
-<div class="install-card" style="background: #000000; border: 1px solid #333333; border-radius: 12px; padding: 40px 32px; margin: 32px 0; text-align: center; position: relative; overflow: hidden;">
-  
-  <div style="display: inline-flex; align-items: center; justify-content: center; width: 64px; height: 64px; border-radius: 50%; background: #111111; border: 1px solid #333333; margin-bottom: 24px; color: #ffffff;">
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <polyline points="8 17 12 21 16 17"></polyline>
-      <line x1="12" y1="12" x2="12" y2="21"></line>
-      <path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"></path>
-    </svg>
-  </div>
-  
-  <h3 style="color: #ffffff; font-size: 1.7em; font-weight: 700; margin: 0 0 16px 0; letter-spacing: -0.02em;">Install Nimbus</h3>
-  
+<div style="background: #000000; border: 1px solid #333333; border-radius: 12px; padding: 40px 32px; margin: 32px 0; text-align: center;">
+  <h3 style="color: #ffffff; font-size: 1.7em; font-weight: 700; margin: 0 0 16px 0; letter-spacing: -0.02em;">One command. No sign-up.</h3>
   <p style="color: #a3a3a3; font-size: 1.1em; line-height: 1.6; margin: 0 auto 24px auto; max-width: 540px;">
-    One command, no sign-up required. The installer verifies SHA256 checksums, sets up the CLI, and provisions the local Docker stack.
+    Nimbus installs the CLI, the gateway, and every bundled MCP server with a single curl. SHA256-verified, runs locally, and provisions the full Docker stack.
   </p>
-  
-  <div style="background: #0a0a0a; border: 1px solid #262626; border-radius: 8px; padding: 16px 20px; margin: 0 auto 16px auto; max-width: 640px; text-align: left; font-family: 'SF Mono', Menlo, Consolas, monospace; font-size: 0.92em; color: #e5e5e5; overflow-x: auto; white-space: nowrap;">
+  <div style="background: #0a0a0a; border: 1px solid #262626; border-radius: 8px; padding: 16px 20px; margin: 0 auto 24px auto; max-width: 640px; text-align: left; font-family: 'SF Mono', Menlo, Consolas, monospace; font-size: 0.92em; color: #e5e5e5; overflow-x: auto; white-space: nowrap;">
     <span style="color: #737373;">$ </span>curl -fsSL https://nimbus.yoodule.com/install.sh | bash
   </div>
-  
-  <p style="color: #737373; font-size: 0.85em; margin: 0 auto 16px auto; max-width: 540px; line-height: 1.5;">
-    Always installs the latest stable release. To pin a specific build, set
-    <code style="color: #d4d4d4; background: #0a0a0a; padding: 2px 6px; border-radius: 4px; font-size: 0.95em;">NIMBUS_VERSION</code>
-    on the right-hand <code style="color: #d4d4d4; background: #0a0a0a; padding: 2px 6px; border-radius: 4px; font-size: 0.95em;">bash</code> of the pipe, or pick a tag from the
-    <a href="https://github.com/Yoodule/nimbus/releases" target="_blank" style="color: #ffffff; text-decoration: underline;">GitHub releases</a> page.
-  </p>
-  
-  <div style="background: #0a0a0a; border: 1px solid #262626; border-radius: 8px; padding: 12px 16px; margin: 0 auto 32px auto; max-width: 640px; text-align: left; font-family: 'SF Mono', Menlo, Consolas, monospace; font-size: 0.85em; color: #a3a3a3; overflow-x: auto; white-space: nowrap;">
-    <span style="color: #737373;"># example: pin to v1.0.3</span><br>
-    <span style="color: #737373;">$ </span>curl -fsSL https://nimbus.yoodule.com/install.sh | NIMBUS_VERSION=v1.0.3 bash
-  </div>
-  
-  <p style="color: #a3a3a3; font-size: 1.05em; line-height: 1.6; margin: 0 auto 20px auto; max-width: 540px;">
-    Want a guided setup instead? Schedule a 1-on-1 onboarding session and we'll walk through your workspace:
-  </p>
-  
-  <a href="https://calendly.com/sundayj/30min?month=2026-05" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; background: #ffffff; color: #000000; text-decoration: none; font-weight: 600; padding: 14px 32px; border-radius: 8px; transition: all 0.2s ease; font-size: 1.05em;">
-    Schedule Onboarding Session
+  <a href="download/" style="display: inline-flex; align-items: center; gap: 8px; background: #ffffff; color: #000000; text-decoration: none; font-weight: 600; padding: 14px 32px; border-radius: 8px; font-size: 1.05em; margin-right: 12px;">
+    Download for macOS / Linux / Windows
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
   </a>
 </div>
-
-<style>
-.install-card a:hover {
-  background: #e5e5e5 !important;
-  transform: translateY(-2px);
-}
-.install-card a:active {
-  transform: scale(0.98);
-}
-</style>
 
 ---
 

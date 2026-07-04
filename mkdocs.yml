@@ -32,6 +32,7 @@ markdown_extensions:
 
 nav:
   - Home: index.md
+  - Download: download.md
   - Official License: license.md
   - Terms of Service: terms_of_service.md
   - Privacy Policy: privacy_policy.md
