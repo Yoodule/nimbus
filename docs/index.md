@@ -41,11 +41,17 @@ Here is a quick walkthrough of Nimbus in action, displaying how it provisions a 
     <span style="color: #737373;">$ </span>curl -fsSL https://nimbus.yoodule.com/install.sh | bash
   </div>
   
-  <p style="color: #737373; font-size: 0.85em; margin: 0 auto 32px auto; max-width: 540px; line-height: 1.5;">
-    Always installs the latest stable release. To pin, prefix with
-    <code style="color: #d4d4d4; background: #0a0a0a; padding: 2px 6px; border-radius: 4px; font-size: 0.95em;">NIMBUS_VERSION=vX.Y.Z</code> or pick a tag from the
+  <p style="color: #737373; font-size: 0.85em; margin: 0 auto 16px auto; max-width: 540px; line-height: 1.5;">
+    Always installs the latest stable release. To pin a specific build, set
+    <code style="color: #d4d4d4; background: #0a0a0a; padding: 2px 6px; border-radius: 4px; font-size: 0.95em;">NIMBUS_VERSION</code>
+    on the right-hand <code style="color: #d4d4d4; background: #0a0a0a; padding: 2px 6px; border-radius: 4px; font-size: 0.95em;">bash</code> of the pipe, or pick a tag from the
     <a href="https://github.com/Yoodule/nimbus/releases" target="_blank" style="color: #ffffff; text-decoration: underline;">GitHub releases</a> page.
   </p>
+  
+  <div style="background: #0a0a0a; border: 1px solid #262626; border-radius: 8px; padding: 12px 16px; margin: 0 auto 32px auto; max-width: 640px; text-align: left; font-family: 'SF Mono', Menlo, Consolas, monospace; font-size: 0.85em; color: #a3a3a3; overflow-x: auto; white-space: nowrap;">
+    <span style="color: #737373;"># example: pin to v1.0.3</span><br>
+    <span style="color: #737373;">$ </span>curl -fsSL https://nimbus.yoodule.com/install.sh | NIMBUS_VERSION=v1.0.3 bash
+  </div>
   
   <p style="color: #a3a3a3; font-size: 1.05em; line-height: 1.6; margin: 0 auto 20px auto; max-width: 540px;">
     Want a guided setup instead? Schedule a 1-on-1 onboarding session and we'll walk through your workspace:
