@@ -38,11 +38,12 @@ Here is a quick walkthrough of Nimbus in action, displaying how it provisions a 
   </p>
   
   <div style="background: #0a0a0a; border: 1px solid #262626; border-radius: 8px; padding: 16px 20px; margin: 0 auto 16px auto; max-width: 640px; text-align: left; font-family: 'SF Mono', Menlo, Consolas, monospace; font-size: 0.92em; color: #e5e5e5; overflow-x: auto; white-space: nowrap;">
-    <span style="color: #737373;">$ </span>curl -fsSL https://nimbus.yoodule.com/install.sh | NIMBUS_VERSION=v1.0.3 bash
+    <span style="color: #737373;">$ </span>curl -fsSL https://nimbus.yoodule.com/install.sh | bash
   </div>
   
   <p style="color: #737373; font-size: 0.85em; margin: 0 auto 32px auto; max-width: 540px; line-height: 1.5;">
-    Omit <code style="color: #d4d4d4; background: #0a0a0a; padding: 2px 6px; border-radius: 4px; font-size: 0.95em;">NIMBUS_VERSION</code> to install the latest release, or pin to any tag from the
+    Always installs the latest stable release. To pin, prefix with
+    <code style="color: #d4d4d4; background: #0a0a0a; padding: 2px 6px; border-radius: 4px; font-size: 0.95em;">NIMBUS_VERSION=vX.Y.Z</code> or pick a tag from the
     <a href="https://github.com/Yoodule/nimbus/releases" target="_blank" style="color: #ffffff; text-decoration: underline;">GitHub releases</a> page.
   </p>
   
