@@ -1,7 +1,7 @@
 #!/bin/bash
-# Nimbus Installer
+# Nimbus Installer - Premium Edition
 # Usage: curl -fsSL https://nimbus.yoodule.com/install.sh | bash
-#   Override:  NIMBUS_VERSION=vX.Y.Z bash -c "$(curl -fsSL https://nimbus.yoodule.com/install.sh)"
+#   Pin a version:  NIMBUS_VERSION=vX.Y.Z bash  (i.e. before the `bash` at the end of the pipe)
 
 set -e
 
@@ -10,19 +10,13 @@ INSTALL_DIR="${NIMBUS_HOME:-$HOME/.nimbus}"
 
 # --- Aesthetics (Yoodule Style: High Contrast, Minimalist) ---
 BOLD='\033[1m'
-WHITE='\033[37m'
-DIM='\033[2m'
 BLUE='\033[34m'
 CYAN='\033[36m'
 NC='\033[0m'
 
 clear
 echo ""
-echo -e "  ${BOLD}${WHITE}█▄  █  █  █▀▄▀█  █▀▄   █ █  █▀${NC}"
-echo -e "  ${BOLD}${WHITE}█ ▀▄█  █  █ ▀ █  ██▄   █▄█  ▄█${NC}"
-echo -e "  ${BOLD}${WHITE}Your 24/7 Employee${NC}"
-echo -e "  ${WHITE}https://nimbus.yoodule.com${NC}"
-echo -e "  ${DIM}────────────────────────────────────────────────────────${NC}"
+echo -e "      ${BOLD}N  I  M  B  U  S${NC}"
 echo ""
 echo -e "  Preparing your environment..."
 
@@ -45,222 +39,145 @@ if ! command -v uv >/dev/null 2>&1; then
     fi
 fi
 
-# 2. Resolve version
-# /releases/latest returns the newest non-draft, non-prerelease release. The
-# fallback is a frozen-in-time version used only when the API is unreachable
-# (offline install, rate limit, etc.) — bump it when cutting releases.
-printf "  Fetching latest release... "
-if [ -z "${NIMBUS_VERSION:-}" ]; then
-    RESOLVED=$(curl -fsSL "https://api.github.com/repos/$REPO/releases/latest" \
-        2>/dev/null | grep '"tag_name"' | head -1 | sed -E 's/.*"tag_name"[[:space:]]*:[[:space:]]*"([^"]+)".*/\1/')
-    if [ -n "$RESOLVED" ]; then
-        NIMBUS_VERSION="$RESOLVED"
+# 2. Check if we are in a local repo for Dev Install
+if [[ -f "nimbus.py" && -d "src" ]]; then
+    echo -e "  ${BOLD}Local repository detected.${NC} Installing from source..."
+    mkdir -p "$INSTALL_DIR"
+    
+    # Sync current repo to install dir (selective)
+    printf "  Syncing files... "
+    if command -v rsync >/dev/null 2>&1; then
+        rsync -a --exclude '.git' --exclude '.venv' --exclude 'node_modules' --exclude '.next' --exclude 'dist' --exclude 'release' --exclude 'build' --exclude 'dashboard' . "$INSTALL_DIR/"
+        # Copy all binaries from dist
+        [ -d "dist" ] && cp -r dist/* "$INSTALL_DIR/" 2>/dev/null || true
     else
-        NIMBUS_VERSION="v1.0.3"
+        # Fallback
+        cp nimbus.py pyproject.toml uv.lock "$INSTALL_DIR/"
+        cp -r src "$INSTALL_DIR/"
+        [ -d "dist" ] && cp -r dist/* "$INSTALL_DIR/" 2>/dev/null || true
     fi
-fi
-if [ -z "$NIMBUS_VERSION" ]; then
-    echo -e "\n  ${BOLD}Error:${NC} Could not resolve a release version. Set NIMBUS_VERSION=vX.Y.Z and retry."
-    exit 1
-fi
-
-RELEASE_BASE="https://github.com/$REPO/releases/download/$NIMBUS_VERSION"
-ASSET_NAME="nimbus-$OS-$ARCH.tar.gz"
-DASHBOARD_ASSET="dashboard.tar.gz"
-RELEASE_URL="${RELEASE_BASE}/$ASSET_NAME"
-DASHBOARD_URL="${RELEASE_BASE}/$DASHBOARD_ASSET"
-echo -e "${BLUE}$NIMBUS_VERSION${NC}"
-
-# 3. Downloading + verifying
-# Each asset gets its own per-file progress bar (printed by
-# download_with_progress), so we don't need a generic "Downloading assets..."
-# banner here — it would just add noise.
-TMP_DIR=$(mktemp -d)
-TMP_FILE="$TMP_DIR/$ASSET_NAME"
-TMP_DASHBOARD="$TMP_DIR/$DASHBOARD_ASSET"
-TMP_SUMS="$TMP_DIR/SHA256SUMS"
-trap 'rm -rf "$TMP_DIR"' EXIT
-
-# Fetch SHA256SUMS first so we can verify every asset against the same sidecar.
-# The grep is positional — SHA256SUMS lines look like "<hex>  <filename>".
-if ! curl -fsSL "${RELEASE_BASE}/SHA256SUMS" -o "$TMP_SUMS"; then
-    echo -e "\n  ${BOLD}Error:${NC} Could not download SHA256SUMS for $NIMBUS_VERSION."
-    echo "  Verify the release at: $RELEASE_BASE"
-    exit 1
-fi
-
-# Human-readable byte counter. bash doesn't do floats, so we drop to awk.
-fmt_bytes() {
-    awk -v b="$1" 'BEGIN {
-        split("B KB MB GB TB", u, " ");
-        i = 1;
-        while (b >= 1024 && i < 5) { b /= 1024; i++ }
-        printf "%.1f %s", b, u[i]
-    }'
-}
-
-# Progress-bar download.
-# curl's built-in -# / --progress-bar triggers HTTP/2 PROTOCOL_ERROR (err 92)
-# against GitHub's release-assets CDN, so we can't use it. Instead we fetch
-# the Content-Length up front (the same URL, but a cheap HEAD-equivalent via
-# -I), kick off the actual GET in the background writing to $out, and poll
-# the file size every 200ms to render a single-line progress bar in place.
-download_with_progress() {
-    local url="$1" name="$2" out="$3"
-
-    # Sniff the total file size. We do a 0-0 range GET and read the
-    # Content-Range header, which the server reports as "bytes 0-0/TOTAL"
-    # — the number after the slash is the real file size. This works
-    # through GitHub's redirect chain (origin → S3 presigned URL), where
-    # a plain HEAD only sees the GitHub hop and gets Content-Length: 0,
-    # and a full GET can't be measured for length without reading it all.
-    local total
-    total=$(curl -fsSL -r 0-0 -D - -o /dev/null "$url" 2>/dev/null \
-        | awk 'BEGIN{IGNORECASE=1} /^content-range: bytes [0-9]+-[0-9]+\//{
-            gsub(/\r/,""); split($0,a,"/"); print a[2]+0; exit
-        }')
-    if [ -z "$total" ] || [ "$total" -le 0 ] 2>/dev/null; then
-        total=0
-    fi
-
-    # Kick off the real download in the background. -s keeps it quiet so
-    # we can render our own bar; -f fails on HTTP >= 400; -L follows the
-    # GitHub → CDN redirect chain.
-    curl -fsSL "$url" -o "$out" &
-    local curl_pid=$!
-
-    printf "  %-22s " "$name"
-    local last_drawn=0
-    local last_size=0
-    local last_t=$(date +%s)
-
-    while kill -0 "$curl_pid" 2>/dev/null; do
-        local now=$(date +%s)
-        local size=0
-        [ -f "$out" ] && size=$(stat -f%z "$out" 2>/dev/null || stat -c%s "$out" 2>/dev/null || echo 0)
-        # Render at most ~5 times/sec; we redraw on size change or every 200ms
-        if [ "$size" -ne "$last_size" ] || [ $((now - last_t)) -ge 1 ]; then
-            local elapsed=$((now - last_t))
-            local delta=$((size - last_size))
-            local speed=0
-            [ "$elapsed" -gt 0 ] && speed=$((delta / elapsed))
-            last_size=$size
-            last_t=$now
-
-            if [ "$total" -gt 0 ]; then
-                local pct=$((size * 100 / total))
-                local filled=$((pct / 5))   # 20-char bar
-                local empty=$((20 - filled))
-                local bar
-                bar=$(printf '%0.s#' $(seq 1 $filled 2>/dev/null) || true)
-                [ -z "$bar" ] && bar=""
-                local spc
-                spc=$(printf '%0.s-' $(seq 1 $empty 2>/dev/null) || true)
-                [ -z "$spc" ] && spc=""
-                printf "\r  %-22s [%s%s] %3d%%  %s / %s  %s/s" \
-                    "$name" "$bar" "$spc" "$pct" \
-                    "$(fmt_bytes "$size")" "$(fmt_bytes "$total")" \
-                    "$(fmt_bytes "$speed")"
-            else
-                # Unknown size: spinner + bytes so far
-                local spinchars='|/-\'
-                local sidx=$(( (now % 4) + 1 ))
-                local spin=$(printf '%s' "$spinchars" | cut -c"$sidx")
-                printf "\r  %-22s %s %s downloaded" \
-                    "$name" "$spin" "$(fmt_bytes "$size")"
-            fi
-            last_drawn=1
-        fi
-        sleep 0.2
-    done
-
-    # Reap the curl process; non-zero exit means the download failed.
-    if ! wait "$curl_pid"; then
-        printf "\n"
-        return 1
-    fi
-    # Final 100% line (or final byte count)
-    local final_size=0
-    [ -f "$out" ] && final_size=$(stat -f%z "$out" 2>/dev/null || stat -c%s "$out" 2>/dev/null || echo 0)
-    if [ "$total" -gt 0 ]; then
-        printf "\r  %-22s [####################] 100%%  %s / %s        \n" \
-            "$name" "$(fmt_bytes "$final_size")" "$(fmt_bytes "$total")"
-    else
-        printf "\r  %-22s done  %s                       \n" \
-            "$name" "$(fmt_bytes "$final_size")"
-    fi
-    return 0
-}
-
-download_and_verify() {
-    local url="$1" name="$2" out="$3"
-    if ! download_with_progress "$url" "$name" "$out"; then
-        echo -e "\n  ${BOLD}Error:${NC} Download failed ($name)."
-        echo "  URL: $url"
-        return 1
-    fi
-    if ! grep -E "^[0-9a-f]{64}  ${name}\$" "$TMP_SUMS" \
-        | (cd "$TMP_DIR" && sha256sum -c --strict -) >/dev/null; then
-        echo -e "\n  ${BOLD}Error:${NC} SHA256 verification failed for $name."
-        echo "  Refusing to install. Verify the release at $RELEASE_BASE manually."
-        return 1
-    fi
-    printf "  Checksum verified for %s... ${BLUE}OK${NC}\n" "$name"
-}
-
-if ! download_and_verify "$RELEASE_URL" "$ASSET_NAME" "$TMP_FILE"; then
-    exit 1
-fi
-
-# 4. Extracting
-printf "  Installing Nimbus... "
-mkdir -p "$INSTALL_DIR"
-if ! tar -xzf "$TMP_FILE" -C "$INSTALL_DIR"; then
-    echo -e "\n  ${BOLD}Error:${NC} Extraction failed."
-    exit 1
-fi
-echo -e "${BLUE}Success${NC}"
-
-chmod +x "$INSTALL_DIR/nimbus" 2>/dev/null || true
-chmod +x "$INSTALL_DIR/nimbus-gateway" 2>/dev/null || true
-
-# 5. Optional dashboard install
-# The dashboard ships as a separate tarball on the same release. The CLI starts
-# fine without it (gateway is headless), but most users want it. We default to
-# "yes" so the user has to opt out — the install fails loud if the download or
-# checksum is bad, so a missing/broken dashboard just skips the install and
-# leaves the CLI working.
-install_dashboard() {
-    if ! download_and_verify "$DASHBOARD_URL" "$DASHBOARD_ASSET" "$TMP_DASHBOARD"; then
-        echo -e "  ${CYAN}Skipping dashboard install (asset not available for this release).${NC}"
-        return 0
-    fi
-    if ! tar -xzf "$TMP_DASHBOARD" -C "$INSTALL_DIR"; then
-        echo -e "  ${CYAN}Skipping dashboard install (extraction failed).${NC}"
-        return 0
-    fi
-    echo -e "  Dashboard installed at: ${BOLD}$INSTALL_DIR/dashboard${NC}"
-}
-
-if [ -t 0 ]; then
-    read -p "  Would you like to install the Nimbus Dashboard too? (Y/n) " -n 1 -r DASH_REPLY
-    echo
-    case "$DASH_REPLY" in
-        [nN]) echo -e "  ${CYAN}Skipping dashboard install.${NC}" ;;
-        *)    install_dashboard ;;
-    esac
+    echo -e "${BLUE}Done${NC}"
+    
+    BINARY_NAME="nimbus.py"
+    IS_SOURCE=true
 else
-    # Non-interactive (curl-piped, no TTY) — install by default.
-    install_dashboard
+    # 2. Fetching Release
+    printf "  Fetching latest release... "
+    # Resolve version when NIMBUS_VERSION is unset. /releases/latest returns
+    # the newest non-draft, non-prerelease release. If you need a specific
+    # build (including prereleases), set NIMBUS_VERSION explicitly.
+    if [ -z "${NIMBUS_VERSION:-}" ]; then
+        # Hit the GitHub API for the most recent non-prerelease tag. The
+        # fallback below is a frozen-in-time version used only when the API
+        # is unreachable (offline install, rate limit, etc.).
+        RESOLVED=$(curl -fsSL "https://api.github.com/repos/$REPO/releases/latest" \
+            2>/dev/null | grep '"tag_name"' | head -1 | sed -E 's/.*"tag_name"[[:space:]]*:[[:space:]]*"([^"]+)".*/\1/')
+        if [ -n "$RESOLVED" ]; then
+            NIMBUS_VERSION="$RESOLVED"
+        else
+            # Frozen-in-time fallback used only when the API is unreachable
+            # (offline install, rate limit, etc.). Update when cutting releases.
+            NIMBUS_VERSION="v1.0.3"
+        fi
+    fi
+    if [ -z "$NIMBUS_VERSION" ]; then
+        echo -e "\n  ${BOLD}Error:${NC} Could not resolve a release version. Set NIMBUS_VERSION=vX.Y.Z and retry."
+        exit 1
+    fi
+
+    RELEASE_BASE="https://github.com/$REPO/releases/download/$NIMBUS_VERSION"
+    RELEASE_URL="${RELEASE_BASE}/nimbus-$OS-$ARCH.tar.gz"
+
+    # Ensure the install dir exists before any download/extract, so a fresh
+    # user (no ~/.nimbus yet) doesn't fail on the first tar.
+    mkdir -p "$INSTALL_DIR"
+
+    # Probe the asset. -L follows GitHub's redirect to the S3-backed CDN,
+    # so we get the real 200/404 instead of the 302 that GitHub returns at
+    # the origin. Without -L, the arm64 probe would always look "missing"
+    # and the script would fall through to a nonexistent amd64 asset.
+    ASSET_STATUS=$(curl -fsSLI -o /dev/null -w '%{http_code}' "$RELEASE_URL" || echo "000")
+    if [ "$ASSET_STATUS" != "200" ] && [ "$OS" = "darwin" ] && [ "$ARCH" = "arm64" ]; then
+        # Apple Silicon under Rosetta can run the Intel binary, but we don't
+        # currently ship one. Fail fast with the actionable URL rather than
+        # burning another 404 on an asset that doesn't exist.
+        echo ""
+        echo -e "  ${BOLD}Error:${NC} No darwin-arm64 asset found for $NIMBUS_VERSION."
+        echo "  Check available assets at: $RELEASE_BASE"
+        echo "  To install via Rosetta instead, set NIMBUS_HOST_ARCH=amd64."
+        exit 1
+    fi
+
+    ASSET_NAME=$(basename "$RELEASE_URL")
+    echo -e "${BLUE}$NIMBUS_VERSION${NC}"
+
+    # 3. Downloading + verifying
+    echo -e "  Downloading assets..."
+    TMP_DIR=$(mktemp -d)
+    TMP_FILE="$TMP_DIR/$ASSET_NAME"
+    trap 'rm -rf "$TMP_DIR"' EXIT
+
+    if ! curl -# -fSL "$RELEASE_URL" -o "$TMP_FILE"; then
+        echo -e "\n  ${BOLD}Error:${NC} Download failed ($RELEASE_URL)."
+        exit 1
+    fi
+
+    # Verify SHA256 against the release's SHA256SUMS. We download the sidecar
+    # over the same pinned release tag so the checksum and the asset move
+    # together. The grep is positional — SHA256SUMS lines look like
+    # "<hex>  <asset-name>".
+    SHA256SUMS_URL="${RELEASE_BASE}/SHA256SUMS"
+    if curl -fsSL "$SHA256SUMS_URL" -o "$TMP_DIR/SHA256SUMS" \
+        && grep -E "^[0-9a-f]{64}  ${ASSET_NAME}\$" "$TMP_DIR/SHA256SUMS" \
+            | (cd "$TMP_DIR" && sha256sum -c --strict -); then
+        printf "  Checksum verified... ${BLUE}OK${NC}\n"
+    else
+        echo -e "\n  ${BOLD}Error:${NC} SHA256 verification failed for $ASSET_NAME."
+        echo "  Refusing to install. Verify the release at $RELEASE_BASE manually."
+        exit 1
+    fi
+
+    # 4. Extracting
+    printf "  Installing Nimbus... "
+    if ! tar -xzf "$TMP_FILE" -C "$INSTALL_DIR"; then
+        echo -e "\n  ${BOLD}Error:${NC} Extraction failed."
+        exit 1
+    fi
+    rm -rf "$TMP_DIR"
+    echo -e "${BLUE}Success${NC}"
+    
+    BINARY_NAME="nimbus-$OS-$ARCH"
+    [ ! -f "$INSTALL_DIR/$BINARY_NAME" ] && BINARY_NAME="nimbus"
+    IS_SOURCE=false
 fi
 
-# 6. Shell Setup
+# 5. Shell Setup
+GATEWAY_NAME="nimbus-gateway-$OS-$ARCH"
+[ ! -f "$INSTALL_DIR/$GATEWAY_NAME" ] && GATEWAY_NAME="nimbus-gateway"
+
+chmod +x "$INSTALL_DIR/$BINARY_NAME" 2>/dev/null || true
+chmod +x "$INSTALL_DIR/$GATEWAY_NAME" 2>/dev/null || true
+
+# Determine shell config
 SHELL_CONFIG="$HOME/.bashrc"
 case "$SHELL" in
     */zsh)  SHELL_CONFIG="$HOME/.zshrc" ;;
     */bash) SHELL_CONFIG="$HOME/.bashrc" ;;
     *)      [ "$OS" = "darwin" ] && SHELL_CONFIG="$HOME/.zshrc" || SHELL_CONFIG="$HOME/.bashrc" ;;
 esac
+
+# Create the nimbus wrapper command if it's source
+if [ "$IS_SOURCE" = true ]; then
+    cat > "$INSTALL_DIR/nimbus" <<EOF
+#!/bin/bash
+export NIMBUS_HOME="$INSTALL_DIR"
+python3 "\$NIMBUS_HOME/nimbus.py" "\$@"
+EOF
+    chmod +x "$INSTALL_DIR/nimbus"
+    FINAL_BINARY="nimbus"
+else
+    FINAL_BINARY="$BINARY_NAME"
+fi
 
 if ! grep -q "NIMBUS_HOME" "$SHELL_CONFIG" 2>/dev/null; then
     {
@@ -274,9 +191,10 @@ fi
 
 echo ""
 echo -e "  ${BOLD}Nimbus is ready to go.${NC}"
+echo -e "  ${CYAN}Note:${NC} The Dashboard is a separate optional component."
 echo ""
 
-# 7. Auto-start option
+# 6. Auto-start option
 SHOULD_START="n"
 if [ -t 0 ]; then
     read -p "  Would you like to start Nimbus now? (y/N) " -n 1 -r REPLY
@@ -284,7 +202,7 @@ if [ -t 0 ]; then
     if [[ $REPLY =~ ^[Yy]$ ]]; then
         SHOULD_START="y"
     fi
-elif [ -c /dev/tty ] 2>/dev/null; then
+elif [ -c /dev/tty ]; then
     if read -p "  Would you like to start Nimbus now? (y/N) " -n 1 -r REPLY < /dev/tty 2>/dev/null; then
         echo
         if [[ $REPLY =~ ^[Yy]$ ]]; then
@@ -297,9 +215,10 @@ if [ "$SHOULD_START" = "y" ]; then
     echo -e "  Starting Nimbus..."
     export NIMBUS_HOME="$INSTALL_DIR"
     export PATH="$INSTALL_DIR:$PATH"
-    "$INSTALL_DIR/nimbus" start
+    "$INSTALL_DIR/$FINAL_BINARY" start
 else
     echo -e "  To start, please run:"
     echo -e "  ${BOLD}source $SHELL_CONFIG${NC}"
     echo -e "  ${BOLD}nimbus start${NC}\n"
 fi
+
