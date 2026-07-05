@@ -77,7 +77,7 @@ else
         else
             # Frozen-in-time fallback used only when the API is unreachable
             # (offline install, rate limit, etc.). Update when cutting releases.
-            NIMBUS_VERSION="v1.0.3"
+            NIMBUS_VERSION="v1.0.4"
         fi
     fi
     if [ -z "$NIMBUS_VERSION" ]; then

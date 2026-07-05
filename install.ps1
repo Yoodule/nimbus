@@ -164,7 +164,7 @@ if (-not $env:NIMBUS_VERSION) {
         $releaseData = Invoke-RestMethod -Uri "https://api.github.com/repos/$Repo/releases/latest" -UseBasicParsing
         $env:NIMBUS_VERSION = $releaseData.tag_name
     } catch {
-        $env:NIMBUS_VERSION = "v1.0.3"
+        $env:NIMBUS_VERSION = "v1.0.4"
     }
 }
 if (-not $env:NIMBUS_VERSION) {
