@@ -28,6 +28,12 @@ ARCH=$(uname -m)
 [[ "$ARCH" == "arm64" || "$ARCH" == "aarch64" ]] && ARCH="arm64"
 echo -e "${BLUE}Done ($OS-$ARCH)${NC}"
 
+# 1.1 Export NIMBUS_HOST_ARCH so the compose file can pick the right
+# platform variant from multi-arch images. Override with NIMBUS_HOST_ARCH
+# in the env (e.g. `NIMBUS_HOST_ARCH=linux/amd64 bash …`) to force a
+# different arch — useful on Apple Silicon under Rosetta or in CI.
+export NIMBUS_HOST_ARCH="linux/$ARCH"
+
 # 1.5 Ensure uv is installed (required for running MCP servers)
 if ! command -v uv >/dev/null 2>&1; then
     printf "  uv not found. Installing uv... "
@@ -185,6 +191,10 @@ if ! grep -q "NIMBUS_HOME" "$SHELL_CONFIG" 2>/dev/null; then
         echo "# Nimbus Platform"
         echo "export NIMBUS_HOME=\"$INSTALL_DIR\""
         echo "export PATH=\"\$NIMBUS_HOME:\$PATH\""
+        # Re-detect host arch in the shell so the compose file's
+        # platform: \${NIMBUS_HOST_ARCH:-linux/arm64} picks the right
+        # variant even if the user moves the install between machines.
+        echo "export NIMBUS_HOST_ARCH=\"\$(uname -m | sed -E 's/x86_64/amd64/; s/aarch64/arm64/; s|^|linux/|')\""
     } >> "$SHELL_CONFIG"
     echo -e "  Added Nimbus to ${BOLD}$SHELL_CONFIG${NC}"
 fi
