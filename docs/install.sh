@@ -17,14 +17,17 @@ NC='\033[0m'
 
 clear
 echo ""
-# Print the Nimbus brand mark. The icon is pre-rendered to
-# block-shading text at release-build time (see
-# nimbus-cli/build.rs) and inlined into this script as a
-# `cat <<'BANNER_EOF'` heredoc by scripts/release.sh. The
-# heredoc contents are the same byte-for-byte art the CLI itself
-# prints in `print_banner()` (see nimbus-cli/src/logo.rs), so
-# the install banner and the runtime banner are identical across
-# all install paths (curl|bash, irm|iex, native binary).
+# Print the Nimbus brand mark as a **pre-baked stacked layout**:
+# 26-line block-shading icon on top, 1 blank separator, 3-line
+# text-block (wordmark / value prop / URL) centered within the
+# 65-cell icon width, divider beneath — 31 rows total. Pre-baked
+# by `nimbus-cli/build.rs` (writes `logo.banner`, copied to
+# `release/banner.txt` by `scripts/release.sh`) and inlined into
+# the heredoc below at release-build time (see the heredoc
+# comment for the placeholder name). The runtime CLI's `print_banner`
+# uses `banner::build_banner_lines` instead so it can pick layout by
+# terminal width; the install banner is the brand's "best foot
+# forward" — 65 cells, fixed, always renders the same shape.
 #
 # TTY gating: if the installer is being piped into another
 # program (e.g. `curl -fsSL install.sh | bash > /tmp/log`), skip
@@ -66,16 +69,13 @@ if [ -t 1 ]; then
   █████████████████████████████████████████████████████████████████
   █████████████████████████████████████████████████████████████████
   █████████████████████████████████████████████████████████████████
+                                                                   
+                     NIMBUS — Your 24/7 Employee
+   One command. No sign-up. The unified semantic gateway for MCP.
+                     https://nimbus.yoodule.com
+  ─────────────────────────────────────────────────────────────────
 BANNER_EOF
 fi
-echo ""
-# Wordmark + tagline + value prop + URL under the icon. Same Yoodule cyan
-# palette as the rest of the script (CYAN/BOLD). Aligned to the icon's left
-# edge (2-space indent). No rule — the value-prop line carries the visual
-# weight of a divider, and a hard line above the URL would compete with it.
-echo -e "  ${BOLD}${CYAN}NIMBUS${NC}  ${CYAN}— Your 24/7 Employee${NC}"
-echo -e "  ${CYAN}One command. No sign-up. The unified semantic gateway for MCP.${NC}"
-echo -e "  ${CYAN}https://nimbus.yoodule.com${NC}"
 echo ""
 echo -e "  Preparing your environment..."
 
