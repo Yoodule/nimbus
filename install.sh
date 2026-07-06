@@ -137,7 +137,7 @@ printf "  Fetching latest release... "
         else
             # Frozen-in-time fallback used only when the API is unreachable
             # (offline install, rate limit, etc.). Update when cutting releases.
-            NIMBUS_VERSION="v1.0.10"
+            NIMBUS_VERSION="v1.0.12"
         fi
     fi
     if [ -z "$NIMBUS_VERSION" ]; then
@@ -326,7 +326,11 @@ fi
 
 echo ""
 echo -e "  ${BOLD}Nimbus is ready to go.${NC}"
-echo -e "  ${CYAN}Note:${NC} The Dashboard is a separate optional component."
+echo ""
+echo -e "  ${CYAN}Two ways to use Nimbus:${NC}"
+echo -e "  ${CYAN}  1.${NC} Just the gateway (headless, MCP-only): run ${BOLD}nimbus start${NC} and say ${BOLD}N${NC} to the dashboard prompt."
+echo -e "  ${CYAN}  2.${NC} Full stack (gateway + agent dashboard): run ${BOLD}nimbus start${NC} and accept the dashboard prompt."
+echo -e "  ${CYAN}Re-run later with: ${BOLD}nimbus dashboard install${NC} (or ${BOLD}nimbus dashboard uninstall${NC} to remove)."
 echo ""
 
 # 6. Auto-start option
