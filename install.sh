@@ -12,6 +12,7 @@ INSTALL_DIR="${NIMBUS_HOME:-$HOME/.nimbus}"
 BOLD='\033[1m'
 BLUE='\033[34m'
 CYAN='\033[36m'
+YELLOW='\033[33m'
 NC='\033[0m'
 
 clear
@@ -45,30 +46,25 @@ if ! command -v uv >/dev/null 2>&1; then
     fi
 fi
 
-# 2. Check if we are in a local repo for Dev Install
-if [[ -f "nimbus.py" && -d "src" ]]; then
-    echo -e "  ${BOLD}Local repository detected.${NC} Installing from source..."
-    mkdir -p "$INSTALL_DIR"
-    
-    # Sync current repo to install dir (selective)
-    printf "  Syncing files... "
-    if command -v rsync >/dev/null 2>&1; then
-        rsync -a --exclude '.git' --exclude '.venv' --exclude 'node_modules' --exclude '.next' --exclude 'dist' --exclude 'release' --exclude 'build' --exclude 'dashboard' . "$INSTALL_DIR/"
-        # Copy all binaries from dist
-        [ -d "dist" ] && cp -r dist/* "$INSTALL_DIR/" 2>/dev/null || true
-    else
-        # Fallback
-        cp nimbus.py pyproject.toml uv.lock "$INSTALL_DIR/"
-        cp -r src "$INSTALL_DIR/"
-        [ -d "dist" ] && cp -r dist/* "$INSTALL_DIR/" 2>/dev/null || true
-    fi
-    echo -e "${BLUE}Done${NC}"
-    
-    BINARY_NAME="nimbus.py"
-    IS_SOURCE=true
-else
-    # 2. Fetching Release
-    printf "  Fetching latest release... "
+# 2. Local-repo guard. The dev branch used to live here — building
+# cargo + rsyncing source into $INSTALL_DIR — but that path is for
+# maintainers and contributors only, never for `curl | bash`. If we
+# detect a local clone, refuse to run and tell the user which script
+# to use instead. A failure here is the correct outcome: a maintainer
+# running install.sh by accident should be redirected to the right
+# tool, not silently get a half-broken install.
+if [[ -f "nimbus-cli/Cargo.toml" && -d "src" ]]; then
+    echo ""
+    echo -e "  ${BOLD}Local repository detected.${NC} This script downloads a prebuilt"
+    echo "  release from GitHub. To install from a local clone, run:"
+    echo ""
+    echo -e "    ${BOLD}./scripts/dev-install.sh${NC}"
+    echo ""
+    exit 1
+fi
+
+# 3. Fetching Release
+printf "  Fetching latest release... "
     # Resolve version when NIMBUS_VERSION is unset. /releases/latest returns
     # the newest non-draft, non-prerelease release. If you need a specific
     # build (including prereleases), set NIMBUS_VERSION explicitly.
@@ -143,6 +139,82 @@ else
         exit 1
     fi
 
+    # Verify the release's signed manifest with minisign. SHA256 above
+    # protects the archive against tampering by anyone with write
+    # access to the GitHub Release; minisign on manifest.json proves
+    # the manifest was published by a holder of the Yoodule signing key
+    # (separate from the GitHub account — even a compromised GH token
+    # can't mint a valid manifest without the minisign secret). Both
+    # checks are required: SHA256 is the "this asset is what I asked
+    # for" check, minisign is the "this is actually from Yoodule"
+    # check.
+    #
+    # Key custody: nimbus-cli/minisign.pub in the repo. It MUST be
+    # reviewed at every release (key rotation is a manual op). Same
+    # key is embedded into the Rust CLI at compile time so the
+    # `nimbus update` and `nimbus doctor` commands trust the same anchor.
+    if ! command -v minisign >/dev/null 2>&1; then
+        printf "  minisign not found. Installing... "
+        if command -v brew >/dev/null 2>&1; then
+            brew install minisign >/dev/null 2>&1 && echo -e "${BLUE}Done${NC}" || \
+                { echo -e "${RED}Failed. Run: brew install minisign${NC}"; exit 1; }
+        elif command -v apt-get >/dev/null 2>&1; then
+            apt-get install -y minisign >/dev/null 2>&1 && echo -e "${BLUE}Done${NC}" || \
+                { echo -e "${RED}Failed. Run: sudo apt-get install -y minisign${NC}"; exit 1; }
+        elif command -v dnf >/dev/null 2>&1; then
+            dnf install -y minisign >/dev/null 2>&1 && echo -e "${BLUE}Done${NC}" || \
+                { echo -e "${RED}Failed. Run: sudo dnf install -y minisign${NC}"; exit 1; }
+        else
+            echo -e "${RED}Failed. Install minisign from https://jedisct1.github.io/minisign/ and retry.${NC}"
+            exit 1
+        fi
+    fi
+    MINISIGN_PUB_URL="${RELEASE_BASE}/minisign.pub"
+    if ! curl -fsSL "$MINISIGN_PUB_URL" -o "$TMP_DIR/minisign.pub"; then
+        echo -e "\n  ${BOLD}Error:${NC} Failed to download minisign.pub from $MINISIGN_PUB_URL."
+        exit 1
+    fi
+    # Pin the pubkey against an embedded fingerprint baked into this
+    # installer. The downloaded pubkey from the release is what we
+    # actually use to verify the manifest, but we compare its key ID
+    # to a known constant before trusting it. Without this pin, a
+    # release that swaps the pubkey would go unchallenged.
+    #
+    # To rotate the key:
+    #   1. Generate a new keypair (minisign -G -p new.pub -W)
+    #   2. Replace nimbus-cli/minisign.pub with new.pub
+    #   3. Re-embed the new key ID in EMBEDDED_PUBKEY_FINGERPRINT here
+    #   4. Re-deploy install.sh
+    #   5. Burn the old secret key (rm ~/.minisign/nimbus.key)
+    #
+    # Key ID is the first 8 bytes of the second base64 line of the
+    # minisign pub file, hex-encoded. To extract from a fresh
+    # minisign -G -p foo.pub: `tail -1 foo.pub | base64 -d | xxd -p -l 8`.
+    EMBEDDED_PUBKEY_FINGERPRINT="4564ce7ac278e3f4"
+    KEY_ID=$(tail -1 "$TMP_DIR/minisign.pub" | base64 -d 2>/dev/null | xxd -p -l 8 2>/dev/null || echo "UNKNOWN")
+    if [ "$EMBEDDED_PUBKEY_FINGERPRINT" = "REPLACE_ME_AT_KEY_GENERATION_TIME" ]; then
+        printf "  ${YELLOW}minisign pubkey not pinned in installer — key rotation is unverified.${NC}\n"
+    elif [ "$KEY_ID" != "$EMBEDDED_PUBKEY_FINGERPRINT" ]; then
+        echo ""
+        echo -e "  ${RED}${BOLD}SECURITY: minisign.pub key ID mismatch.${NC}"
+        echo "  Expected: $EMBEDDED_PUBKEY_FINGERPRINT"
+        echo "  Got:      $KEY_ID"
+        echo "  This may indicate a key rotation, a release artifact tampering,"
+        echo "  or an installer that's out of date. Refusing to proceed."
+        echo "  See: $MINISIGN_PUB_URL"
+        exit 1
+    fi
+    if curl -fsSL "${RELEASE_BASE}/manifest.json" -o "$TMP_DIR/manifest.json" \
+        && curl -fsSL "${RELEASE_BASE}/manifest.json.minisig" -o "$TMP_DIR/manifest.json.minisig" \
+        && (cd "$TMP_DIR" && minisign -V -p minisign.pub -m manifest.json -q); then
+        printf "  Signature verified... ${BLUE}OK${NC}\n"
+    else
+        echo -e "\n  ${BOLD}Error:${NC} Manifest signature verification failed."
+        echo "  Refusing to install. The release at $RELEASE_BASE may be"
+        echo "  tampered with, or your clock is significantly off."
+        exit 1
+    fi
+
     # 4. Extracting
     printf "  Installing Nimbus... "
     if ! tar -xzf "$TMP_FILE" -C "$INSTALL_DIR"; then
@@ -154,15 +226,18 @@ else
     
     BINARY_NAME="nimbus-$OS-$ARCH"
     [ ! -f "$INSTALL_DIR/$BINARY_NAME" ] && BINARY_NAME="nimbus"
-    IS_SOURCE=false
-fi
 
 # 5. Shell Setup
-GATEWAY_NAME="nimbus-gateway-$OS-$ARCH"
-[ ! -f "$INSTALL_DIR/$GATEWAY_NAME" ] && GATEWAY_NAME="nimbus-gateway"
+# (The tarball no longer ships a standalone gateway binary; the gateway
+# is the OCI image pulled by `nimbus start` via docker compose. The
+# PyInstaller nimbus-gateway binary used to be chmod'd here, but
+# nothing on the install path executed it. The `docker-compose` block
+# we used to extract is also gone — the compose.yaml in the tarball
+# is renamed to .yaml by tar -xzf's default, and `nimbus start` reads
+# $NIMBUS_HOME/compose.yaml directly. Nothing else needs to be
+# chmod'd in the install step.)
 
 chmod +x "$INSTALL_DIR/$BINARY_NAME" 2>/dev/null || true
-chmod +x "$INSTALL_DIR/$GATEWAY_NAME" 2>/dev/null || true
 
 # Determine shell config
 SHELL_CONFIG="$HOME/.bashrc"
@@ -172,18 +247,10 @@ case "$SHELL" in
     *)      [ "$OS" = "darwin" ] && SHELL_CONFIG="$HOME/.zshrc" || SHELL_CONFIG="$HOME/.bashrc" ;;
 esac
 
-# Create the nimbus wrapper command if it's source
-if [ "$IS_SOURCE" = true ]; then
-    cat > "$INSTALL_DIR/nimbus" <<EOF
-#!/bin/bash
-export NIMBUS_HOME="$INSTALL_DIR"
-python3 "\$NIMBUS_HOME/nimbus.py" "\$@"
-EOF
-    chmod +x "$INSTALL_DIR/nimbus"
-    FINAL_BINARY="nimbus"
-else
-    FINAL_BINARY="$BINARY_NAME"
-fi
+# The release tarball always extracts to nimbus-$OS-$ARCH (or nimbus
+# if a multi-platform release was uploaded as a single binary). We
+# use $BINARY_NAME for the launch below.
+FINAL_BINARY="$BINARY_NAME"
 
 if ! grep -q "NIMBUS_HOME" "$SHELL_CONFIG" 2>/dev/null; then
     {
