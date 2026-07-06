@@ -32,7 +32,7 @@
     - [Nimbus for Intel Macs — `nimbus-darwin-amd64.tar.gz`](https://github.com/Yoodule/nimbus/releases/latest/download/nimbus-darwin-amd64.tar.gz)
 
     <p style="color: #737373; font-size: 0.85em; margin: 16px 0 0 0;">
-      Requires macOS 12 Monterey or later. The bundled MCP stack also needs <a href="https://docs.docker.com/desktop/install/mac-install/" target="_blank">Docker Desktop</a> or OrbStack.
+      Requires macOS 12 Monterey or later.
     </p>
 
 === "Linux"
@@ -60,7 +60,7 @@
     - [Nimbus for x86_64 — `nimbus-linux-amd64.tar.gz`](https://github.com/Yoodule/nimbus/releases/latest/download/nimbus-linux-amd64.tar.gz)
 
     <p style="color: #737373; font-size: 0.85em; margin: 16px 0 0 0;">
-      Requires Python 3.12+ (auto-installed via <a href="https://astral.sh/uv" target="_blank"><code>uv</code></a> if missing) and either Docker or the standalone Qdrant runtime.
+      Requires Python 3.12+ (auto-installed via <a href="https://astral.sh/uv" target="_blank"><code>uv</code></a> if missing).
     </p>
 
 === "Windows"
@@ -89,33 +89,7 @@
     - [Nimbus for Windows (x64) — `nimbus-windows-amd64.tar.gz`](https://github.com/Yoodule/nimbus/releases/latest/download/nimbus-windows-amd64.tar.gz)
 
     <p style="color: #737373; font-size: 0.85em; margin: 16px 0 0 0;">
-      Requires Windows 10 build 19041+ with WSL2 and <a href="https://docs.docker.com/desktop/install/windows-install/" target="_blank">Docker Desktop</a>.
-    </p>
-
-=== "Docker"
-
-    <div class="install-cmd" markdown>
-    ```
-    docker pull yoodule/nimbus:latest
-    docker run --rm -it --name nimbus -p 8088:8088 yoodule/nimbus:latest
-    ```
-    </div>
-
-    <p style="color: #737373; font-size: 0.9em; margin: 12px 0 24px 0;">
-      Runs the gateway in a container with no host-side install. Mount <code>~/.nimbus</code> to persist config, OAuth tokens, and the Qdrant vector store across restarts.
-    </p>
-
-    <p style="margin: 0 0 12px 0;"><strong>Verify it worked:</strong></p>
-
-    <div class="install-cmd" markdown>
-    ```
-    docker ps | grep nimbus
-    curl http://localhost:8088/health
-    ```
-    </div>
-
-    <p style="color: #737373; font-size: 0.85em; margin: 16px 0 0 0;">
-      Multi-arch image — works on <code>linux/amd64</code> and <code>linux/arm64</code> hosts.
+      Requires Windows 10 build 19041+ or later.
     </p>
 
 === "Source"
