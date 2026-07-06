@@ -26,6 +26,13 @@ echo ""
 # the install banner and the runtime banner are identical across
 # all install paths (curl|bash, irm|iex, native binary).
 #
+# Stacked layout: the heredoc carries 27 icon rows + 1 ─×65
+# divider, then the 3 wordmark lines are emitted as ANSI-colored
+# echoes below the heredoc (separated by the `echo ""` after the
+# `fi`). Icon and text occupy different rows — no column overlap,
+# no visual conflict. Mirrors the stacked layout the runtime
+# CLI's `banner::stacked_layout` emits at 40-94 col terminals.
+#
 # TTY gating: if the installer is being piped into another
 # program (e.g. `curl -fsSL install.sh | bash > /tmp/log`), skip
 # the banner entirely — block-shading characters in a log file
@@ -66,13 +73,18 @@ if [ -t 1 ]; then
   █████████████████████████████████████████████████████████████████
   █████████████████████████████████████████████████████████████████
   █████████████████████████████████████████████████████████████████
+  ─────────────────────────────────────────────────────────────────
 BANNER_EOF
 fi
 echo ""
-# Wordmark + tagline + value prop + URL under the icon. Same Yoodule cyan
-# palette as the rest of the script (CYAN/BOLD). Aligned to the icon's left
-# edge (2-space indent). No rule — the value-prop line carries the visual
-# weight of a divider, and a hard line above the URL would compete with it.
+# Stacked layout: the heredoc carries 27 icon rows + 1 ─×65
+# divider, then this `echo ""` produces the blank separator, then
+# the 3 wordmark ANSI echoes follow on the next 3 lines. The
+# divider closes the icon stack; the wordmark / value-prop / URL
+# block sits beneath on its own. The 2-space indent on every
+# line (heredoc body + echoes) keeps the whole banner
+# column-aligned with the 2-space-indented install text below
+# (`  Preparing your environment...`).
 echo -e "  ${BOLD}${CYAN}NIMBUS${NC}  ${CYAN}— Your 24/7 Employee${NC}"
 echo -e "  ${CYAN}One command. No sign-up. The unified semantic gateway for MCP.${NC}"
 echo -e "  ${CYAN}https://nimbus.yoodule.com${NC}"
