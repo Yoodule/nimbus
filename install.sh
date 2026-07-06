@@ -17,7 +17,65 @@ NC='\033[0m'
 
 clear
 echo ""
-echo -e "      ${BOLD}N  I  M  B  U  S${NC}"
+# Print the Nimbus brand mark. The icon is pre-rendered to
+# block-shading text at release-build time (see
+# nimbus-cli/build.rs) and inlined into this script as a
+# `cat <<'BANNER_EOF'` heredoc by scripts/release.sh. The
+# heredoc contents are the same byte-for-byte art the CLI itself
+# prints in `print_banner()` (see nimbus-cli/src/logo.rs), so
+# the install banner and the runtime banner are identical across
+# all install paths (curl|bash, irm|iex, native binary).
+#
+# TTY gating: if the installer is being piped into another
+# program (e.g. `curl -fsSL install.sh | bash > /tmp/log`), skip
+# the banner entirely — block-shading characters in a log file
+# are noise.
+#
+# The heredoc's closing `BANNER_EOF` is at column 0 by design —
+# bash requires that for `<<'EOF'` (vs. `<<-EOF`, which only
+# strips leading TABS, not spaces). The 2-space indent on each
+# body line is baked into the file by build.rs (writes
+# `logo.banner`) so the icon column-aligns with the
+# 2-space-indented install text below (`  Preparing your
+# environment...`).
+if [ -t 1 ]; then
+    cat <<'BANNER_EOF'
+  █████████████████████████████████████████████████████████████████
+  █████████████████████████████████████████████████████████████████
+  █████████████████████████████████████████████████████████████████
+  █████████████████████████████████████████████████████████████████
+  █████████████████████████████████████████████████████████████████
+  █████████████████████████████████████████████████████████████████
+  █████████████████████▒░▓█████████████████████████████████████████
+  █████████████████████  ░███████████████████▓ ░███████████████████
+  ████████████████▒░░░     ░░░▓███████████▓░░    ░▒████████████████
+  ████████████████▓▓▒░     ░▒▓██████▓▓█████▓▒   ▒▓▓████████████████
+  █████████████████████  ░█████████   ███████▓░▒███████████████████
+  █████████████████████▒░▓████████▒   ▒████████████████████████████
+  ███████████████████████████████░     ░███████████████████████████
+  ███████████████████████████▓▒           ▒▓███████████████████████
+  ██████████████████████░                       ░██████████████████
+  █████████████████████████▓▒░             ░▒▓█████████████████████
+  ██████████████████████████████▒       ▒██████████████████████████
+  ████████████████████████████████░   ▒████████████████████████████
+  █████████████████████████████████   █████████████████████████████
+  █████████████████████████████████▓░▒█████████████████████████████
+  █████████████████████████████████████████████████████████████████
+  █████████████████████████████████████████████████████████████████
+  █████████████████████████████████████████████████████████████████
+  █████████████████████████████████████████████████████████████████
+  █████████████████████████████████████████████████████████████████
+  █████████████████████████████████████████████████████████████████
+BANNER_EOF
+fi
+echo ""
+# Wordmark + tagline + value prop + URL under the icon. Same Yoodule cyan
+# palette as the rest of the script (CYAN/BOLD). Aligned to the icon's left
+# edge (2-space indent). No rule — the value-prop line carries the visual
+# weight of a divider, and a hard line above the URL would compete with it.
+echo -e "  ${BOLD}${CYAN}NIMBUS${NC}  ${CYAN}— Your 24/7 Employee${NC}"
+echo -e "  ${CYAN}One command. No sign-up. The unified semantic gateway for MCP.${NC}"
+echo -e "  ${CYAN}https://nimbus.yoodule.com${NC}"
 echo ""
 echo -e "  Preparing your environment..."
 
@@ -79,7 +137,7 @@ printf "  Fetching latest release... "
         else
             # Frozen-in-time fallback used only when the API is unreachable
             # (offline install, rate limit, etc.). Update when cutting releases.
-            NIMBUS_VERSION="v1.0.4"
+            NIMBUS_VERSION="v1.0.7"
         fi
     fi
     if [ -z "$NIMBUS_VERSION" ]; then
