@@ -905,7 +905,7 @@
     - [Nimbus for Intel Macs — `nimbus-darwin-amd64.tar.gz`](https://github.com/Yoodule/nimbus/releases/latest/download/nimbus-darwin-amd64.tar.gz)
 
     <p style="color: #737373; font-size: 0.85em; margin: 16px 0 0 0;">
-      Requires macOS 12 Monterey or later. The bundled MCP stack also needs <a href="https://docs.docker.com/desktop/install/mac-install/" target="_blank">Docker Desktop</a> or OrbStack.
+      Requires macOS 12 Monterey or later.
     </p>
 
 === "Linux"
@@ -931,7 +931,7 @@
     - [Nimbus for x86_64 — `nimbus-linux-amd64.tar.gz`](https://github.com/Yoodule/nimbus/releases/latest/download/nimbus-linux-amd64.tar.gz)
 
     <p style="color: #737373; font-size: 0.85em; margin: 16px 0 0 0;">
-      Requires Python 3.12+ (auto-installed via <a href="https://astral.sh/uv" target="_blank"><code>uv</code></a> if missing) and either Docker or the standalone Qdrant runtime.
+      Requires Python 3.12+ (auto-installed via <a href="https://astral.sh/uv" target="_blank"><code>uv</code></a> if missing).
     </p>
 
 === "Windows"
@@ -958,40 +958,16 @@
     - [Nimbus for Windows (x64) — `nimbus-windows-amd64.tar.gz`](https://github.com/Yoodule/nimbus/releases/latest/download/nimbus-windows-amd64.tar.gz)
 
     <p style="color: #737373; font-size: 0.85em; margin: 16px 0 0 0;">
-      Requires Windows 10 build 19041+ with WSL2 and <a href="https://docs.docker.com/desktop/install/windows-install/" target="_blank">Docker Desktop</a>.
-    </p>
-
-=== "Docker"
-
-    <div class="install-cmd" markdown>
-    <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>docker pull yoodule/nimbus:latest
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>docker run --rm -it --name nimbus -p 8088:8088 yoodule/nimbus:latest
-</code></pre></div>
-    </div>
-
-    <p style="color: #737373; font-size: 0.9em; margin: 12px 0 24px 0;">
-      Runs the gateway in a container with no host-side install. Mount <code>~/.nimbus</code> to persist config, OAuth tokens, and the Qdrant vector store across restarts.
-    </p>
-
-    <p style="margin: 0 0 12px 0;"><strong>Verify it worked:</strong></p>
-
-    <div class="install-cmd" markdown>
-    <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>docker ps | grep nimbus
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>curl http://localhost:8088/health
-</code></pre></div>
-    </div>
-
-    <p style="color: #737373; font-size: 0.85em; margin: 16px 0 0 0;">
-      Multi-arch image — works on <code>linux/amd64</code> and <code>linux/arm64</code> hosts.
+      Requires Windows 10 build 19041+ or later.
     </p>
 
 === "Source"
 
     <div class="install-cmd" markdown>
-    <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>git clone https://github.com/Yoodule/nimbus-gateway.git
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>cd nimbus-gateway
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>uv sync
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>uv run python nimbus.py start
+    <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>git clone https://github.com/Yoodule/nimbus-gateway.git
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>cd nimbus-gateway
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>uv sync
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>uv run python nimbus.py start
 </code></pre></div>
     </div>
 
@@ -1002,7 +978,7 @@
     <p style="margin: 0 0 12px 0;"><strong>Verify it worked:</strong></p>
 
     <div class="install-cmd" markdown>
-    <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>curl http://localhost:8088/health
+    <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>curl http://localhost:8088/health
 </code></pre></div>
     </div>
 
@@ -1055,49 +1031,49 @@
 <hr />
 <h2 id="pin-a-version">Pin a Version</h2>
 <p>The one-liner above always installs the latest stable release. To pin a build, set <code>NIMBUS_VERSION</code> on the <strong>right-hand side</strong> of the pipe (so <code>curl</code> doesn't see it and the variable reaches the installed script):</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://nimbus.yoodule.com/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nv">NIMBUS_VERSION</span><span class="o">=</span>v1.0.3<span class="w"> </span>bash
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://nimbus.yoodule.com/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nv">NIMBUS_VERSION</span><span class="o">=</span>v1.0.3<span class="w"> </span>bash
 </code></pre></div>
 <p>Browse all published versions on the <a href="https://github.com/Yoodule/nimbus/releases">releases page</a>.</p>
 <hr />
 <h2 id="verify-before-you-install">Verify Before You Install</h2>
 <p>Every release ships with a <code>SHA256SUMS</code> file. The installer checksums automatically, but you can verify manually if you prefer:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://github.com/Yoodule/nimbus/releases/latest/download/SHA256SUMS<span class="w"> </span>-o<span class="w"> </span>SHA256SUMS
-<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>sha256sum<span class="w"> </span>-c<span class="w"> </span>--strict<span class="w"> </span>SHA256SUMS
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://github.com/Yoodule/nimbus/releases/latest/download/SHA256SUMS<span class="w"> </span>-o<span class="w"> </span>SHA256SUMS
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>sha256sum<span class="w"> </span>-c<span class="w"> </span>--strict<span class="w"> </span>SHA256SUMS
 </code></pre></div>
 <p>The installer is also <strong>SLSA-attested</strong> by GitHub Actions. Inspect the provenance with <a href="https://cli.github.com/manual/gh_attestation_verify"><code>gh attestation verify</code></a>.</p>
 <hr />
 <h2 id="upgrade">Upgrade</h2>
 <p>The CLI upgrades itself in place. Your <code>mcp.json</code>, <code>.env</code>, OAuth tokens, and the Qdrant index are preserved:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>nimbus<span class="w"> </span>upgrade
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>nimbus<span class="w"> </span>upgrade
 </code></pre></div>
 <p>To upgrade to a specific version:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>nimbus<span class="w"> </span>upgrade<span class="w"> </span>--version<span class="w"> </span>v1.0.3
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>nimbus<span class="w"> </span>upgrade<span class="w"> </span>--version<span class="w"> </span>v1.0.3
 </code></pre></div>
 <hr />
 <h2 id="uninstall">Uninstall</h2>
 <p>Removes the CLI, the gateway, the local Docker stack, and the install directory in one step:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>nimbus<span class="w"> </span>uninstall
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>nimbus<span class="w"> </span>uninstall
 </code></pre></div>
 <p>If you want to keep your config (mcp.json, .env, tokens) for a future reinstall, pass <code>--keep-config</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>nimbus<span class="w"> </span>uninstall<span class="w"> </span>--keep-config
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>nimbus<span class="w"> </span>uninstall<span class="w"> </span>--keep-config
 </code></pre></div>
 <hr />
 <h2 id="what-gets-installed">What Gets Installed</h2>
 <p>The installer writes everything under <code>~/.nimbus/</code> (or <code>$NIMBUS_HOME</code> if you set it):</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>~/.nimbus/
-<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>├── nimbus                # CLI shim
-<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>├── nimbus-gateway-*      # Compiled gateway binary
-<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>├── mcp.json              # Server registry
-<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>├── servers/              # Bundled MCP servers
-<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>├── .env                  # Local config (OPENROUTER_API_KEY, QDRANT_URL, …)
-<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>└── logs/                 # Runtime logs
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>~/.nimbus/
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>├── nimbus                # CLI shim
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>├── nimbus-gateway-*      # Compiled gateway binary
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>├── mcp.json              # Server registry
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>├── servers/              # Bundled MCP servers
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>├── .env                  # Local config (OPENROUTER_API_KEY, QDRANT_URL, …)
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>└── logs/                 # Runtime logs
 </code></pre></div>
 <p>It also adds <code>export NIMBUS_HOME</code> and <code>PATH</code> to your shell config (<code>~/.zshrc</code>, <code>~/.bashrc</code>, or <code>$PROFILE</code> on Windows) so <code>nimbus</code> is on your PATH in new shells.</p>
 <hr />
 <h2 id="faq">FAQ</h2>
 <h3 id="the-installer-says-arm64-not-found-on-my-apple-silicon-mac">The installer says "arm64 not found" on my Apple Silicon Mac.</h3>
 <p>That message is from an outdated installer. Run <code>nimbus upgrade</code> to pull the latest, or fetch a fresh copy of the script directly:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://raw.githubusercontent.com/Yoodule/nimbus/main/install.sh<span class="w"> </span>-o<span class="w"> </span>/tmp/install.sh<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>bash<span class="w"> </span>/tmp/install.sh
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://raw.githubusercontent.com/Yoodule/nimbus/main/install.sh<span class="w"> </span>-o<span class="w"> </span>/tmp/install.sh<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>bash<span class="w"> </span>/tmp/install.sh
 </code></pre></div>
 <p>The current installer follows GitHub's CDN redirect, detects your architecture, and fails fast with an actionable error if the asset is genuinely missing.</p>
 <h3 id="can-i-install-on-a-machine-without-docker">Can I install on a machine without Docker?</h3>
