@@ -15,7 +15,13 @@ CYAN='\033[36m'
 YELLOW='\033[33m'
 NC='\033[0m'
 
-clear
+# `clear` exits non-zero on terminals whose terminfo entry isn't
+# installed (e.g. a Lima VM with only xterm-256color in
+# /etc/terminfo — `TERM=dumb` would trip it). The banner is
+# decorative; if `clear` can't run, the banner is no less useful
+# for just printing beneath whatever the user's terminal already
+# showed. `|| true` keeps `set -e` from killing the install.
+clear || true
 echo ""
 # Print the Nimbus brand mark as a **pre-baked stacked layout**:
 # 26-line block-shading icon on top, 1 blank separator, 3-line
@@ -329,18 +335,27 @@ echo -e "  ${CYAN}Re-run later with: ${BOLD}nimbus dashboard install${NC} (or ${
 echo ""
 
 # 6. Auto-start option
+#
+# Skipped entirely when `--no-auto-start` is passed (used by
+# scripts/test-e2e.sh to keep the install non-interactive — the
+# prompt below would otherwise block on `read` from a piped stdin).
+# The install still finishes the file writes, PATH wiring, and
+# shell-config block, so a test that just wants to assert the
+# install completed can do so without ever answering a prompt.
 SHOULD_START="n"
-if [ -t 0 ]; then
-    read -p "  Would you like to start Nimbus now? (y/N) " -n 1 -r REPLY
-    echo
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-        SHOULD_START="y"
-    fi
-elif [ -c /dev/tty ]; then
-    if read -p "  Would you like to start Nimbus now? (y/N) " -n 1 -r REPLY < /dev/tty 2>/dev/null; then
+if [ "${1:-}" != "--no-auto-start" ]; then
+    if [ -t 0 ]; then
+        read -p "  Would you like to start Nimbus now? (y/N) " -n 1 -r REPLY
         echo
         if [[ $REPLY =~ ^[Yy]$ ]]; then
             SHOULD_START="y"
+        fi
+    elif [ -c /dev/tty ]; then
+        if read -p "  Would you like to start Nimbus now? (y/N) " -n 1 -r REPLY < /dev/tty 2>/dev/null; then
+            echo
+            if [[ $REPLY =~ ^[Yy]$ ]]; then
+                SHOULD_START="y"
+            fi
         fi
     fi
 fi
