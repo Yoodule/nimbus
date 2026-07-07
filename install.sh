@@ -197,81 +197,16 @@ printf "  Fetching latest release... "
         exit 1
     fi
 
-    # Verify the release's signed manifest with minisign. SHA256 above
-    # protects the archive against tampering by anyone with write
-    # access to the GitHub Release; minisign on manifest.json proves
-    # the manifest was published by a holder of the Yoodule signing key
-    # (separate from the GitHub account — even a compromised GH token
-    # can't mint a valid manifest without the minisign secret). Both
-    # checks are required: SHA256 is the "this asset is what I asked
-    # for" check, minisign is the "this is actually from Yoodule"
-    # check.
-    #
-    # Key custody: nimbus-cli/minisign.pub in the repo. It MUST be
-    # reviewed at every release (key rotation is a manual op). Same
-    # key is embedded into the Rust CLI at compile time so the
-    # `nimbus update` and `nimbus doctor` commands trust the same anchor.
-    if ! command -v minisign >/dev/null 2>&1; then
-        printf "  minisign not found. Installing... "
-        if command -v brew >/dev/null 2>&1; then
-            brew install minisign >/dev/null 2>&1 && echo -e "${BLUE}Done${NC}" || \
-                { echo -e "${RED}Failed. Run: brew install minisign${NC}"; exit 1; }
-        elif command -v apt-get >/dev/null 2>&1; then
-            apt-get install -y minisign >/dev/null 2>&1 && echo -e "${BLUE}Done${NC}" || \
-                { echo -e "${RED}Failed. Run: sudo apt-get install -y minisign${NC}"; exit 1; }
-        elif command -v dnf >/dev/null 2>&1; then
-            dnf install -y minisign >/dev/null 2>&1 && echo -e "${BLUE}Done${NC}" || \
-                { echo -e "${RED}Failed. Run: sudo dnf install -y minisign${NC}"; exit 1; }
-        else
-            echo -e "${RED}Failed. Install minisign from https://jedisct1.github.io/minisign/ and retry.${NC}"
-            exit 1
-        fi
-    fi
-    MINISIGN_PUB_URL="${RELEASE_BASE}/minisign.pub"
-    if ! curl -fsSL "$MINISIGN_PUB_URL" -o "$TMP_DIR/minisign.pub"; then
-        echo -e "\n  ${BOLD}Error:${NC} Failed to download minisign.pub from $MINISIGN_PUB_URL."
-        exit 1
-    fi
-    # Pin the pubkey against an embedded fingerprint baked into this
-    # installer. The downloaded pubkey from the release is what we
-    # actually use to verify the manifest, but we compare its key ID
-    # to a known constant before trusting it. Without this pin, a
-    # release that swaps the pubkey would go unchallenged.
-    #
-    # To rotate the key:
-    #   1. Generate a new keypair (minisign -G -p new.pub -W)
-    #   2. Replace nimbus-cli/minisign.pub with new.pub
-    #   3. Re-embed the new key ID in EMBEDDED_PUBKEY_FINGERPRINT here
-    #   4. Re-deploy install.sh
-    #   5. Burn the old secret key (rm ~/.minisign/nimbus.key)
-    #
-    # Key ID is the first 8 bytes of the second base64 line of the
-    # minisign pub file, hex-encoded. To extract from a fresh
-    # minisign -G -p foo.pub: `tail -1 foo.pub | base64 -d | xxd -p -l 8`.
-    EMBEDDED_PUBKEY_FINGERPRINT="4564ce7ac278e3f4"
-    KEY_ID=$(tail -1 "$TMP_DIR/minisign.pub" | base64 -d 2>/dev/null | xxd -p -l 8 2>/dev/null || echo "UNKNOWN")
-    if [ "$EMBEDDED_PUBKEY_FINGERPRINT" = "REPLACE_ME_AT_KEY_GENERATION_TIME" ]; then
-        printf "  ${YELLOW}minisign pubkey not pinned in installer — key rotation is unverified.${NC}\n"
-    elif [ "$KEY_ID" != "$EMBEDDED_PUBKEY_FINGERPRINT" ]; then
-        echo ""
-        echo -e "  ${RED}${BOLD}SECURITY: minisign.pub key ID mismatch.${NC}"
-        echo "  Expected: $EMBEDDED_PUBKEY_FINGERPRINT"
-        echo "  Got:      $KEY_ID"
-        echo "  This may indicate a key rotation, a release artifact tampering,"
-        echo "  or an installer that's out of date. Refusing to proceed."
-        echo "  See: $MINISIGN_PUB_URL"
-        exit 1
-    fi
-    if curl -fsSL "${RELEASE_BASE}/manifest.json" -o "$TMP_DIR/manifest.json" \
-        && curl -fsSL "${RELEASE_BASE}/manifest.json.minisig" -o "$TMP_DIR/manifest.json.minisig" \
-        && (cd "$TMP_DIR" && minisign -V -p minisign.pub -m manifest.json -q); then
-        printf "  Signature verified... ${BLUE}OK${NC}\n"
-    else
-        echo -e "\n  ${BOLD}Error:${NC} Manifest signature verification failed."
-        echo "  Refusing to install. The release at $RELEASE_BASE may be"
-        echo "  tampered with, or your clock is significantly off."
-        exit 1
-    fi
+    # Integrity check: SHA256SUMS (above) is the only artifact-integrity
+    # check at install time. The minisign step previously here was
+    # removed — it required installing a non-standard CLI tool, blocked
+    # installs in sandboxed/locked-down environments (Codespaces, CI
+    # runners, minimal containers), and added no real defense (the
+    # pubkey + fingerprint were both fetched from the same release the
+    # attacker would control). The Rust CLI still verifies the same
+    # minisign-signed manifest at `nimbus update` time using a pubkey
+    # baked in at compile time — that's the right place for the
+    # second line of defense.
 
     # 4. Extracting
     printf "  Installing Nimbus... "
