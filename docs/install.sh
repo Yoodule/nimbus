@@ -319,16 +319,37 @@ esac
 # use $BINARY_NAME for the launch below.
 FINAL_BINARY="$BINARY_NAME"
 
-if ! grep -q "NIMBUS_HOME" "$SHELL_CONFIG" 2>/dev/null; then
+# Shell-config integration.
+#
+# The Nimbus block is wrapped in paired `# BEGIN nimbus` / `# END nimbus`
+# sentinels so `nimbus uninstall` can strip the whole block via the
+# helper in nimbus-cli/src/lifecycle.rs::strip_nimbus_shell_block.
+# The block is matched as a line-prefix (the helper trims leading and
+# trailing whitespace before comparing), so trailing whitespace
+# inserted by an editor doesn't break the strip. The guard below
+# checks for the sentinel rather than `NIMBUS_HOME` so:
+#   - a fresh install appends the block (with sentinels)
+#   - a re-install does NOT double-append (the sentinel is already
+#     present)
+#   - a legacy install (pre-sentinel, no `# BEGIN nimbus`) will
+#     append a SECOND block, which is harmless: the `nimbus` binary
+#     added by the second install wins on PATH, and `nimbus uninstall`
+#     strips the sentinel-wrapped block and leaves the legacy one
+#     alone (a one-time migration artifact; the next uninstall on
+#     the legacy block is a no-op because the sentinel-wrapped block
+#     is already gone and the helper is idempotent on absent markers).
+if ! grep -q "^# BEGIN nimbus" "$SHELL_CONFIG" 2>/dev/null; then
     {
         echo ""
         echo "# Nimbus Platform"
+        echo "# BEGIN nimbus"
         echo "export NIMBUS_HOME=\"$INSTALL_DIR\""
         echo "export PATH=\"\$NIMBUS_HOME:\$PATH\""
         # Re-detect host arch in the shell so the compose file's
         # platform: \${NIMBUS_HOST_ARCH:-linux/arm64} picks the right
         # variant even if the user moves the install between machines.
         echo "export NIMBUS_HOST_ARCH=\"\$(uname -m | sed -E 's/x86_64/amd64/; s/aarch64/arm64/; s|^|linux/|')\""
+        echo "# END nimbus"
     } >> "$SHELL_CONFIG"
     echo -e "  Added Nimbus to ${BOLD}$SHELL_CONFIG${NC}"
 fi
