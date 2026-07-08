@@ -92,33 +92,6 @@
       Requires Windows 10 build 19041+ or later.
     </p>
 
-=== "Source"
-
-    <div class="install-cmd" markdown>
-    ```
-    git clone https://github.com/Yoodule/nimbus-gateway.git
-    cd nimbus-gateway
-    uv sync
-    uv run python nimbus.py start
-    ```
-    </div>
-
-    <p style="color: #737373; font-size: 0.9em; margin: 12px 0 24px 0;">
-      For contributors and anyone who wants to read the source. Runs against your local checkout — the installer detects a sibling <code>src/</code> directory and uses your working tree.
-    </p>
-
-    <p style="margin: 0 0 12px 0;"><strong>Verify it worked:</strong></p>
-
-    <div class="install-cmd" markdown>
-    ```
-    curl http://localhost:8088/health
-    ```
-    </div>
-
-    <p style="margin: 24px 0 0 0;">
-      <a href="https://github.com/Yoodule/nimbus-gateway" target="_blank" style="color: #ffffff;">Browse the source on GitHub →</a>
-    </p>
-
 </div>
 
 ---
