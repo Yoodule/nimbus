@@ -67,6 +67,187 @@ $Banner = @'
 '@
 Write-Host ""
 Write-Host $Banner
+
+# --- OCI digest refresh helpers --------------------------------
+# Used after `Expand-Archive` / `tar -xzf` to fix the stale
+# `@sha256:…` pin in the extracted compose.yaml. The release
+# tarball bakes the pin at release-build time, so any re-push
+# of the same tag (e.g. a hotfix) makes the pin dangle. We HEAD
+# the live index digest and rewrite the @sha256 suffix in-place.
+#
+# Mirrors install.sh's resolve_ghcr_digest + refresh_compose_pin
+# pair. Functions are defined BEFORE the install pipeline so
+# the Pester tests can dot-source install.ps1 and call them in
+# isolation. Real installs reach them after the tarball is on
+# disk (see call site after the extract).
+
+# Resolve-NimbusImageDigest <repo-name> <tag>
+#   Prints `sha256:<64hex>` of the live ghcr.io OCI image index
+#   for `ghcr.io/yoodule/nimbus/<repo>:<tag>`. Returns 0 on
+#   success, throws on network/HTTP failure.
+#
+# The Accept header `application/vnd.oci.image.index.v1+json`
+# is REQUIRED: without it, ghcr returns 401 (it uses the Accept
+# header to decide between a manifest, an index, and a manifest
+# list — and treats the absence of the index Accept on the
+# anonymous endpoint as unauthorized). This is a real bug we
+# hit in v1.0.0 recut9 (project-release-v100-recut9.md).
+#
+# Test-override: when NIMBUS_TESTS_GHCR_DIGEST_CMD is set, the
+# function runs the named command (via cmd.exe) and prints its
+# stdout. The Pester tests use this to inject a canned digest
+# without touching the network. Real installs never set this —
+# only the Pester source-only path does.
+function Resolve-NimbusImageDigest {
+    param(
+        [Parameter(Mandatory)][string]$RepoName,
+        [Parameter(Mandatory)][string]$Tag
+    )
+
+    if ($env:NIMBUS_TESTS_GHCR_DIGEST_CMD) {
+        $output = & cmd.exe /c $env:NIMBUS_TESTS_GHCR_DIGEST_CMD
+        return $output
+    }
+
+    $url = "https://ghcr.io/v2/yoodule/nimbus/${RepoName}/manifests/${Tag}"
+    $headers = @{
+        Accept = "application/vnd.oci.image.index.v1+json"
+    }
+
+    try {
+        # Use -Method Head + -Headers; -DisableKeepAlive is a
+        # no-op for HEAD but matches install.sh's --no-keepalive
+        # pattern; -PassThru lets us read .Headers from the
+        # response object. -ErrorAction Stop forces a try/catch
+        # on any 4xx/5xx (default would let it slide past the
+        # try block).
+        $response = Invoke-WebRequest -Uri $url -Method Head -Headers $headers -UseBasicParsing -ErrorAction Stop
+        $digest = $response.Headers["Docker-Content-Digest"]
+        if (-not $digest) {
+            throw "no Docker-Content-Digest header in response"
+        }
+        return $digest
+    } catch {
+        Write-Host "Note: could not resolve live digest for ${RepoName}:${Tag} (offline?)" -ForegroundColor Yellow
+        throw
+    }
+}
+
+# Refresh-NimbusComposePin <compose.yaml-path> <image-ref>
+#   Rewrites a `image: <image-ref>@sha256:OLD` line in the given
+#   compose.yaml to `image: <image-ref>@sha256:NEW`, where NEW is
+#   the current ghcr.io index digest for <image-ref>. Leaves
+#   bare `image: <image-ref>` lines (no pin) untouched. Leaves
+#   other services' image lines alone.
+#
+#   Returns:
+#     $true  if a stale pin was found and rewritten (or the pin
+#            was already current and the file was rewritten to
+#            normalize it — the caller's "did the hex change?"
+#            check is what actually decides whether to log);
+#     $false if the file was untouched (no pin to refresh, or
+#            the digest lookup failed and we left the file
+#            alone offline-safely).
+#
+#   This function does NOT print to the host — the caller
+#   (Invoke-NimbusInstallPostExtract) formats the user-visible
+#   log line. Keeping the function quiet makes the Pester unit
+#   tests trivial: they assert on file content, not stdout.
+function Refresh-NimbusComposePin {
+    param(
+        [Parameter(Mandatory)][string]$ComposePath,
+        [Parameter(Mandatory)][string]$ImageRef
+    )
+
+    if (-not (Test-Path $ComposePath)) {
+        return $false
+    }
+
+    # Pull the repo name and tag out of <image-ref> for the
+    # ghcr.io lookup. We accept both `repo:tag` and the full
+    # `ghcr.io/org/repo:tag` form.
+    $refTail = $ImageRef.Split('/')[-1]
+    $repo = $refTail.Split(':')[0]
+    $tag = $refTail.Split(':')[1]
+
+    try {
+        $newDigest = Resolve-NimbusImageDigest -RepoName $repo -Tag $tag
+    } catch {
+        # Offline / registry hiccup: leave the pin as-is.
+        return $false
+    }
+
+    # Normalize: tolerate callers (and the live registry) that
+    # hand us a digest with or without the `sha256:` prefix.
+    if ($newDigest.StartsWith("sha256:")) {
+        $newHex = $newDigest.Substring(7)
+    } else {
+        $newHex = $newDigest
+    }
+
+    # Build the matching pattern: `image: <ImageRef>@sha256:<64hex>`.
+    # Escape regex metacharacters in $ImageRef (slashes, colons,
+    # dots). The pattern matches a whole line beginning with
+    # optional leading whitespace.
+    $escapedRef = [regex]::Escape($ImageRef)
+    $pattern = "^(?<indent>\s*)image:\s+${escapedRef}@sha256:[0-9a-f]{64}"
+    $replacement = '${indent}image: ' + $ImageRef + '@sha256:' + $newHex
+
+    $content = Get-Content -Raw -Path $ComposePath
+    $newContent = [regex]::Replace($content, $pattern, $replacement, 'Multiline')
+    if ($newContent -eq $content) {
+        # No match — the file's image line was bare or didn't
+        # have a pin to refresh. Nothing to do.
+        return $false
+    }
+    Set-Content -Path $ComposePath -Value $newContent -NoNewline
+    return $true
+}
+
+# Invoke-NimbusInstallPostExtract
+#   Orchestrates the post-extract digest refresh. Iterates the
+#   known pinned repos (gateway, dashboard) and refreshes each
+#   pin in $InstallDir\compose.yaml against the live
+#   ghcr.io index. Safe to call when the compose.yaml or $Version
+#   is missing (no-op). Mirrors the install.sh call site below
+#   the `tar -xzf` step.
+#
+#   Prints a visible "Refreshed X pin to sha256:..." line on
+#   success so the user can see the post-install digest refresh
+#   actually ran. The line is conditional on the hex having
+#   changed (a current install with a current pin stays quiet).
+function Invoke-NimbusInstallPostExtract {
+    if (-not $Version) { return }
+    $tag = $Version.TrimStart('v')
+    $composePath = Join-Path $InstallDir "compose.yaml"
+    if (-not (Test-Path $composePath)) { return }
+
+    foreach ($repoName in @("gateway", "dashboard")) {
+        $imageRef = "ghcr.io/yoodule/nimbus/${repoName}:${tag}"
+
+        # Snapshot the hex in the file BEFORE the refresh, so we
+        # can show "Refreshed X pin from OLD to NEW" (and stay
+        # silent when the pin was already current).
+        $oldHex = $null
+        $content = Get-Content -Raw -Path $composePath
+        $matchPattern = "image:\s+${imageRef}@sha256:([0-9a-f]{64})"
+        $m = [regex]::Match($content, $matchPattern)
+        if ($m.Success) { $oldHex = $m.Groups[1].Value }
+
+        $rewritten = Refresh-NimbusComposePin -ComposePath $composePath -ImageRef $imageRef
+        if ($rewritten) {
+            $newContent = Get-Content -Raw -Path $composePath
+            $m2 = [regex]::Match($newContent, $matchPattern)
+            if ($m2.Success) {
+                $newHex = $m2.Groups[1].Value
+                if ($oldHex -and ($oldHex -ne $newHex)) {
+                    Write-Host "  Refreshed ${repoName} pin to sha256:$($newHex.Substring(0,12))… (was stale $($oldHex.Substring(0,12))…)" -ForegroundColor Blue
+                }
+            }
+        }
+    }
+}
+
 Write-Host "  Preparing your environment..."
 
 # 1. System Check
@@ -161,6 +342,19 @@ if ((Test-Path "nimbus-cli/Cargo.toml") -and (Test-Path "src")) {
     }
     Remove-Item $TmpFile -Force
     Write-Host "Success" -ForegroundColor Blue
+
+    # 4.1 Refresh the OCI digest pin in the extracted compose.yaml.
+    # Same rationale as the install.sh call site: the release
+    # tarball's compose.yaml carries
+    # `image: ghcr.io/yoodule/nimbus/gateway:vX.Y.Z@sha256:OLD`
+    # (and the dashboard line beside it). If vX.Y.Z has been
+    # re-pushed, the live index digest is NEW but the tarball
+    # still bakes the OLD pin, and `docker compose pull` 404s
+    # on the old digest. The fix is one HTTP HEAD against
+    # ghcr.io per image and a sed-equivalent rewrite of the
+    # @sha256:… suffix. Offline-safe: if the network call
+    # fails, we log a warning and leave the pin as-is.
+    Invoke-NimbusInstallPostExtract
 
     $IsSource = $false
 }
