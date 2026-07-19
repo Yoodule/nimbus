@@ -8,6 +8,14 @@ $ErrorActionPreference = "Stop"
 $Repo = "Yoodule/nimbus"
 $InstallDir = if ($env:NIMBUS_HOME) { $env:NIMBUS_HOME } else { Join-Path $env:USERPROFILE ".nimbus" }
 
+$IsAdmin = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+if (-not $IsAdmin) {
+    Write-Host "`n  Error: Administrator privileges are required to install Nimbus." -ForegroundColor Red
+    Write-Host "  Please right-click PowerShell, select 'Run as Administrator', and try again." -ForegroundColor Yellow
+    Write-Host "  This is necessary so Nimbus can add a Windows Defender exclusion to prevent your firewall from blocking the nimbus.exe background services."
+    exit 1
+}
+
 # Print the Nimbus brand mark as a **pre-baked stacked layout**:
 # 26-line block-shading icon on top, 1 blank separator, 3-line
 # text-block (wordmark / value prop / URL) centered within the
@@ -218,7 +226,7 @@ function Refresh-NimbusComposePin {
 #   changed (a current install with a current pin stays quiet).
 function Invoke-NimbusInstallPostExtract {
     if (-not $Version) { return }
-    $tag = $Version.TrimStart('v')
+    $tag = $Version
     $composePath = Join-Path $InstallDir "compose.yaml"
     if (-not (Test-Path $composePath)) { return }
 
@@ -245,6 +253,184 @@ function Invoke-NimbusInstallPostExtract {
                 }
             }
         }
+    }
+}
+
+# --- Windows Defender handling helpers -------------------------
+# A real Windows user hit this immediately after `irm | iex`:
+#
+#   Program 'nimbus.exe' failed to run: Operation did not complete
+#   successfully because the file contains a virus or potentially
+#   unwanted software.
+#
+# The fix is install-time, not signing. The release binary is
+# unsigned (no cert procurement) and fresh binaries have no
+# SmartScreen reputation. Windows Defender real-time scan trips
+# on the freshly extracted `nimbus.exe` until we (a) clear the
+# Mark-of-the-Web that Invoke-WebRequest set on the tarball, and
+# (b) add a per-install Defender exclusion so first-run lands
+# cleanly. Mirrors the install.sh side which has no Defender
+# surface to handle.
+#
+# All three helpers are quiet on success — the caller formats
+# the user-visible log line. This keeps the Pester unit tests
+# trivial: they assert on file content / return value, not on
+# stdout. Mirrors the Resolve-NimbusImageDigest / Refresh-NimbusComposePin
+# pattern above.
+
+# Invoke-NimbusDefenderUnblock <install-dir>
+#   Clears the Mark-of-the-Web (Zone.Identifier alternate data
+#   stream = 3, "downloaded from the internet") that
+#   Invoke-WebRequest set on every file under $InstallDir. The
+#   tar -xzf step preserves the stream from the tarball, so
+#   the .exe lands on disk with the "internet zone" tag and
+#   Defender's "downloaded from the internet" PUA branch fires
+#   on first exec. Unblock-File silences that branch.
+#
+#   SmartScreen still warns on a fresh binary with no
+#   reputation — this only neutralizes the Defender scan, not
+#   the SmartScreen reputation dialog. For the latter, the
+#   Test-NimbusBinaryLaunch helper below prints a "click More
+#   info → Run anyway" hint when the dialog actually appears.
+#
+#   Returns:
+#     $true  on success (or when there were no files to unblock);
+#     $false on hard failure.
+#
+#   Test-override: NIMBUS_TESTS_DEFENDER_UNBLOCK_CMD, if set,
+#   replaces the Unblock-File loop with a no-op. The Pester
+#   tests use this to exercise the caller without touching the
+#   filesystem. Real installs never set this.
+function Invoke-NimbusDefenderUnblock {
+    param(
+        [Parameter(Mandatory)][string]$InstallDir
+    )
+
+    if ($env:NIMBUS_TESTS_DEFENDER_UNBLOCK_CMD) {
+        # Tests have stubbed the unblock step out. Run the
+        # named command and report $true to keep the caller
+        # quiet.
+        & cmd.exe /c $env:NIMBUS_TESTS_DEFENDER_UNBLOCK_CMD | Out-Null
+        return $true
+    }
+
+    if (-not (Test-Path $InstallDir)) {
+        return $false
+    }
+
+    try {
+        Get-ChildItem -Path $InstallDir -Recurse -File -Force |
+            ForEach-Object { Unblock-File -Path $_.FullName -ErrorAction SilentlyContinue }
+        return $true
+    } catch {
+        return $false
+    }
+}
+
+# Add-NimbusDefenderExclusion <install-dir>
+#   Adds a Windows Defender real-time-scan exclusion scoped to
+#   $InstallDir only. Never to a parent path, never to
+#   %USERPROFILE%, never to C:\. The exclusion is the difference
+#   between "user clicks through SmartScreen and it works" and
+#   "user clicks through SmartScreen and Defender still kills
+#   the .exe on the next launch."
+#
+#   Guarded by Get-Command Add-MpPreference so PS5.1 hosts
+#   (which don't ship the Defender module) skip silently
+#   instead of throwing on a missing cmdlet. On hosts that
+#   have the cmdlet but lack elevation, the try/catch swallows
+#   the failure and the caller logs a one-line yellow note.
+#
+#   Returns:
+#     $true  if the exclusion was added;
+#     $false if the cmdlet is unavailable, the user isn't
+#            elevated, or $InstallDir doesn't exist.
+#
+#   Test-override: NIMBUS_TESTS_DEFENDER_EXCLUSION_CMD, if
+#   set, replaces the Add-MpPreference call with a no-op (or
+#   a deliberate failure for the offline-safety test). The
+#   Pester tests use this to inject outcomes without needing
+#   an elevated shell. Real installs never set this.
+function Add-NimbusDefenderExclusion {
+    param(
+        [Parameter(Mandatory)][string]$InstallDir
+    )
+
+    if ($env:NIMBUS_TESTS_DEFENDER_EXCLUSION_CMD) {
+        # Tests have stubbed the exclusion step. The named
+        # command is expected to set %ERRORLEVEL%: 0 = success,
+        # non-zero = simulated failure. PowerShell's `cmd.exe
+        # /c` translates that into $LASTEXITCODE.
+        & cmd.exe /c $env:NIMBUS_TESTS_DEFENDER_EXCLUSION_CMD | Out-Null
+        return ($LASTEXITCODE -eq 0)
+    }
+
+    if (-not (Get-Command Add-MpPreference -ErrorAction SilentlyContinue)) {
+        # PS5.1 + no Defender module — the cmdlet isn't there.
+        return $false
+    }
+
+    if (-not (Test-Path $InstallDir)) {
+        return $false
+    }
+
+    try {
+        $ExePath = Join-Path $InstallDir "nimbus.exe"
+        Add-MpPreference -ExclusionPath $InstallDir -ErrorAction Stop
+        Add-MpPreference -ExclusionPath $ExePath -ErrorAction Stop
+        Add-MpPreference -ExclusionProcess $ExePath -ErrorAction Stop
+        return $true
+    } catch {
+        # Non-elevated PowerShell → "Requested registry access
+        # is not allowed." Swallow and let the caller log.
+        return $false
+    }
+}
+
+# Test-NimbusBinaryLaunch <binary-path>
+#   Probes the freshly installed binary with `--version` to
+#   catch the case where Windows Defender or SmartScreen
+#   actually blocks the exec at runtime. Without this probe,
+#   a user who hit the SmartScreen dialog would still see
+#   `nimbus start` crash with the cryptic "file contains a
+#   virus" message; with it, we surface a one-line hint
+#   pointing them at the "More info → Run anyway" click.
+#
+#   Returns:
+#     $null     if the binary launched cleanly (no hint needed);
+#     a string  with the user-visible hint, if the exception
+#               message matches the Defender/SmartScreen
+#               pattern. The caller prints it in yellow.
+#
+#   Throws on any OTHER failure (binary missing, bad exit
+#   code, etc.) — we don't want to silence unrelated errors.
+#
+#   Test-override: NIMBUS_TESTS_BINARY_LAUNCH_CMD, if set,
+#   runs the named command instead of `& $BinaryPath --version`
+#   and returns $null on exit-code 0 / hint string on
+#   non-zero. Lets the Pester tests cover both branches
+#   without an actual Defender dialog. Real installs never
+#   set this.
+function Test-NimbusBinaryLaunch {
+    param(
+        [Parameter(Mandatory)][string]$BinaryPath
+    )
+
+    if ($env:NIMBUS_TESTS_BINARY_LAUNCH_CMD) {
+        & cmd.exe /c $env:NIMBUS_TESTS_BINARY_LAUNCH_CMD | Out-Null
+        if ($LASTEXITCODE -eq 0) { return $null }
+        return "Windows blocked nimbus.exe on first run. Click 'More info' -> 'Run anyway' in the dialog, then re-run this installer or invoke 'nimbus start' directly."
+    }
+
+    try {
+        & $BinaryPath --version | Out-Null
+        return $null
+    } catch {
+        $msg = $_.Exception.Message
+        if ($msg -match 'virus|potentially unwanted|SmartScreen|protected your PC') {
+            return "Windows blocked nimbus.exe on first run. Click 'More info' -> 'Run anyway' in the dialog, then re-run this installer or invoke 'nimbus start' directly."
+        }
+        throw
     }
 }
 
@@ -356,6 +542,38 @@ if ((Test-Path "nimbus-cli/Cargo.toml") -and (Test-Path "src")) {
     # fails, we log a warning and leave the pin as-is.
     Invoke-NimbusInstallPostExtract
 
+    # 4.2 Clear the Mark-of-the-Web (Zone.Identifier = 3) that
+    # Invoke-WebRequest set on every file in the extracted
+    # tarball. Without this, Defender's "downloaded from the
+    # internet" PUA branch fires on first nimbus.exe exec and
+    # the user sees `Operation did not complete successfully
+    # because the file contains a virus or potentially
+    # unwanted software`. Unblock-File is a no-op on files
+    # without the stream, so the dev path (which doesn't have
+    # the stream at all because it uses Copy-Item) is safe to
+    # call this on too.
+    $Unblocked = Invoke-NimbusDefenderUnblock -InstallDir $InstallDir
+    # Quiet on success — unblocking ~5 files is invisible to
+    # the user. A future change could log the count, but the
+    # current install is already busy with extraction lines.
+
+    # 4.3 Add a per-install Defender real-time-scan exclusion.
+    # Scoped to $InstallDir only — never a parent path, never
+    # %USERPROFILE%, never C:\. On non-elevated PowerShell the
+    # Add-MpPreference call throws ("Requested registry access
+    # is not allowed") and the helper returns $false; we log a
+    # one-line note and continue. On PS5.1 hosts (no Defender
+    # module) the helper also returns $false. Either way the
+    # user is no worse off than before this change — the
+    # Test-NimbusBinaryLaunch probe below will print the
+    # SmartScreen hint if needed.
+    $Excluded = Add-NimbusDefenderExclusion -InstallDir $InstallDir
+    if ($Excluded) {
+        Write-Host "  Added Defender exclusion for $InstallDir" -ForegroundColor Blue
+    } else {
+        Write-Host "  Note: Defender exclusion skipped (run as admin? Or PS5.1 host?). Defender may scan on first run." -ForegroundColor Yellow
+    }
+
     $IsSource = $false
 }
 
@@ -365,14 +583,29 @@ if ((Test-Path "nimbus-cli/Cargo.toml") -and (Test-Path "src")) {
 #
 # We do NOT generate real values for any secret. Only structural
 # defaults get non-empty values — the rest are empty placeholders
-# the user can populate. Three keys (BETTER_AUTH_SECRET,
-# QDRANT_API_KEY, OPENROUTER_API_KEY) are intentionally OMITTED from
-# this stub: the first two are auto-generated by `nimbus start`
-# (or `nimbus env-init`) so the Better Auth dashboard sees a real,
-# crypto-strong secret from first boot, and the third is prompted
-# for interactively on first start. Writing `KEY=` for any of them
-# would short-circuit those paths because the lookup would find
-# the key (with an empty value) and skip generation.
+# the user can populate.
+#
+# Seven keys (BETTER_AUTH_SECRET, QDRANT_API_KEY, NIMBUS_SERVICE_KEY,
+# POSTGRES_USER, POSTGRES_PASSWORD, REDIS_PASSWORD, VNC_PASSWORD)
+# are intentionally OMITTED from this stub: they are
+# auto-generated by `nimbus start` (or `nimbus env-init`) so the
+# Better Auth dashboard sees a real, crypto-strong secret from
+# first boot, the gateway↔dashboard service-key handshake has a
+# value, and every system service (Postgres, Redis, VNC) starts
+# with a fresh random credential instead of a known default.
+# OPENROUTER_API_KEY is prompted for interactively on first
+# start. Writing `KEY=` for any of them would short-circuit
+# those paths because the lookup would find the key (with an
+# empty value) and skip generation.
+#
+# The heredoc below only pre-fills keys the runtime actually reads
+# (via load_env_file in main.rs, the dashboard's process.env, the
+# upwork-mcp subprocess's os.getenv, or mcp.json / compose.yaml
+# env propagation). Keys like NIMBUS_USER_NAME, NIMBUS_USER_EMAIL,
+# NIMBUS_ADMIN_PASSWORD, NIMBUS_APPROVED, NIMBUS_OPENROUTER_KEY,
+# CLOUDFLARE_*, GITHUB_TOKEN, MINISIGN_SECRET_KEY_FILE are
+# intentionally not pre-filled — nothing reads them at runtime,
+# and adding them would only clutter the file.
 # The file is restricted to the current user (Windows equivalent
 # of chmod 0600) because it WILL hold real secrets once populated.
 $EnvFile = Join-Path $InstallDir ".env"
@@ -382,31 +615,55 @@ if (-not (Test-Path $EnvFile)) {
 # Paste your real values into the empty fields, then run `nimbus start`.
 # See https://nimbus.yoodule.com for the full list of integrations.
 
-# --- Secrets (paste your real values) ---
-# BETTER_AUTH_SECRET and QDRANT_API_KEY are auto-generated by
-# `nimbus start` / `nimbus env-init` on first run.
-# OPENROUTER_API_KEY is prompted for interactively on first start.
+# --- Third-party API keys the user populates ---
+# UPWORK_REDIRECT_URI, UPWORK_CLIENT_ID, UPWORK_CLIENT_SECRET,
+# UPWORK_API_KEY_NAME, UPWORK_ACCOUNT_TYPE, UPWORK_PERMISSIONS are
+# read by servers/upwork-mcp/config/upwork_config.py and mcp.json.
+# EXA_API_KEY, NIMBUS_API_KEY are read by compose.yaml / dashboard.
+# POLYGON_RPC_URL, POLYMARKET_PRIVATE_KEY, NOTION_TOKEN are read by
+# mcp.json.
+# NIMBUS_RUN_MODE is intentionally OMITTED — `nimbus start` always
+# writes the literal value `docker` to ~/.nimbus/.env (main.rs:2305),
+# and the only reader is the Python gateway's load_dotenv precedence
+# check (server.py:101). A missing key defaults to non-docker mode,
+# which is correct for anyone running the gateway outside compose.
 UPWORK_REDIRECT_URI=
 UPWORK_CLIENT_ID=
-NIMBUS_APPROVED=
-EXA_API_KEY=
-POLYGON_RPC_URL=
-NIMBUS_USER_EMAIL=
-NIMBUS_USER_NAME=
-NIMBUS_API_KEY=
-GITHUB_TOKEN=
-CLOUDFLARE_API_TOKEN=
-CLOUDFLARE_ZONE_ID=
-NIMBUS_ADMIN_PASSWORD=
-POLYMARKET_PRIVATE_KEY=
-NIMBUS_RUN_MODE=
+UPWORK_CLIENT_SECRET=
 UPWORK_API_KEY_NAME=
 UPWORK_ACCOUNT_TYPE=
-UPWORK_CLIENT_SECRET=
-NIMBUS_OPENROUTER_KEY=
 UPWORK_PERMISSIONS=
-MINISIGN_SECRET_KEY_FILE=
+EXA_API_KEY=
+NIMBUS_API_KEY=
+POLYGON_RPC_URL=
+POLYMARKET_PRIVATE_KEY=
 NOTION_TOKEN=
+
+# --- LLM provider API keys (rotation pool) ---
+# The single-key form (e.g. OPENROUTER_API_KEY) still works and is
+# what the CLI prompts for on first start. The plural *_API_KEYS form
+# adds automatic rotation: when one key returns 401/402/429 the
+# gateway tries the next key in the pool instead of failing. Leaving
+# these EMPTY is the right choice for a fresh install — write them
+# in only if you actually have multiple accounts to rotate through.
+# Accepts CSV on one line (k1,k2,k3) OR a YAML array with one key
+# per line, e.g.:
+#   OPENROUTER_API_KEYS=[sk-key-1,
+#   sk-key-2,
+#   sk-key-3]
+# Writing `KEY=` for any of these would NOT short-circuit anything
+# the gateway reads today, but we keep them empty by default so the
+# pool never silently contains a single empty entry. The dashboard
+# `****` redaction sentinel is a real value to the parser (see
+# key-pool.ts:parseKeyList) and would inflate the pool size if a
+# masked key ever leaked here.
+OPENAI_API_KEYS=
+ANTHROPIC_API_KEYS=
+GOOGLE_API_KEYS=
+XAI_API_KEYS=
+GROQ_API_KEYS=
+OPENROUTER_API_KEYS=
+OLLAMA_API_KEYS=
 
 # --- Structural defaults (runtime needs these) ---
 GATEWAY_PORT=8088
@@ -454,8 +711,32 @@ if (-not [Environment]::GetEnvironmentVariable("NIMBUS_HOME", "User")) {
 Write-Host "`n  Nimbus is ready to go." -ForegroundColor Cyan
 Write-Host "  Note: You may need to restart your terminal for PATH changes to take full effect.`n" -ForegroundColor DarkCyan
 
+# 5.5 SmartScreen probe (release-install path only). Run the
+# freshly-installed nimbus.exe with `--version` to catch the
+# case where SmartScreen reputation / Defender runtime block
+# the exec. If the binary actually fails to start with a
+# Defender- or SmartScreen-pattern error message, print a
+# one-line "click More info -> Run anyway" hint so the user
+# knows what's blocking them and how to clear it. The dev
+# branch is skipped — the just-built binary is known-good and
+# the user's machine is the maintainer's own.
+if (-not $IsSource) {
+    $FinalBinaryPath = Join-Path $InstallDir "nimbus.exe"
+    $Hint = Test-NimbusBinaryLaunch -BinaryPath $FinalBinaryPath
+    if ($Hint) {
+        Write-Host ""
+        Write-Host "  $Hint" -ForegroundColor Yellow
+        Write-Host ""
+    }
+}
+
 # 6. Auto-start option
-$Response = Read-Host "  Would you like to start Nimbus now? (y/N)"
+try {
+    $Response = Read-Host "  Would you like to start Nimbus now? (y/N)"
+} catch {
+    $Response = "n"
+}
+
 if ($Response -match "^[Yy]$") {
     Write-Host "  Starting Nimbus..."
     Set-Location $InstallDir
