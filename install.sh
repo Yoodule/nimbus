@@ -564,6 +564,19 @@ NIMBUS_ENV_EOF
         echo -e "  Created ${BOLD}\$NIMBUS_HOME/.env${NC} — paste your API keys, then run \`nimbus start\` (OpenRouter key is prompted for on first start)"
     fi
 
+    # Agent isolation Layer 1: the filesystem-mcp allowlist in
+    # mcp.json is scoped to ${NIMBUS_PROJECTS_ROOT} (defaults to
+    # ~/.nimbus/projects in the container; bind-mounted from this
+    # host dir in compose.yaml). The bind-mount target must be
+    # user-owned on first install — if we let docker auto-create
+    # the dir, it's owned by root inside the container and the
+    # agent hits EACCES on its first read/write. Mirrors the
+    # .env stub gating pattern above.
+    if [ ! -d "$INSTALL_DIR/projects" ]; then
+        mkdir -p "$INSTALL_DIR/projects"
+        echo -e "  Created ${BOLD}\$NIMBUS_HOME/projects${NC} — agent scratchpad (filesystem-mcp allowlist root)"
+    fi
+
 # 5. Shell Setup
 # (The tarball no longer ships a standalone gateway binary; the gateway
 # is the OCI image pulled by `nimbus start` via docker compose. The
