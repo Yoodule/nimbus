@@ -686,6 +686,19 @@ NIMBUS_GATEWAY_URL=http://localhost:8088/mcp
     Write-Host "  Created $EnvFile — paste your API keys before first start"
 }
 
+# Agent isolation Layer 1: the filesystem-mcp allowlist in
+# mcp.json is scoped to ${NIMBUS_PROJECTS_ROOT} (defaults to
+# ~/.nimbus/projects in the container; bind-mounted from this
+# host dir in compose.yaml). The bind-mount target must be
+# user-owned on first install — if we let docker auto-create
+# the dir, it's owned by root inside the container and the
+# agent hits EACCES on its first read/write. Mirrors the
+# .env stub gating pattern above.
+if (-not (Test-Path "$InstallDir/projects")) {
+    New-Item -ItemType Directory -Path "$InstallDir/projects" -Force | Out-Null
+    Write-Host "  Created $InstallDir/projects — agent scratchpad (filesystem-mcp allowlist root)"
+}
+
 # 5. Shell Setup
 # (no-op wrapper needed: the dev branch above already dropped a real
 # nimbus.exe at $InstallDir\nimbus.exe, so we use it as-is. The
