@@ -201,6 +201,71 @@ refresh_all_compose_pins() {
     done
 }
 
+# --- Docker pre-flight probe -----------------------------------
+# New-user trap fix: the install completes happily without
+# Docker, but the next `nimbus start` fails with
+# "Could not start `docker compose`. Is Docker installed and
+# on your PATH?" (compose_up.rs:122). Probing at install time
+# surfaces a platform-specific fix URL while the user is still
+# in front of their terminal, instead of after they close the
+# installer and forget.
+#
+# Design contract (per the user's "warn, don't block" choice):
+#   1. NEVER return non-zero. A headless user (no Docker
+#      today) must still land in a CLI-only state. The
+#      function always exits 0.
+#   2. Output the verdict via $NIMBUS_DOCKER_OK so the install
+#      pipeline can branch on the result and print the right
+#      warning. Values:
+#         - "yes"        — docker binary present, daemon reachable
+#         - "no-binary"  — docker not on PATH (or exit 127)
+#         - "no-daemon"  — docker present, daemon unreachable
+#   3. The function is SILENT on stdout/stderr — the warning
+#      copy lives in the install pipeline, not here, so the
+#      function stays a small black-box predicate.
+#   4. Test override: NIMBUS_TESTS_DOCKER_CMD replaces the
+#      real `docker compose version` invocation so the bats
+#      tests can exercise every path without ever touching
+#      the real docker binary. Mirrors the pattern of
+#      NIMBUS_TESTS_GHCR_DIGEST_CMD above.
+check_docker() {
+    # Default to unset so the verdict is always defined.
+    NIMBUS_DOCKER_OK="no-binary"
+
+    local docker_cmd
+    if [ -n "${NIMBUS_TESTS_DOCKER_CMD:-}" ]; then
+        docker_cmd="$NIMBUS_TESTS_DOCKER_CMD"
+    else
+        docker_cmd="docker"
+    fi
+
+    # Distinguish "binary missing" from "daemon down":
+    #   - `command -v` exits 1 when the binary is absent
+    #   - `command -v` exits 0 when the binary is on PATH
+    # We probe with `command -v` FIRST (cheap, no docker
+    # side-effects) and only run the full `compose version`
+    # when we know the binary is present. This collapses the
+    # "command not found" 127 case to the same verdict as a
+    # missing binary so the install pipeline doesn't have to
+    # distinguish 1 from 127.
+    if ! command -v "$docker_cmd" >/dev/null 2>&1; then
+        NIMBUS_DOCKER_OK="no-binary"
+        return 0
+    fi
+
+    # Binary present. Run `docker compose version` and
+    # classify the result. We redirect both stdout and
+    # stderr to /dev/null because the function is silent
+    # (warning copy lives in the install pipeline).
+    if "$docker_cmd" compose version >/dev/null 2>&1; then
+        NIMBUS_DOCKER_OK="yes"
+    else
+        NIMBUS_DOCKER_OK="no-daemon"
+    fi
+
+    return 0
+}
+
 # Real early-exit for source-only mode. Must come AFTER the
 # function defs above (so bats can call them) but BEFORE the
 # install pipeline below (which would download real tarballs).
@@ -639,6 +704,47 @@ fi
 
 echo ""
 echo -e "  ${BOLD}Nimbus is ready to go.${NC}"
+
+# Docker pre-flight. `nimbus start` shells out to `docker compose`
+# (compose_up.rs:run at line 59) and bails with a cold error if the
+# daemon isn't reachable. We probe here so the user sees a friendly
+# fix-URL while they're still in the terminal, not after they close
+# the installer and try to start tomorrow. Warn-only: this never
+# `exit 1`s. A headless user with no Docker should still land in a
+# CLI-only state. See `check_docker` above for the verdict contract.
+check_docker
+if [ "$NIMBUS_DOCKER_OK" = "no-binary" ]; then
+    echo ""
+    echo -e "  ${YELLOW}⚠  Docker not found.${NC} Nimbus runs its gateway + MCP stack inside"
+    echo "  Docker containers, so Docker must be installed before"
+    echo "  \`nimbus start\` will work."
+    echo ""
+    if [ "$OS" = "darwin" ]; then
+        echo "  Install Docker Desktop:"
+        echo "    https://www.docker.com/products/docker-desktop/"
+        echo "  (or: brew install --cask docker)"
+    elif [ "$OS" = "linux" ]; then
+        echo "  Install Docker Engine:"
+        echo "    https://docs.docker.com/engine/install/"
+        echo "  (or: curl -fsSL https://get.docker.com | sh)"
+    fi
+    echo ""
+    echo "  You can continue with the install — \`nimbus start\` will"
+    echo "  remind you if Docker is still missing."
+elif [ "$NIMBUS_DOCKER_OK" = "no-daemon" ]; then
+    echo ""
+    echo -e "  ${YELLOW}⚠  Docker is installed but the daemon isn't running.${NC}"
+    echo "  \`nimbus start\` needs the Docker daemon to be up."
+    echo ""
+    if [ "$OS" = "darwin" ]; then
+        echo "  Start Docker Desktop:"
+        echo "    open -a Docker"
+    elif [ "$OS" = "linux" ]; then
+        echo "  Start the daemon:"
+        echo "    sudo systemctl start docker"
+    fi
+    echo ""
+fi
 echo ""
 echo -e "  ${CYAN}Two ways to use Nimbus:${NC}"
 echo -e "  ${CYAN}  1.${NC} Just the gateway (headless, MCP-only): run ${BOLD}nimbus start${NC} and say ${BOLD}N${NC} to the dashboard prompt."
