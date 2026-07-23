@@ -17,7 +17,15 @@ theme:
       primary: black
       accent: white
   features:
-    - navigation.instant
+    # navigation.instant is INCOMPATIBLE with the i18n plugin's
+    # contextual language switcher (the plugin emits a hard WARNING
+    # per-locale-build about this, which --strict turns into an
+    # error). The mkdocs-static-i18n README documents this as a
+    # known limitation: the language switcher uses an out-of-band
+    # <a> tag that instant-navigation tries to intercept, and the
+    # two fight. The trade-off is acceptable: full-page loads on
+    # nav transitions are <100 ms on a gh-pages CDN, and the
+    # language switcher is a hard product requirement.
     - navigation.tracking
     - navigation.tabs
     - search.suggest
@@ -37,10 +45,90 @@ markdown_extensions:
   - attr_list
   - md_in_html
 
+plugins:
+  # i18n (mkdocs-static-i18n) is a third-party plugin, not built into
+  # mkdocs-material. The uvx invocation in scripts/deploy-docs.sh
+  # includes `--with mkdocs-static-i18n` to pull it into the same
+  # ephemeral env as mkdocs-material.
+  #
+  # Folder convention: docs/<locale>/<page>.md (one folder per locale,
+  # English is the source of truth under docs/en/). The plugin
+  # cross-links sibling locales via a language picker in the top bar.
+  #
+  # Locale list MUST match scripts/check_translations.py:SUPPORTED_LOCALES
+  # (and, in the other repos, nimbus-cli/src/locale.rs and
+  # dashboard/src/lib/const.ts). When adding a locale, add it everywhere.
+  - i18n:
+      docs_structure: folder
+      languages:
+        - locale: en
+          default: true
+          name: English
+          build: true
+        # nav_translations is a PER-LANGUAGE key (not a top-level
+          # key). It maps each default-locale nav title to its
+          # translated form. File paths in the top-level nav: stay
+          # unlocalized; the plugin resolves the right per-locale
+          # file from docs/<locale>/<page>.md automatically.
+        - locale: ko
+          name: 한국어
+          build: true
+          nav_translations:
+            Home: 홈
+            Download: 다운로드
+            Cloud: 클라우드
+            Official License: 공식 라이선스
+            Terms of Service: 서비스 약관
+            Privacy Policy: 개인정보처리방침
+        - locale: es
+          name: Español
+          build: true
+          nav_translations:
+            Home: Inicio
+            Download: Descarga
+            Cloud: Nube
+            Official License: Licencia oficial
+            Terms of Service: Términos de servicio
+            Privacy Policy: Política de privacidad
+        - locale: fr
+          name: Français
+          build: true
+          nav_translations:
+            Home: Accueil
+            Download: Téléchargement
+            Cloud: Cloud
+            Official License: Licence officielle
+            Terms of Service: Conditions d'utilisation
+            Privacy Policy: Politique de confidentialité
+        - locale: ja
+          name: 日本語
+          build: true
+          nav_translations:
+            Home: ホーム
+            Download: ダウンロード
+            Cloud: クラウド
+            Official License: 公式ライセンス
+            Terms of Service: 利用規約
+            Privacy Policy: プライバシーポリシー
+        - locale: zh
+          name: 中文
+          build: true
+          nav_translations:
+            Home: 首页
+            Download: 下载
+            Cloud: 云
+            Official License: 官方许可
+            Terms of Service: 服务条款
+            Privacy Policy: 隐私政策
+
+# nav is the English (default-locale) nav. The i18n plugin resolves
+# each per-locale file from docs/<locale>/<page>.md automatically, so
+# the paths here use the en/ prefix. The other locales' titles come
+# from the nav_translations block inside each language entry above.
 nav:
-  - Home: index.md
-  - Download: download.md
-  - Cloud: cloud.md
-  - Official License: license.md
-  - Terms of Service: terms_of_service.md
-  - Privacy Policy: privacy_policy.md
+  - Home: en/index.md
+  - Download: en/download.md
+  - Cloud: en/cloud.md
+  - Official License: en/license.md
+  - Terms of Service: en/terms_of_service.md
+  - Privacy Policy: en/privacy_policy.md

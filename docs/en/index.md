@@ -25,7 +25,7 @@
     <li>Full source, BUSL-1.1 license</li>
     <li>SHA256-verified, SLSA-attested releases</li>
   </ul>
-  <a href="download/" style="display: flex; align-items: center; justify-content: center; gap: 8px; background: #ffffff; color: #000000; text-decoration: none; font-weight: 600; padding: 14px 24px; border-radius: 0; font-size: 1em; width: 100%; box-sizing: border-box; margin-top: auto;">
+  <a href="download.md" style="display: flex; align-items: center; justify-content: center; gap: 8px; background: #ffffff; color: #000000; text-decoration: none; font-weight: 600; padding: 14px 24px; border-radius: 0; font-size: 1em; width: 100%; box-sizing: border-box; margin-top: auto;">
     Get the installer
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
   </a>
@@ -225,7 +225,7 @@ The `nimbus` CLI controls the lifecycle of your local containerized workspace.
 | `nimbus chat "prompt"` | Send a prompt to the dashboard and stream the response. |
 | `nimbus env-init` | Populate CLI-owned secrets in `~/.nimbus/.env` (idempotent). |
 
-See [`nimbus --help`](download/) for the full reference, or the [Download page](download/) for platform-specific install instructions.
+See [`nimbus --help`](download.md) for the full reference, or the [Download page](download.md) for platform-specific install instructions.
 
 ---
 

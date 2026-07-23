@@ -20,7 +20,12 @@ cd "$(dirname "$0")/.."
 # Nimbus install script, so it's available everywhere this script runs. uvx
 # pulls mkdocs + mkdocs-material into an ephemeral env on first run and
 # caches it for subsequent invocations.
-MKDOCS=(uvx --from mkdocs-material --with mkdocs-material[imaging] mkdocs)
+#
+# --with mkdocs-static-i18n is required for the per-locale docs/ directory
+# layout (docs/en/, docs/ko/, ...). The plugin is third-party (not bundled
+# with mkdocs-material), so we layer it into the same uvx env. If you forget
+# this, mkdocs builds only the en/ tree and silently drops the other locales.
+MKDOCS=(uvx --from mkdocs-material --with mkdocs-material[imaging] --with mkdocs-static-i18n mkdocs)
 if ! command -v uv >/dev/null 2>&1; then
     echo "uv is required to run this script. Install it from https://astral.sh/uv" >&2
     exit 1
