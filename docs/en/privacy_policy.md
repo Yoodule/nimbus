@@ -1,3 +1,9 @@
+!!! note "English is the authoritative version of this Privacy Policy"
+    This document is published in English only. Translations, if any, are
+    provided for convenience and do not have legal effect. In case of any
+    discrepancy between a translation and the English text, the English
+    version controls.
+
 # Privacy Policy
 
 **Effective Date:** May 19, 2026

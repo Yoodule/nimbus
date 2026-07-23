@@ -1,3 +1,9 @@
+!!! note "English is the authoritative version of this license"
+    This document is published in English only. Translations, if any, are
+    provided for convenience and do not have legal effect. In case of any
+    discrepancy between a translation and the English text, the English
+    version controls.
+
 # Business Source License 1.1 — Nimbus Parameters
 
 !!! warning "This is **not** an OSI- or FSF-approved open source license"

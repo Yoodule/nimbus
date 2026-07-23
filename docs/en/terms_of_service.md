@@ -1,3 +1,9 @@
+!!! note "English is the authoritative version of these Terms of Service"
+    This document is published in English only. Translations, if any, are
+    provided for convenience and do not have legal effect. In case of any
+    discrepancy between a translation and the English text, the English
+    version controls.
+
 # Terms of Service
 
 **Effective Date:** May 19, 2026
