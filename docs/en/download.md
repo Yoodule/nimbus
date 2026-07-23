@@ -211,7 +211,7 @@ In-memory by default — re-approve on restart. Set `NIMBUS_PERSIST_TOKENS=1` in
 
 Yes — set `NIMBUS_HOST_ARCH=amd64` before the install command to pull the Intel build. We don't ship a universal binary because the gatekeeper tooling adds 60+ MB for a small subset of users; Rosetta handles it transparently.
 
-### How do I run multiple Nimbus instances on the same host?
+### How do I run multiple Nimbus instances on the same host? {#how-do-i-run-multiple-nimbus-instances-on-the-same-host}
 
 Nimbus binds to fixed host ports (`3000`, `8088`, `6333`, `5433`, `6080`, `8006`, `8007`, `8081`), so the default install is single-instance. To run a second, clone the repo, remap ports in `compose.yaml`, set a unique `NIMBUS_HOME`, and set `COMPOSE_PROJECT_NAME` so the two stacks don't collide. Full details in the [Multiple Instances section](#how-do-i-run-multiple-nimbus-instances-on-the-same-host) below.
 

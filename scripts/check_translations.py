@@ -42,6 +42,13 @@ LEGAL_FILES: frozenset[str] = frozenset({
 # this exact string is treated as not-translated, even if it has bytes.
 TRANSLATION_STUB_MARKER: str = "TODO: translate"
 
+# Explicit H3 id that the FAQ self-link points at. The id is set on the
+# H3 with mkdocs's attribute-list syntax (e.g. `### ... {#<id>}`) so it
+# is locale-stable — every translation can use the same id and the
+# self-link resolves regardless of language. If a new locale is added
+# without preserving the id, the test in this file catches it.
+MULTI_INSTANCE_FAQ_ID: str = "how-do-i-run-multiple-nimbus-instances-on-the-same-host"
+
 
 def _en_basenames() -> list[str]:
     """Sorted .md filenames in docs/en/ (the source-of-truth tree)."""
@@ -160,6 +167,53 @@ class TranslationParityTests(unittest.TestCase):
             "index.md", basenames,
             "docs/en/index.md is missing — the home page is required",
         )
+
+    def test_multi_instance_faq_anchor_id_is_stable_across_locales(self) -> None:
+        """The FAQ 'multiple instances' self-link points at
+        MULTI_INSTANCE_FAQ_ID. If the H3 doesn't carry that id
+        explicitly (via `{#id}` attribute list), mkdocs derives a
+        different slug from the translated H3 text and the self-link
+        breaks in every non-en locale.
+
+        The fix is to put the id on the H3 with mkdocs's attribute
+        syntax. en is the source of truth and must carry the
+        attribute-list form (so the id is canonical even if the H3
+        text is later edited). Each translated download.md must
+        reference the same id somewhere — either on the H3 or in the
+        self-link body — so the anchor resolves in every locale.
+        """
+        en_download = DOCS_DIR / "en" / "download.md"
+        self.assertTrue(
+            en_download.is_file(),
+            "docs/en/download.md is missing — source of truth required",
+        )
+        en_content = en_download.read_text(encoding="utf-8")
+        self.assertIn(
+            f"{{#{MULTI_INSTANCE_FAQ_ID}}}",
+            en_content,
+            f"docs/en/download.md H3 is missing the explicit "
+            f"'{{#{MULTI_INSTANCE_FAQ_ID}}}' attribute-list anchor — "
+            f"mkdocs will derive a different slug and the FAQ self-link "
+            f"will break. Add the attribute list to the H3.",
+        )
+
+        for locale in LOCALES:
+            locale_download = DOCS_DIR / locale / "download.md"
+            if not locale_download.exists():
+                # If the locale's download.md doesn't exist yet, the
+                # per-locale translation-completeness test already
+                # fails. Don't double-report — skip the anchor check.
+                continue
+            content = locale_download.read_text(encoding="utf-8")
+            self.assertIn(
+                MULTI_INSTANCE_FAQ_ID,
+                content,
+                f"docs/{locale}/download.md does not reference "
+                f"'{MULTI_INSTANCE_FAQ_ID}' — the FAQ self-link won't "
+                f"resolve. Either put '{{#{MULTI_INSTANCE_FAQ_ID}}}' "
+                f"on the H3 or update the self-link target to match "
+                f"the H3's derived slug.",
+            )
 
 
 if __name__ == "__main__":
