@@ -142,48 +142,52 @@
   text-align: left;
 }
 
-.download-hero .prereq-callout {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: #1a1a1a;
+/* ------------------------------------------------------------------ */
+/* Download page: Docker prereq callout.                              */
+/* Short single-paragraph note. Square corners, stronger left bar     */
+/* than the rest of the page so it reads as a clear "before you      */
+/* install" block, not a soft footnote.                              */
+/* ------------------------------------------------------------------ */
+
+.prereq-callout {
+  display: block;
+  background: #0a0a0a;
   border: 1px solid #404040;
-  border-radius: 8px;
-  padding: 10px 16px;
+  border-left: 4px solid #ffffff;
+  border-radius: 0;
+  padding: 16px 22px;
   color: #d4d4d4;
-  font-size: 0.9em;
-  margin-top: 8px;
+  font-size: 0.95em;
+  line-height: 1.6;
+  margin: 24px 0 32px 0;
+  text-align: left;
 }
 
-.download-hero .prereq-callout a {
+.prereq-callout > p {
+  margin: 0;
+  color: inherit;
+  font-size: inherit;
+  font-weight: normal;
+  letter-spacing: 0;
+  padding: 0;
+  border: 0;
+}
+
+.prereq-callout a {
   color: #ffffff;
   text-decoration: underline;
   text-underline-offset: 2px;
+  text-decoration-color: #525252;
+  transition: text-decoration-color 0.15s ease;
 }
 
-/* ------------------------------------------------------------------ */
-/* Tabbed install picker.                                             */
-/* pymdownx.tabbed + alternate_style: true renders a segmented        */
-/* control at the top of the install section. We add a small leading  */
-/* platform icon inside each tab and tighten the install-cmd inside.  */
-/* ------------------------------------------------------------------ */
-
-.tabbed-set.tabbed-alternate > .tabbed-content > h3:first-child,
-.tabbed-set.tabbed-alternate > .tabbed-content > p:first-child {
-  margin-top: 0;
+.prereq-callout a:hover {
+  text-decoration-color: #ffffff;
 }
 
-.tabbed-set.tabbed-alternate .tab-icon {
-  width: 24px;
-  height: 24px;
-  display: block;
-  margin: 8px 0 12px 0;
+.prereq-callout strong {
   color: #ffffff;
-  fill: currentColor;
-}
-
-.tabbed-set.tabbed-alternate .install-cmd {
-  margin-top: 12px;
+  font-weight: 600;
 }
 
 /* ------------------------------------------------------------------ */
@@ -198,11 +202,66 @@
   margin-top: 0;
 }
 
-.tabbed-set.tabbed-alternate .tab-icon {
-  width: 24px;
-  height: 24px;
-  display: block;
-  margin: 8px 0 12px 0;
+/* The tab labels (macOS / Linux / Windows). mkdocs Material's default
+   tabbed-alternate style stacks the icon over the name with a chunky
+   underline — reads like a top-nav, not a segmented control. Override
+   to put icon + name side by side in a tight horizontal row, with
+   no default background — the pill only appears on hover. */
+.tabbed-set.tabbed-alternate .tabbed-labels > label {
+  padding: 6px 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  line-height: 1;
+  background: transparent;
+  border: 1px solid transparent;
+  color: #a3a3a3;
+  border-radius: 6px;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.tabbed-set.tabbed-alternate .tabbed-labels > label::before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px 20px;
+  filter: brightness(0) invert(1);
+  opacity: 0.9;
+  flex: 0 0 20px;
+}
+
+.tabbed-set.tabbed-alternate .tabbed-labels > label:nth-child(1)::before {
+  background-image: url("/static/platforms/apple.svg");
+}
+
+.tabbed-set.tabbed-alternate .tabbed-labels > label:nth-child(2)::before {
+  background-image: url("/static/platforms/linux.svg");
+  /* Tux's ink sits inside the inner 16x16 of a 24x24 viewBox, so the
+     other icons look heavier at the same pixel size. Bump the
+     background-size to compensate and keep all three visually matched. */
+  background-size: 24px 24px;
+}
+
+.tabbed-set.tabbed-alternate .tabbed-labels > label:nth-child(3)::before {
+  background-image: url("/static/platforms/windows11.svg");
+}
+
+/* Hover on inactive tabs — subtle slate wash so the user gets
+   feedback, but no color flash that breaks the dark palette. */
+.tabbed-set.tabbed-alternate .tabbed-labels > label:hover {
+  color: #ffffff;
+  background: #141414;
+  border-color: #404040;
+}
+
+/* Reset the bottom-border Material draws on the whole label set so
+   the labels sit cleanly inside the row instead of being glued to a
+   baseline. */
+.tabbed-set.tabbed-alternate .tabbed-labels {
+  border-bottom: none;
 }
 
 .tabbed-set.tabbed-alternate .install-cmd {
@@ -214,3 +273,24 @@
 /* inline styles already in index.md, so extra.css only needs to      */
 /* make sure nothing collides. Nothing more to add.                   */
 /* ------------------------------------------------------------------ */
+
+/* Two ways cards: replace the browser's plain disc with a small slate
+   arrow that matches the dark palette. The card div carries the
+   `.two-ways-card` class on the index page (added in index.md). */
+.two-ways-card > ul {
+  padding-left: 0;
+  list-style: none;
+}
+
+.two-ways-card > ul > li {
+  position: relative;
+  padding-left: 1.4em;
+}
+
+.two-ways-card > ul > li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: #525252;
+  font-weight: 400;
+}

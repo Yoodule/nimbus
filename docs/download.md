@@ -4,20 +4,9 @@
   The unified MCP gateway for production AI agents. One command installs the CLI, the gateway, and every bundled MCP server — SHA256-verified, no sign-up, runs locally.
 </p>
 
-<div class="download-hero" markdown="1">
-
-<h3 style="color: #ffffff; font-size: 1.7em; font-weight: 700; margin: 0 0 16px 0; letter-spacing: -0.02em;">One command. No sign-up.</h3>
-
-Nimbus installs the CLI, the gateway, and every bundled MCP server with a single command. SHA256-verified, runs locally, and provisions the full Docker stack.
-
-<a href="#install" style="display: inline-flex; align-items: center; gap: 8px; background: #ffffff; color: #000000; text-decoration: none; font-weight: 600; padding: 14px 32px; border-radius: 8px; font-size: 1.05em;">
-  Pick your platform
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-</a>
-
 <div class="prereq-callout" markdown="1">
-  ⚠ <strong>Prerequisite:</strong> <a href="https://www.docker.com/products/docker-desktop/" target="_blank">Docker Desktop</a>, <a href="https://orbstack.dev/" target="_blank">OrbStack</a>, or a headless Docker Engine must be installed and the daemon running. The bundled MCP stack (browser, Postgres, Qdrant) runs in containers.
-</div>
+
+**Prerequisite:** Nimbus needs <a href="https://www.docker.com/products/docker-desktop/" target="_blank">Docker Desktop</a> (or <a href="https://orbstack.dev/" target="_blank">OrbStack</a> on Mac) installed and running before you install. Installation is free and takes a couple of minutes.
 
 </div>
 
@@ -25,9 +14,9 @@ Nimbus installs the CLI, the gateway, and every bundled MCP server with a single
 
 === "macOS"
 
-    <img src="/static/platforms/apple.svg" alt="" class="tab-icon" />
-
     Apple Silicon & Intel. Requires macOS 12 Monterey or later.
+
+    **Install (latest):**
 
     ```bash
     curl -fsSL https://nimbus.yoodule.com/install.sh | bash
@@ -40,11 +29,27 @@ Nimbus installs the CLI, the gateway, and every bundled MCP server with a single
     - [Apple Silicon (M1/M2/M3/M4) →](https://github.com/Yoodule/nimbus/releases/latest/download/nimbus-darwin-arm64.tar.gz)
     - [Intel Macs →](https://github.com/Yoodule/nimbus/releases/latest/download/nimbus-darwin-amd64.tar.gz)
 
+    **System requirements:**
+
+    - **OS:** macOS 12 Monterey or later (Apple Silicon or Intel)
+    - **Docker:** Docker Desktop 4.x+ or [OrbStack](https://orbstack.dev/) — daemon must be running
+    - **Python:** 3.12+ (auto-installed via [`uv`](https://astral.sh/uv) if missing)
+    - **Disk:** ~30 MB for the CLI, ~2 GB once Docker images are pulled
+    - **RAM:** 4 GB minimum, 8 GB recommended
+
+    **Pin a specific version:**
+
+    Set `NIMBUS_VERSION` on the right-hand side of the pipe (so `curl` doesn't see it and the variable reaches the installed script):
+
+    ```bash
+    curl -fsSL https://nimbus.yoodule.com/install.sh | NIMBUS_VERSION=v1.0.3 bash
+    ```
+
 === "Linux"
 
-    <img src="/static/platforms/linux.svg" alt="" class="tab-icon" />
+    x86_64 & aarch64. Tested on Ubuntu 22.04+, Debian 12+, Fedora 39+, and Arch.
 
-    x86_64 & aarch64. Tested on Ubuntu 22.04+, Debian 12+, Fedora 39+, and Arch. Requires glibc 2.31+. Python 3.12+ is auto-installed via [uv](https://astral.sh/uv) if missing.
+    **Install (latest):**
 
     ```bash
     curl -fsSL https://nimbus.yoodule.com/install.sh | bash
@@ -55,11 +60,27 @@ Nimbus installs the CLI, the gateway, and every bundled MCP server with a single
     - [x86_64 →](https://github.com/Yoodule/nimbus/releases/latest/download/nimbus-linux-amd64.tar.gz)
     - [aarch64 →](https://github.com/Yoodule/nimbus/releases/latest/download/nimbus-linux-arm64.tar.gz)
 
+    **System requirements:**
+
+    - **OS:** glibc 2.31+ (Ubuntu 22.04, Debian 12, Fedora 39, Arch)
+    - **Docker:** Docker Desktop 4.x+, [OrbStack](https://orbstack.dev/), or a headless Docker Engine — daemon must be running
+    - **Python:** 3.12+ (auto-installed via [`uv`](https://astral.sh/uv) if missing)
+    - **Disk:** ~30 MB for the CLI, ~2 GB once Docker images are pulled
+    - **RAM:** 4 GB minimum, 8 GB recommended
+
+    **Pin a specific version:**
+
+    Set `NIMBUS_VERSION` on the right-hand side of the pipe (so `curl` doesn't see it and the variable reaches the installed script):
+
+    ```bash
+    curl -fsSL https://nimbus.yoodule.com/install.sh | NIMBUS_VERSION=v1.0.3 bash
+    ```
+
 === "Windows"
 
-    <img src="/static/platforms/windows11.svg" alt="" class="tab-icon" />
+    PowerShell & WSL2. Administrator is not required. The installer handles PATH setup and registers Nimbus in your user profile.
 
-    PowerShell & WSL2. Requires Windows 10 build 19041+ or later. Administrator is not required. The installer handles PATH setup and registers Nimbus in your user profile.
+    **Install (latest):**
 
     ```powershell
     irm https://nimbus.yoodule.com/install.ps1 | iex
@@ -70,29 +91,23 @@ Nimbus installs the CLI, the gateway, and every bundled MCP server with a single
     - [One-click: install.cmd launcher →](https://nimbus.yoodule.com/install.cmd)
     - [Windows (x64) →](https://github.com/Yoodule/nimbus/releases/latest/download/nimbus-windows-amd64.tar.gz)
 
+    **System requirements:**
+
+    - **OS:** Windows 10 build 19041+ or Windows 11 with WSL2 enabled
+    - **Docker:** Docker Desktop 4.x+ (with WSL2 backend) — daemon must be running
+    - **Python:** 3.12+ (auto-installed via [`uv`](https://astral.sh/uv) if missing)
+    - **Disk:** ~30 MB for the CLI, ~2 GB once Docker images are pulled
+    - **RAM:** 4 GB minimum, 8 GB recommended (Qdrant + Docker)
+
+    **Pin a specific version:**
+
+    Set `NIMBUS_VERSION` in your shell before running the installer (so the variable reaches the installed script):
+
+    ```powershell
+    $env:NIMBUS_VERSION = "v1.0.3"; irm https://nimbus.yoodule.com/install.ps1 | iex
+    ```
+
 ---
-
-## System Requirements
-
-| Component | Requirement |
-|-----------|-------------|
-| **Docker** | Docker Desktop 4.x+, OrbStack, or a headless Docker Engine — the daemon must be running. Required for the bundled MCP stack (browser, Postgres, Qdrant). |
-| **Python** | 3.12+ (auto-installed via [`uv`](https://astral.sh/uv) if missing) |
-| **macOS** | 12 Monterey or later (Apple Silicon or Intel) |
-| **Linux** | glibc 2.31+ (Ubuntu 22.04, Debian 12, Fedora 39, Arch) |
-| **Windows** | Windows 10 build 19041+ with WSL2 |
-| **Disk** | ~30 MB for the CLI, ~2 GB once Docker images are pulled |
-| **RAM** | 4 GB minimum, 8 GB recommended (Qdrant + Docker) |
-
----
-
-## Pin a Version
-
-The one-liner above always installs the latest stable release. To pin a build, set `NIMBUS_VERSION` on the **right-hand side** of the pipe (so `curl` doesn't see it and the variable reaches the installed script):
-
-```bash
-curl -fsSL https://nimbus.yoodule.com/install.sh | NIMBUS_VERSION=v1.0.3 bash
-```
 
 Browse all published versions on the [releases page](https://github.com/Yoodule/nimbus/releases).
 
@@ -100,14 +115,13 @@ Browse all published versions on the [releases page](https://github.com/Yoodule/
 
 ## Verify Before You Install
 
-Every release ships with a `SHA256SUMS` file. The installer checksums automatically, but you can verify manually if you prefer:
+Every release ships with a `SHA256SUMS` file. The installer checksums automatically. To inspect the checksums yourself, grab the file from the [releases page](https://github.com/Yoodule/nimbus/releases) and run:
 
 ```bash
-curl -fsSL https://github.com/Yoodule/nimbus/releases/latest/download/SHA256SUMS -o SHA256SUMS
 sha256sum -c --strict SHA256SUMS
 ```
 
-The installer is also **SLSA-attested** by GitHub Actions. Inspect the provenance with [`gh attestation verify`](https://cli.github.com/manual/gh_attestation_verify).
+Every release is SLSA-attested by GitHub Actions. You can view the attestation on the [releases page](https://github.com/Yoodule/nimbus/releases).
 
 ---
 
