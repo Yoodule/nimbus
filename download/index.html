@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../static/favicon.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -31,7 +31,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -52,6 +52,8 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
+    
+      <link rel="stylesheet" href="../extra.css">
     
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -925,87 +927,92 @@
   The unified MCP gateway for production AI agents. One command installs the CLI, the gateway, and every bundled MCP server — SHA256-verified, no sign-up, runs locally.
 </p>
 
-<div class="download-tabs" markdown>
+<div class="download-hero" markdown>
 
-=== "macOS"
+### One command. No sign-up.
 
-    <div class="install-cmd" markdown>
-    <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>curl -fsSL https://nimbus.yoodule.com/install.sh | bash
+Nimbus installs the CLI, the gateway, and every bundled MCP server with a single command. SHA256-verified, runs locally, and provisions the full Docker stack.
+
+<div class="install-cmd" markdown>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>curl -fsSL https://nimbus.yoodule.com/install.sh | bash
 </code></pre></div>
-    </div>
+</div>
 
-    <p style="color: #737373; font-size: 0.9em; margin: 12px 0 24px 0;">
-      Paste this in Terminal. Auto-detects Apple Silicon vs Intel, downloads the right binary, and verifies it against the published SHA256SUMS.
-    </p>
+<a href="#macos" style="display: inline-flex; align-items: center; gap: 8px; background: #ffffff; color: #000000; text-decoration: none; font-weight: 600; padding: 14px 32px; border-radius: 8px; font-size: 1.05em;">
+  Pick your platform
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+</a>
 
-    <p style="margin: 0 0 12px 0;"><strong>Verify it worked:</strong></p>
+<div class="prereq-callout" markdown>
+  ⚠ **Prerequisite:** [Docker Desktop](https://www.docker.com/products/docker-desktop/), [OrbStack](https://orbstack.dev/), or a headless Docker Engine must be installed and the daemon running. The bundled MCP stack (browser, Postgres, Qdrant) runs in containers.
+</div>
 
-    <div class="install-cmd" markdown>
-    <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>nimbus --version
+</div>
+
+<div class="download-grid" markdown>
+
+<div class="download-card" markdown id="macos">
+
+<img src="static/platforms/apple.svg" alt="" class="platform-icon" />
+
+<p class="platform-name">macOS</p>
+<p class="platform-subtitle">Apple Silicon &amp; Intel</p>
+
+<div class="install-cmd" markdown>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>curl -fsSL https://nimbus.yoodule.com/install.sh | bash
 </code></pre></div>
-    </div>
+</div>
 
-    <p style="margin: 24px 0 8px 0;"><strong>Or download directly:</strong></p>
+<ul class="direct-links" markdown>
+  <li><a href="https://github.com/Yoodule/nimbus/releases/latest/download/nimbus-darwin-arm64.tar.gz" target="_blank">Direct: Apple Silicon (M1/M2/M3/M4) →</a></li>
+  <li><a href="https://github.com/Yoodule/nimbus/releases/latest/download/nimbus-darwin-amd64.tar.gz" target="_blank">Direct: Intel Macs →</a></li>
+</ul>
 
-    - [Nimbus for Apple Silicon (M1/M2/M3/M4) — `nimbus-darwin-arm64.tar.gz`](https://github.com/Yoodule/nimbus/releases/latest/download/nimbus-darwin-arm64.tar.gz)
-    - [Nimbus for Intel Macs — `nimbus-darwin-amd64.tar.gz`](https://github.com/Yoodule/nimbus/releases/latest/download/nimbus-darwin-amd64.tar.gz)
+<p class="platform-footer">Requires macOS 12 Monterey or later. The installer auto-detects Apple Silicon vs Intel and verifies against the published SHA256SUMS.</p>
 
-    <p style="color: #737373; font-size: 0.85em; margin: 16px 0 0 0;">
-      Requires macOS 12 Monterey or later.
-    </p>
+</div>
 
-=== "Linux"
+<div class="download-card" markdown id="linux">
 
-    <div class="install-cmd" markdown>
-    <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>curl -fsSL https://nimbus.yoodule.com/install.sh | bash
+<img src="static/platforms/linux.svg" alt="" class="platform-icon" />
+
+<p class="platform-name">Linux</p>
+<p class="platform-subtitle">x86_64 &amp; aarch64</p>
+
+<div class="install-cmd" markdown>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>curl -fsSL https://nimbus.yoodule.com/install.sh | bash
 </code></pre></div>
-    </div>
+</div>
 
-    <p style="color: #737373; font-size: 0.9em; margin: 12px 0 24px 0;">
-      Paste this in your shell. Tested on Ubuntu 22.04+, Debian 12+, Fedora 39+, and Arch. Auto-detects your architecture and pulls the right binary.
-    </p>
+<ul class="direct-links" markdown>
+  <li><a href="https://github.com/Yoodule/nimbus/releases/latest/download/nimbus-linux-amd64.tar.gz" target="_blank">Direct: x86_64 →</a></li>
+  <li><a href="https://github.com/Yoodule/nimbus/releases/latest/download/nimbus-linux-arm64.tar.gz" target="_blank">Direct: aarch64 →</a></li>
+</ul>
 
-    <p style="margin: 0 0 12px 0;"><strong>Verify it worked:</strong></p>
+<p class="platform-footer">Tested on Ubuntu 22.04+, Debian 12+, Fedora 39+, and Arch. Requires glibc 2.31+. Python 3.12+ is auto-installed via <a href="https://astral.sh/uv" target="_blank"><code>uv</code></a> if missing.</p>
 
-    <div class="install-cmd" markdown>
-    <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>nimbus --version
+</div>
+
+<div class="download-card" markdown id="windows">
+
+<img src="static/platforms/windows11.svg" alt="" class="platform-icon" />
+
+<p class="platform-name">Windows</p>
+<p class="platform-subtitle">PowerShell &amp; WSL2</p>
+
+<div class="install-cmd" markdown>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">irm </span><span class="n">https</span><span class="p">://</span><span class="n">nimbus</span><span class="p">.</span><span class="n">yoodule</span><span class="p">.</span><span class="n">com</span><span class="p">/</span><span class="n">install</span><span class="p">.</span><span class="n">ps1</span> <span class="p">|</span> <span class="nb">iex</span>
 </code></pre></div>
-    </div>
+</div>
 
-    <p style="margin: 24px 0 8px 0;"><strong>Or download directly:</strong></p>
+<ul class="direct-links" markdown>
+  <li><a href="https://nimbus.yoodule.com/install.cmd" target="_blank">One-click: install.cmd launcher →</a></li>
+  <li><a href="https://github.com/Yoodule/nimbus/releases/latest/download/nimbus-windows-amd64.tar.gz" target="_blank">Direct: Windows (x64) →</a></li>
+</ul>
 
-    - [Nimbus for x86_64 — `nimbus-linux-amd64.tar.gz`](https://github.com/Yoodule/nimbus/releases/latest/download/nimbus-linux-amd64.tar.gz)
+<p class="platform-footer">Requires Windows 10 build 19041+ or later. Administrator is not required. The installer handles PATH setup and registers Nimbus in your user profile.</p>
 
-    <p style="color: #737373; font-size: 0.85em; margin: 16px 0 0 0;">
-      Requires Python 3.12+ (auto-installed via <a href="https://astral.sh/uv" target="_blank"><code>uv</code></a> if missing).
-    </p>
-
-=== "Windows"
-
-    <div class="install-cmd" markdown>
-    <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nb">irm </span><span class="n">https</span><span class="p">://</span><span class="n">nimbus</span><span class="p">.</span><span class="n">yoodule</span><span class="p">.</span><span class="n">com</span><span class="p">/</span><span class="n">install</span><span class="p">.</span><span class="n">ps1</span> <span class="p">|</span> <span class="nb">iex</span>
-</code></pre></div>
-    </div>
-
-    <p style="color: #737373; font-size: 0.9em; margin: 12px 0 24px 0;">
-      Paste this in PowerShell. Administrator is not required. The installer handles PATH setup and registers Nimbus in your user profile.
-    </p>
-
-    <p style="margin: 0 0 12px 0;"><strong>Verify it worked:</strong></p>
-
-    <div class="install-cmd" markdown>
-    <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">nimbus</span> <span class="p">-</span><span class="n">-version</span>
-</code></pre></div>
-    </div>
-
-    <p style="margin: 24px 0 8px 0;"><strong>Or use the one-click launcher:</strong></p>
-
-    - [`install.cmd` — opens PowerShell and runs the installer](https://nimbus.yoodule.com/install.cmd)
-    - [Nimbus for Windows (x64) — `nimbus-windows-amd64.tar.gz`](https://github.com/Yoodule/nimbus/releases/latest/download/nimbus-windows-amd64.tar.gz)
-
-    <p style="color: #737373; font-size: 0.85em; margin: 16px 0 0 0;">
-      Requires Windows 10 build 19041+ or later.
-    </p>
+</div>
 
 </div>
 
@@ -1020,12 +1027,12 @@
 </thead>
 <tbody>
 <tr>
-<td><strong>Python</strong></td>
-<td>3.12+ (auto-installed via <a href="https://astral.sh/uv"><code>uv</code></a> if missing)</td>
+<td><strong>Docker</strong></td>
+<td>Docker Desktop 4.x+, OrbStack, or a headless Docker Engine — the daemon must be running. Required for the bundled MCP stack (browser, Postgres, Qdrant).</td>
 </tr>
 <tr>
-<td><strong>Docker</strong></td>
-<td>Docker Desktop 4.x+, OrbStack, or a headless Docker Engine for the bundled MCP stack</td>
+<td><strong>Python</strong></td>
+<td>3.12+ (auto-installed via <a href="https://astral.sh/uv"><code>uv</code></a> if missing)</td>
 </tr>
 <tr>
 <td><strong>macOS</strong></td>
@@ -1052,49 +1059,49 @@
 <hr />
 <h2 id="pin-a-version">Pin a Version</h2>
 <p>The one-liner above always installs the latest stable release. To pin a build, set <code>NIMBUS_VERSION</code> on the <strong>right-hand side</strong> of the pipe (so <code>curl</code> doesn't see it and the variable reaches the installed script):</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://nimbus.yoodule.com/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nv">NIMBUS_VERSION</span><span class="o">=</span>v1.0.3<span class="w"> </span>bash
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://nimbus.yoodule.com/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nv">NIMBUS_VERSION</span><span class="o">=</span>v1.0.3<span class="w"> </span>bash
 </code></pre></div>
 <p>Browse all published versions on the <a href="https://github.com/Yoodule/nimbus/releases">releases page</a>.</p>
 <hr />
 <h2 id="verify-before-you-install">Verify Before You Install</h2>
 <p>Every release ships with a <code>SHA256SUMS</code> file. The installer checksums automatically, but you can verify manually if you prefer:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://github.com/Yoodule/nimbus/releases/latest/download/SHA256SUMS<span class="w"> </span>-o<span class="w"> </span>SHA256SUMS
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>sha256sum<span class="w"> </span>-c<span class="w"> </span>--strict<span class="w"> </span>SHA256SUMS
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://github.com/Yoodule/nimbus/releases/latest/download/SHA256SUMS<span class="w"> </span>-o<span class="w"> </span>SHA256SUMS
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>sha256sum<span class="w"> </span>-c<span class="w"> </span>--strict<span class="w"> </span>SHA256SUMS
 </code></pre></div>
 <p>The installer is also <strong>SLSA-attested</strong> by GitHub Actions. Inspect the provenance with <a href="https://cli.github.com/manual/gh_attestation_verify"><code>gh attestation verify</code></a>.</p>
 <hr />
 <h2 id="upgrade">Upgrade</h2>
 <p>The CLI upgrades itself in place. Your <code>mcp.json</code>, <code>.env</code>, OAuth tokens, and the Qdrant index are preserved:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>nimbus<span class="w"> </span>upgrade
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>nimbus<span class="w"> </span>upgrade
 </code></pre></div>
 <p>To upgrade to a specific version:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>nimbus<span class="w"> </span>upgrade<span class="w"> </span>--version<span class="w"> </span>v1.0.3
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>nimbus<span class="w"> </span>upgrade<span class="w"> </span>--version<span class="w"> </span>v1.0.3
 </code></pre></div>
 <hr />
 <h2 id="uninstall">Uninstall</h2>
 <p>Removes the CLI, the gateway, the local Docker stack, and the install directory in one step:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>nimbus<span class="w"> </span>uninstall
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>nimbus<span class="w"> </span>uninstall
 </code></pre></div>
 <p>If you want to keep your config (mcp.json, .env, tokens) for a future reinstall, pass <code>--keep-config</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>nimbus<span class="w"> </span>uninstall<span class="w"> </span>--keep-config
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>nimbus<span class="w"> </span>uninstall<span class="w"> </span>--keep-config
 </code></pre></div>
 <hr />
 <h2 id="what-gets-installed">What Gets Installed</h2>
 <p>The installer writes everything under <code>~/.nimbus/</code> (or <code>$NIMBUS_HOME</code> if you set it):</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>~/.nimbus/
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>├── nimbus                # CLI shim
-<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>├── nimbus-gateway-*      # Compiled gateway binary
-<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>├── mcp.json              # Server registry
-<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>├── servers/              # Bundled MCP servers
-<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>├── .env                  # Local config (OPENROUTER_API_KEY, QDRANT_URL, …)
-<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>└── logs/                 # Runtime logs
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>~/.nimbus/
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>├── nimbus                # CLI shim
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>├── nimbus-gateway-*      # Compiled gateway binary
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>├── mcp.json              # Server registry
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>├── servers/              # Bundled MCP servers
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>├── .env                  # Local config (OPENROUTER_API_KEY, QDRANT_URL, …)
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>└── logs/                 # Runtime logs
 </code></pre></div>
 <p>It also adds <code>export NIMBUS_HOME</code> and <code>PATH</code> to your shell config (<code>~/.zshrc</code>, <code>~/.bashrc</code>, or <code>$PROFILE</code> on Windows) so <code>nimbus</code> is on your PATH in new shells.</p>
 <hr />
 <h2 id="faq">FAQ</h2>
 <h3 id="the-installer-says-arm64-not-found-on-my-apple-silicon-mac">The installer says "arm64 not found" on my Apple Silicon Mac.</h3>
 <p>That message is from an outdated installer. Run <code>nimbus upgrade</code> to pull the latest, or fetch a fresh copy of the script directly:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://raw.githubusercontent.com/Yoodule/nimbus/main/install.sh<span class="w"> </span>-o<span class="w"> </span>/tmp/install.sh<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>bash<span class="w"> </span>/tmp/install.sh
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://raw.githubusercontent.com/Yoodule/nimbus/main/install.sh<span class="w"> </span>-o<span class="w"> </span>/tmp/install.sh<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>bash<span class="w"> </span>/tmp/install.sh
 </code></pre></div>
 <p>The current installer follows GitHub's CDN redirect, detects your architecture, and fails fast with an actionable error if the asset is genuinely missing.</p>
 <h3 id="can-i-install-on-a-machine-without-docker">Can I install on a machine without Docker?</h3>
@@ -1174,7 +1181,7 @@
       <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "search.suggest", "search.highlight", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>

@@ -256,6 +256,60 @@ function Invoke-NimbusInstallPostExtract {
     }
 }
 
+# --- Docker pre-flight probe -----------------------------------
+# New-user trap fix (mirrors check_docker in install.sh): the
+# install completes happily without Docker, but the next
+# `nimbus start` fails with "Could not start `docker compose`.
+# Is Docker installed and on your PATH?" (compose_up.rs:122).
+# Probing at install time surfaces a platform-specific fix URL
+# while the user is still in front of their terminal.
+#
+# Design contract (matches the bash side):
+#   1. NEVER throw. A headless user (no Docker today) must
+#      still land in a CLI-only state.
+#   2. Returns a verdict string so the install pipeline can
+#      branch on the result and print the right warning:
+#         - "yes"        — docker binary present, daemon reachable
+#         - "no-binary"  — docker not on PATH
+#         - "no-daemon"  — docker present, daemon unreachable
+#   3. The function is silent on the success stream — the
+#      warning copy lives in the install pipeline, not here.
+#   4. Test override: $env:NIMBUS_TESTS_DOCKER_CMD replaces
+#      the real `docker compose version` invocation so the
+#      Pester tests can exercise every path without ever
+#      touching the real docker binary.
+function Test-NimbusDocker {
+    $verdict = "no-binary"
+
+    $dockerCmd = if ($env:NIMBUS_TESTS_DOCKER_CMD) {
+        $env:NIMBUS_TESTS_DOCKER_CMD
+    } else {
+        "docker"
+    }
+
+    # Distinguish "binary missing" from "daemon down". Get-Command
+    # returns $null for a missing binary; if we get past it, the
+    # binary is present and we can safely shell out to it.
+    $present = Get-Command $dockerCmd -ErrorAction SilentlyContinue
+    if (-not $present) {
+        Write-Output "no-binary"
+        return
+    }
+
+    # Binary present. Run `docker compose version` and classify.
+    # We use `&` (call operator) on the resolved path so the
+    # test-override (a full .cmd path) works the same as the
+    # default ("docker" — looked up on PATH).
+    & $dockerCmd compose version *> $null
+    if ($LASTEXITCODE -eq 0) {
+        $verdict = "yes"
+    } else {
+        $verdict = "no-daemon"
+    }
+
+    Write-Output $verdict
+}
+
 # --- Windows Defender handling helpers -------------------------
 # A real Windows user hit this immediately after `irm | iex`:
 #
@@ -741,6 +795,34 @@ if (-not $IsSource) {
         Write-Host "  $Hint" -ForegroundColor Yellow
         Write-Host ""
     }
+}
+
+# 5.7 Docker pre-flight. Surface a warning if Docker (the
+# runtime backing `nimbus start`'s compose stack) is missing
+# or its daemon isn't running. We WARN, not block: a user on
+# a headless Windows box can still land in a CLI-only state
+# and the doctor check is the canonical diagnostic surface.
+# The verdict comes from Test-NimbusDocker (above); the
+# warning copy lives here, in the install pipeline, so the
+# function stays a pure predicate (per the bash side at
+# install.sh's `check_docker`).
+$DockerVerdict = Test-NimbusDocker
+if ($DockerVerdict -eq "no-binary") {
+    Write-Host ""
+    Write-Host "  ! Docker was not found on your PATH." -ForegroundColor Yellow
+    Write-Host "    Nimbus runs its services via Docker Compose, so you'll need" -ForegroundColor Yellow
+    Write-Host "    Docker Desktop (or an alternative: Rancher Desktop, Podman)" -ForegroundColor Yellow
+    Write-Host "    before `nimbus start` will work." -ForegroundColor Yellow
+    Write-Host "    Get Docker Desktop: https://www.docker.com/products/docker-desktop/" -ForegroundColor Yellow
+    Write-Host "    (You can ignore this and run the CLI-only commands now.)" -ForegroundColor Yellow
+    Write-Host ""
+} elseif ($DockerVerdict -eq "no-daemon") {
+    Write-Host ""
+    Write-Host "  ! Docker is installed but the daemon is not running." -ForegroundColor Yellow
+    Write-Host "    Start Docker Desktop and wait for the icon in the system tray" -ForegroundColor Yellow
+    Write-Host "    to settle, then try `nimbus start` again." -ForegroundColor Yellow
+    Write-Host "    (You can ignore this and run the CLI-only commands now.)" -ForegroundColor Yellow
+    Write-Host ""
 }
 
 # 6. Auto-start option

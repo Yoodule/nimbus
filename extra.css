@@ -1,0 +1,168 @@
+/* docs/extra.css
+ *
+ * mkdocs Material extras for nimbus.yoodule.com.
+ * The slate palette sets the dark theme; this file adds the
+ * bespoke download-page components and a small set of
+ * utility classes used by index.md + download.md.
+ */
+
+/* ------------------------------------------------------------------ */
+/* Download page: card grid + install-cmd blocks + platform icons.    */
+/* Replaces the old unstyled `=== "macOS"` tab block on download.md.  */
+/* ------------------------------------------------------------------ */
+
+.download-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin: 32px 0;
+}
+
+.download-card {
+  background: #0a0a0a;
+  border: 1px solid #262626;
+  border-radius: 12px;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  transition: border-color 0.15s ease;
+}
+
+.download-card:hover {
+  border-color: #404040;
+}
+
+.download-card .platform-icon {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 20px;
+  color: #ffffff;
+  fill: currentColor;
+}
+
+.download-card .platform-name {
+  font-size: 1.25em;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 4px 0;
+  letter-spacing: -0.01em;
+}
+
+.download-card .platform-subtitle {
+  font-size: 0.85em;
+  color: #737373;
+  margin: 0 0 20px 0;
+}
+
+.install-cmd {
+  background: #000000;
+  border: 1px solid #262626;
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin: 0 0 16px 0;
+  font-family: 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 0.88em;
+  color: #e5e5e5;
+  overflow-x: auto;
+  white-space: nowrap;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.install-cmd code {
+  background: transparent;
+  color: #e5e5e5;
+  padding: 0;
+  font-size: 1em;
+}
+
+.download-card .direct-links {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 16px 0;
+  font-size: 0.88em;
+}
+
+.download-card .direct-links li {
+  margin: 6px 0;
+}
+
+.download-card .direct-links a {
+  color: #a3a3a3;
+  text-decoration: none;
+}
+
+.download-card .direct-links a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.download-card .platform-footer {
+  font-size: 0.78em;
+  color: #525252;
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid #1a1a1a;
+  width: 100%;
+}
+
+/* ------------------------------------------------------------------ */
+/* Download page: hero CTA + Docker prereq callout.                   */
+/* ------------------------------------------------------------------ */
+
+.download-hero {
+  text-align: center;
+  background: #000000;
+  border: 1px solid #262626;
+  border-radius: 12px;
+  padding: 40px 32px;
+  margin: 32px 0;
+}
+
+.download-hero h3 {
+  color: #ffffff;
+  font-size: 1.7em;
+  font-weight: 700;
+  margin: 0 0 16px 0;
+  letter-spacing: -0.02em;
+}
+
+.download-hero p {
+  color: #a3a3a3;
+  font-size: 1.05em;
+  line-height: 1.6;
+  margin: 0 auto 24px auto;
+  max-width: 540px;
+}
+
+.download-hero .install-cmd {
+  margin: 0 auto 24px auto;
+  max-width: 640px;
+  text-align: left;
+}
+
+.download-hero .prereq-callout {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #1a1a1a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  padding: 10px 16px;
+  color: #d4d4d4;
+  font-size: 0.9em;
+  margin-top: 8px;
+}
+
+.download-hero .prereq-callout a {
+  color: #ffffff;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Index page: existing video-container + footer CTA box reuse the    */
+/* inline styles already in index.md, so extra.css only needs to      */
+/* make sure nothing collides. Nothing more to add.                   */
+/* ------------------------------------------------------------------ */
