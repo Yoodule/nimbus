@@ -162,6 +162,54 @@
 }
 
 /* ------------------------------------------------------------------ */
+/* Tabbed install picker.                                             */
+/* pymdownx.tabbed + alternate_style: true renders a segmented        */
+/* control at the top of the install section. We add a small leading  */
+/* platform icon inside each tab and tighten the install-cmd inside.  */
+/* ------------------------------------------------------------------ */
+
+.tabbed-set.tabbed-alternate > .tabbed-content > h3:first-child,
+.tabbed-set.tabbed-alternate > .tabbed-content > p:first-child {
+  margin-top: 0;
+}
+
+.tabbed-set.tabbed-alternate .tab-icon {
+  width: 24px;
+  height: 24px;
+  display: block;
+  margin: 8px 0 12px 0;
+  color: #ffffff;
+  fill: currentColor;
+}
+
+.tabbed-set.tabbed-alternate .install-cmd {
+  margin-top: 12px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Tabbed install picker.                                             */
+/* pymdownx.tabbed + alternate_style: true renders a segmented        */
+/* control at the top of the install section. We add a small leading  */
+/* platform icon inside each tab and tighten the install-cmd inside.  */
+/* ------------------------------------------------------------------ */
+
+.tabbed-set.tabbed-alternate > .tabbed-content > h3:first-child,
+.tabbed-set.tabbed-alternate > .tabbed-content > p:first-child {
+  margin-top: 0;
+}
+
+.tabbed-set.tabbed-alternate .tab-icon {
+  width: 24px;
+  height: 24px;
+  display: block;
+  margin: 8px 0 12px 0;
+}
+
+.tabbed-set.tabbed-alternate .install-cmd {
+  margin-top: 12px;
+}
+
+/* ------------------------------------------------------------------ */
 /* Index page: existing video-container + footer CTA box reuse the    */
 /* inline styles already in index.md, so extra.css only needs to      */
 /* make sure nothing collides. Nothing more to add.                   */
