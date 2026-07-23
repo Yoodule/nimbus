@@ -30,8 +30,12 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
   - admonition
   - pymdownx.details
+  - attr_list
+  - md_in_html
 
 nav:
   - Home: index.md

@@ -4,13 +4,13 @@
   The unified MCP gateway for production AI agents. One command installs the CLI, the gateway, and every bundled MCP server — SHA256-verified, no sign-up, runs locally.
 </p>
 
-<div class="download-hero" markdown>
+<div class="download-hero" markdown="1">
 
-### One command. No sign-up.
+<h3 style="color: #ffffff; font-size: 1.7em; font-weight: 700; margin: 0 0 16px 0; letter-spacing: -0.02em;">One command. No sign-up.</h3>
 
 Nimbus installs the CLI, the gateway, and every bundled MCP server with a single command. SHA256-verified, runs locally, and provisions the full Docker stack.
 
-<div class="install-cmd" markdown>
+<div class="install-cmd" markdown="1">
 ```
 curl -fsSL https://nimbus.yoodule.com/install.sh | bash
 ```
@@ -21,28 +21,28 @@ curl -fsSL https://nimbus.yoodule.com/install.sh | bash
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
 </a>
 
-<div class="prereq-callout" markdown>
-  ⚠ **Prerequisite:** [Docker Desktop](https://www.docker.com/products/docker-desktop/), [OrbStack](https://orbstack.dev/), or a headless Docker Engine must be installed and the daemon running. The bundled MCP stack (browser, Postgres, Qdrant) runs in containers.
+<div class="prereq-callout" markdown="1">
+  ⚠ <strong>Prerequisite:</strong> <a href="https://www.docker.com/products/docker-desktop/" target="_blank">Docker Desktop</a>, <a href="https://orbstack.dev/" target="_blank">OrbStack</a>, or a headless Docker Engine must be installed and the daemon running. The bundled MCP stack (browser, Postgres, Qdrant) runs in containers.
 </div>
 
 </div>
 
-<div class="download-grid" markdown>
+<div class="download-grid" markdown="1">
 
-<div class="download-card" markdown id="macos">
+<div class="download-card" markdown="1" id="macos">
 
-<img src="static/platforms/apple.svg" alt="" class="platform-icon" />
+<img src="/static/platforms/apple.svg" alt="" class="platform-icon" />
 
 <p class="platform-name">macOS</p>
 <p class="platform-subtitle">Apple Silicon &amp; Intel</p>
 
-<div class="install-cmd" markdown>
+<div class="install-cmd" markdown="1">
 ```
 curl -fsSL https://nimbus.yoodule.com/install.sh | bash
 ```
 </div>
 
-<ul class="direct-links" markdown>
+<ul class="direct-links" markdown="1">
   <li><a href="https://github.com/Yoodule/nimbus/releases/latest/download/nimbus-darwin-arm64.tar.gz" target="_blank">Direct: Apple Silicon (M1/M2/M3/M4) →</a></li>
   <li><a href="https://github.com/Yoodule/nimbus/releases/latest/download/nimbus-darwin-amd64.tar.gz" target="_blank">Direct: Intel Macs →</a></li>
 </ul>
@@ -51,20 +51,20 @@ curl -fsSL https://nimbus.yoodule.com/install.sh | bash
 
 </div>
 
-<div class="download-card" markdown id="linux">
+<div class="download-card" markdown="1" id="linux">
 
-<img src="static/platforms/linux.svg" alt="" class="platform-icon" />
+<img src="/static/platforms/linux.svg" alt="" class="platform-icon" />
 
 <p class="platform-name">Linux</p>
 <p class="platform-subtitle">x86_64 &amp; aarch64</p>
 
-<div class="install-cmd" markdown>
+<div class="install-cmd" markdown="1">
 ```
 curl -fsSL https://nimbus.yoodule.com/install.sh | bash
 ```
 </div>
 
-<ul class="direct-links" markdown>
+<ul class="direct-links" markdown="1">
   <li><a href="https://github.com/Yoodule/nimbus/releases/latest/download/nimbus-linux-amd64.tar.gz" target="_blank">Direct: x86_64 →</a></li>
   <li><a href="https://github.com/Yoodule/nimbus/releases/latest/download/nimbus-linux-arm64.tar.gz" target="_blank">Direct: aarch64 →</a></li>
 </ul>
@@ -73,20 +73,20 @@ curl -fsSL https://nimbus.yoodule.com/install.sh | bash
 
 </div>
 
-<div class="download-card" markdown id="windows">
+<div class="download-card" markdown="1" id="windows">
 
-<img src="static/platforms/windows11.svg" alt="" class="platform-icon" />
+<img src="/static/platforms/windows11.svg" alt="" class="platform-icon" />
 
 <p class="platform-name">Windows</p>
 <p class="platform-subtitle">PowerShell &amp; WSL2</p>
 
-<div class="install-cmd" markdown>
+<div class="install-cmd" markdown="1">
 ```powershell
 irm https://nimbus.yoodule.com/install.ps1 | iex
 ```
 </div>
 
-<ul class="direct-links" markdown>
+<ul class="direct-links" markdown="1">
   <li><a href="https://nimbus.yoodule.com/install.cmd" target="_blank">One-click: install.cmd launcher →</a></li>
   <li><a href="https://github.com/Yoodule/nimbus/releases/latest/download/nimbus-windows-amd64.tar.gz" target="_blank">Direct: Windows (x64) →</a></li>
 </ul>

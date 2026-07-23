@@ -62,10 +62,10 @@
   padding: 14px 16px;
   margin: 0 0 16px 0;
   font-family: 'SF Mono', Menlo, Consolas, monospace;
-  font-size: 0.88em;
+  font-size: 0.82em;
   color: #e5e5e5;
-  overflow-x: auto;
-  white-space: nowrap;
+  overflow-wrap: break-word;
+  word-break: break-all;
   width: 100%;
   box-sizing: border-box;
 }
