@@ -98,7 +98,10 @@ resolve_ghcr_digest() {
         | awk 'tolower($1) == "docker-content-digest:" { print $2; exit }')
 
     if [ -z "$digest" ]; then
-        echo "Note: could not resolve live digest for ${repo}:${tag} (offline?)" >&2
+        # Silent: refresh_compose_pin treats an empty digest as
+        # "offline, leave the pin as-is" and returns 0. Spamming
+        # stderr with "Note: could not resolve…" on every offline
+        # install is noisy and the user can't act on it anyway.
         return 1
     fi
     echo "$digest"
