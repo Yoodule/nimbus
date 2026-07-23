@@ -4,93 +4,96 @@
   The unified MCP gateway for production AI agents. One command installs the CLI, the gateway, and every bundled MCP server — SHA256-verified, no sign-up, runs locally.
 </p>
 
-<div class="download-tabs" markdown>
+<div class="download-hero" markdown>
 
-=== "macOS"
+### One command. No sign-up.
 
-    <div class="install-cmd" markdown>
-    ```
-    curl -fsSL https://nimbus.yoodule.com/install.sh | bash
-    ```
-    </div>
+Nimbus installs the CLI, the gateway, and every bundled MCP server with a single command. SHA256-verified, runs locally, and provisions the full Docker stack.
 
-    <p style="color: #737373; font-size: 0.9em; margin: 12px 0 24px 0;">
-      Paste this in Terminal. Auto-detects Apple Silicon vs Intel, downloads the right binary, and verifies it against the published SHA256SUMS.
-    </p>
+<div class="install-cmd" markdown>
+```
+curl -fsSL https://nimbus.yoodule.com/install.sh | bash
+```
+</div>
 
-    <p style="margin: 0 0 12px 0;"><strong>Verify it worked:</strong></p>
+<a href="#macos" style="display: inline-flex; align-items: center; gap: 8px; background: #ffffff; color: #000000; text-decoration: none; font-weight: 600; padding: 14px 32px; border-radius: 8px; font-size: 1.05em;">
+  Pick your platform
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+</a>
 
-    <div class="install-cmd" markdown>
-    ```
-    nimbus --version
-    ```
-    </div>
+<div class="prereq-callout" markdown>
+  ⚠ **Prerequisite:** [Docker Desktop](https://www.docker.com/products/docker-desktop/), [OrbStack](https://orbstack.dev/), or a headless Docker Engine must be installed and the daemon running. The bundled MCP stack (browser, Postgres, Qdrant) runs in containers.
+</div>
 
-    <p style="margin: 24px 0 8px 0;"><strong>Or download directly:</strong></p>
+</div>
 
-    - [Nimbus for Apple Silicon (M1/M2/M3/M4) — `nimbus-darwin-arm64.tar.gz`](https://github.com/Yoodule/nimbus/releases/latest/download/nimbus-darwin-arm64.tar.gz)
-    - [Nimbus for Intel Macs — `nimbus-darwin-amd64.tar.gz`](https://github.com/Yoodule/nimbus/releases/latest/download/nimbus-darwin-amd64.tar.gz)
+<div class="download-grid" markdown>
 
-    <p style="color: #737373; font-size: 0.85em; margin: 16px 0 0 0;">
-      Requires macOS 12 Monterey or later.
-    </p>
+<div class="download-card" markdown id="macos">
 
-=== "Linux"
+<img src="static/platforms/apple.svg" alt="" class="platform-icon" />
 
-    <div class="install-cmd" markdown>
-    ```
-    curl -fsSL https://nimbus.yoodule.com/install.sh | bash
-    ```
-    </div>
+<p class="platform-name">macOS</p>
+<p class="platform-subtitle">Apple Silicon &amp; Intel</p>
 
-    <p style="color: #737373; font-size: 0.9em; margin: 12px 0 24px 0;">
-      Paste this in your shell. Tested on Ubuntu 22.04+, Debian 12+, Fedora 39+, and Arch. Auto-detects your architecture and pulls the right binary.
-    </p>
+<div class="install-cmd" markdown>
+```
+curl -fsSL https://nimbus.yoodule.com/install.sh | bash
+```
+</div>
 
-    <p style="margin: 0 0 12px 0;"><strong>Verify it worked:</strong></p>
+<ul class="direct-links" markdown>
+  <li><a href="https://github.com/Yoodule/nimbus/releases/latest/download/nimbus-darwin-arm64.tar.gz" target="_blank">Direct: Apple Silicon (M1/M2/M3/M4) →</a></li>
+  <li><a href="https://github.com/Yoodule/nimbus/releases/latest/download/nimbus-darwin-amd64.tar.gz" target="_blank">Direct: Intel Macs →</a></li>
+</ul>
 
-    <div class="install-cmd" markdown>
-    ```
-    nimbus --version
-    ```
-    </div>
+<p class="platform-footer">Requires macOS 12 Monterey or later. The installer auto-detects Apple Silicon vs Intel and verifies against the published SHA256SUMS.</p>
 
-    <p style="margin: 24px 0 8px 0;"><strong>Or download directly:</strong></p>
+</div>
 
-    - [Nimbus for x86_64 — `nimbus-linux-amd64.tar.gz`](https://github.com/Yoodule/nimbus/releases/latest/download/nimbus-linux-amd64.tar.gz)
+<div class="download-card" markdown id="linux">
 
-    <p style="color: #737373; font-size: 0.85em; margin: 16px 0 0 0;">
-      Requires Python 3.12+ (auto-installed via <a href="https://astral.sh/uv" target="_blank"><code>uv</code></a> if missing).
-    </p>
+<img src="static/platforms/linux.svg" alt="" class="platform-icon" />
 
-=== "Windows"
+<p class="platform-name">Linux</p>
+<p class="platform-subtitle">x86_64 &amp; aarch64</p>
 
-    <div class="install-cmd" markdown>
-    ```powershell
-    irm https://nimbus.yoodule.com/install.ps1 | iex
-    ```
-    </div>
+<div class="install-cmd" markdown>
+```
+curl -fsSL https://nimbus.yoodule.com/install.sh | bash
+```
+</div>
 
-    <p style="color: #737373; font-size: 0.9em; margin: 12px 0 24px 0;">
-      Paste this in PowerShell. Administrator is not required. The installer handles PATH setup and registers Nimbus in your user profile.
-    </p>
+<ul class="direct-links" markdown>
+  <li><a href="https://github.com/Yoodule/nimbus/releases/latest/download/nimbus-linux-amd64.tar.gz" target="_blank">Direct: x86_64 →</a></li>
+  <li><a href="https://github.com/Yoodule/nimbus/releases/latest/download/nimbus-linux-arm64.tar.gz" target="_blank">Direct: aarch64 →</a></li>
+</ul>
 
-    <p style="margin: 0 0 12px 0;"><strong>Verify it worked:</strong></p>
+<p class="platform-footer">Tested on Ubuntu 22.04+, Debian 12+, Fedora 39+, and Arch. Requires glibc 2.31+. Python 3.12+ is auto-installed via <a href="https://astral.sh/uv" target="_blank"><code>uv</code></a> if missing.</p>
 
-    <div class="install-cmd" markdown>
-    ```powershell
-    nimbus --version
-    ```
-    </div>
+</div>
 
-    <p style="margin: 24px 0 8px 0;"><strong>Or use the one-click launcher:</strong></p>
+<div class="download-card" markdown id="windows">
 
-    - [`install.cmd` — opens PowerShell and runs the installer](https://nimbus.yoodule.com/install.cmd)
-    - [Nimbus for Windows (x64) — `nimbus-windows-amd64.tar.gz`](https://github.com/Yoodule/nimbus/releases/latest/download/nimbus-windows-amd64.tar.gz)
+<img src="static/platforms/windows11.svg" alt="" class="platform-icon" />
 
-    <p style="color: #737373; font-size: 0.85em; margin: 16px 0 0 0;">
-      Requires Windows 10 build 19041+ or later.
-    </p>
+<p class="platform-name">Windows</p>
+<p class="platform-subtitle">PowerShell &amp; WSL2</p>
+
+<div class="install-cmd" markdown>
+```powershell
+irm https://nimbus.yoodule.com/install.ps1 | iex
+```
+</div>
+
+<ul class="direct-links" markdown>
+  <li><a href="https://nimbus.yoodule.com/install.cmd" target="_blank">One-click: install.cmd launcher →</a></li>
+  <li><a href="https://github.com/Yoodule/nimbus/releases/latest/download/nimbus-windows-amd64.tar.gz" target="_blank">Direct: Windows (x64) →</a></li>
+</ul>
+
+<p class="platform-footer">Requires Windows 10 build 19041+ or later. Administrator is not required. The installer handles PATH setup and registers Nimbus in your user profile.</p>
+
+</div>
 
 </div>
 
@@ -100,8 +103,8 @@
 
 | Component | Requirement |
 |-----------|-------------|
+| **Docker** | Docker Desktop 4.x+, OrbStack, or a headless Docker Engine — the daemon must be running. Required for the bundled MCP stack (browser, Postgres, Qdrant). |
 | **Python** | 3.12+ (auto-installed via [`uv`](https://astral.sh/uv) if missing) |
-| **Docker** | Docker Desktop 4.x+, OrbStack, or a headless Docker Engine for the bundled MCP stack |
 | **macOS** | 12 Monterey or later (Apple Silicon or Intel) |
 | **Linux** | glibc 2.31+ (Ubuntu 22.04, Debian 12, Fedora 39, Arch) |
 | **Windows** | Windows 10 build 19041+ with WSL2 |

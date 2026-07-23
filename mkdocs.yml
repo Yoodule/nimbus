@@ -3,6 +3,9 @@ site_url: https://nimbus.yoodule.com
 site_description: Your 24/7 Employee
 copyright: Built by <a href="https://www.linkedin.com/in/sundayj1213/?utm_source=nimbus&utm_medium=docs&utm_campaign=footer" target="_blank">Sunday Johnson</a> at <a href="https://yoodule.com?utm_source=nimbus&utm_medium=docs&utm_campaign=footer">Yoodule</a>
 
+extra_css:
+  - extra.css
+
 theme:
   name: material
   custom_dir: overrides
