@@ -173,6 +173,24 @@
   border: 0;
 }
 
+/* When the callout has the "Quick check" snippet, the trailing
+ * <p> ("If you see a CONTAINER ID table…") butts flush against
+ * the bottom of the <pre> with no breathing room — looks like a
+ * single run-on block. Add bottom margin to the <pre> instead
+ * of top margin to the <p>: this keeps the original single-<p>
+ * callout (no code block) untouched, and applies only when the
+ * callout actually contains a snippet. */
+.prereq-callout pre {
+  background: #050505;
+  border: 1px solid #262626;
+  border-radius: 0;
+  padding: 10px 14px;
+  margin: 12px 0 10px 0;
+  font-size: 0.9em;
+  line-height: 1.5;
+  overflow-x: auto;
+}
+
 .prereq-callout a {
   color: #ffffff;
   text-decoration: underline;
@@ -188,6 +206,14 @@
 .prereq-callout strong {
   color: #ffffff;
   font-weight: 600;
+}
+
+.prereq-callout pre code {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  color: #e5e5e5;
+  font-size: inherit;
 }
 
 /* ------------------------------------------------------------------ */

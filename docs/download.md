@@ -6,7 +6,15 @@
 
 <div class="prereq-callout" markdown="1">
 
-**Prerequisite:** Nimbus needs <a href="https://www.docker.com/products/docker-desktop/" target="_blank">Docker Desktop</a> (or <a href="https://orbstack.dev/" target="_blank">OrbStack</a> on Mac) installed and running before you install. Installation is free and takes a couple of minutes.
+**Prerequisite:** Nimbus needs <a href="https://www.docker.com/products/docker-desktop/" target="_blank">Docker Desktop</a> (or <a href="https://orbstack.dev/" target="_blank">OrbStack</a> on Mac) installed and **running** before you install. Installation is free and takes a couple of minutes.
+
+**Quick check — run this first:**
+
+```bash
+docker ps
+```
+
+If you see a `CONTAINER ID` table (or a "no containers" row), Docker is up and you're good to go. If you see `Cannot connect to the Docker daemon`, start Docker Desktop (macOS / Windows) or `sudo systemctl start docker` (Linux) and try again.
 
 </div>
 
