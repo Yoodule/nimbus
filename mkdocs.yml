@@ -120,6 +120,11 @@ plugins:
             Official License: 官方许可
             Terms of Service: 服务条款
             Privacy Policy: 隐私政策
+  # search is a built-in plugin; required for the search box to render
+  # in the header. Without this entry, only the `search.suggest` /
+  # `search.highlight` features are configured but no search index is
+  # built, so the input does not appear.
+  - search
 
 # nav is the English (default-locale) nav. The i18n plugin resolves
 # each per-locale file from docs/<locale>/<page>.md automatically, so
