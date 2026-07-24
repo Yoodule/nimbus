@@ -19,45 +19,11 @@
 {% endblock %}
 
 {% block footer %}
-  {# Pagefind modal — must be in the DOM for keyboard binding below to
-     open it. Per-locale isolation is automatic: the modal reads
-     window.documentElement.lang on open, so /ko/ queries hit only the
-     ko shard. #}
+  {# Pagefind modal — the trigger button in the header (added by
+     overrides/partials/header.html) opens this modal on click and
+     binds the Cmd/Ctrl+K shortcut globally. Per-locale isolation
+     is automatic: the modal reads window.documentElement.lang on
+     open, so /ko/ queries hit only the ko shard. #}
   <pagefind-modal></pagefind-modal>
-
-  {# Keyboard fallback for opening the pagefind modal without a
-     visible search button. The pagefind component UI ships a
-     <pagefind-modal-trigger> element that would normally register
-     the Cmd/Ctrl+K binding itself, but we deliberately omit that
-     element from the header (its default styling renders as a
-     full-width white pill that doesn't fit mkdocs-material's dark
-     slate header). Without a trigger, the global shortcut is not
-     bound, so we wire one up here.
-
-     This is a 12-line shim, not a real Pagefind API. We:
-       1. Wait for the <pagefind-modal> custom element to be defined
-          (pagefind-component-ui.js loads asynchronously as a module).
-       2. Add a keydown listener that fires on Cmd+K (mac) or Ctrl+K
-          (everything else), unless the user is typing in an
-          input/textarea/contenteditable (don't hijack typing).
-       3. Call modal.open() — the pagefind component UI exposes this
-          method on the <pagefind-modal> element directly. #}
-  <script>
-    customElements.whenDefined("pagefind-modal").then(() => {
-      const modal = document.querySelector("pagefind-modal");
-      if (!modal) return;
-      document.addEventListener("keydown", (e) => {
-        const isCmdK = (e.key === "k" || e.key === "K") && (e.metaKey || e.ctrlKey);
-        if (!isCmdK) return;
-        const t = document.activeElement;
-        if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable)) {
-          return;
-        }
-        e.preventDefault();
-        modal.open();
-      });
-    });
-  </script>
-
   {{ super() }}
 {% endblock %}
