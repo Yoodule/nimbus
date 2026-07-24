@@ -83,14 +83,8 @@
        The trigger element is registered by pagefind-component-ui.js
        (loaded in extrahead) which sees this element and renders a
        styled magnifier button in its place. See
-       https://pagefind.app/docs/ui-usage/ for the trigger API.
-       `compact` strips the inline "Search" text + "Ctrl+K" hint
-       (the SVG icon child is also replaced by the JS, so the
-       inline magnify here is purely a no-JS fallback). #}
-    <pagefind-modal-trigger
-        class="md-header__button md-icon"
-        compact
-        hide-shortcut>
+       https://pagefind.app/docs/ui-usage/ for the trigger API. #}
+    <pagefind-modal-trigger class="md-header__button md-icon">
       {% include ".icons/material/magnify.svg" %}
     </pagefind-modal-trigger>
     {% if config.repo_url %}
