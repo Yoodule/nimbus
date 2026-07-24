@@ -11,18 +11,20 @@
   </script>
 
   {# Pagefind search (built by scripts/deploy-docs.sh post-mkdocs).
-     The component UI auto-detects <html lang="..."> at search time
-     and queries the matching locale's .pf_index shard. Korean pages
-     → Korean search, Japanese pages → Japanese search, no JS shim. #}
+     Default Pagefind Component UI: <pagefind-modal-trigger> in
+     overrides/partials/header.html opens <pagefind-modal> here.
+     Per-locale isolation is automatic: the modal reads
+     window.documentElement.lang on open, so /ko/ queries hit only
+     the ko shard. #}
   <link href="{{ 'pagefind/pagefind-component-ui.css' | url }}" rel="stylesheet">
   <script src="{{ 'pagefind/pagefind-component-ui.js' | url }}" type="module"></script>
 {% endblock %}
 
 {% block footer %}
-  {# Pagefind modal — the trigger button in the header (added by
-     overrides/partials/header.html) opens this modal on click and
-     binds the Cmd/Ctrl+K shortcut globally. Per-locale isolation
-     is automatic: the modal reads window.documentElement.lang on
+  {# Pagefind modal — the trigger button in the header
+     (overrides/partials/header.html) opens this modal on click and
+     binds the Cmd/Ctrl+K shortcut. Per-locale isolation is
+     automatic: the modal reads window.documentElement.lang on
      open, so /ko/ queries hit only the ko shard. #}
   <pagefind-modal></pagefind-modal>
   {{ super() }}
