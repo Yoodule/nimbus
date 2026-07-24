@@ -7,10 +7,11 @@ extra_css:
   - extra.css
 
 # Pagefind's UI is loaded by overrides/main.html (extrahead + extrafooter
-# blocks). We do NOT need an `extra_javascript:` entry here because
-# Pagefind's index is built as a post-build step in scripts/deploy-docs.sh
-# (see `uvx --from 'pagefind[extended]' python -m pagefind --site site`)
-# and the runtime JS is mounted by the search.html block override.
+# blocks). The per-locale index shards are built by the mkdocs hook at
+# scripts/pagefind_hook.py (registered below in the `hooks:` block).
+# The hook runs on `on_post_build`, so the shards land in site/pagefind/
+# regardless of whether the build was triggered by `mkdocs build`,
+# `mkdocs serve`, or `mkdocs gh-deploy` (which runs its own build).
 #
 # Why Pagefind instead of mkdocs-material's built-in search:
 #   - The built-in search plugin uses a single shared lunr multiLanguage
@@ -146,6 +147,15 @@ plugins:
   # the built-in plugin here would write a stale site/search/
   # search_index.json that no one reads (the user lands on the
   # Pagefind modal from the header).
+
+# mkdocs hooks: run as part of every `mkdocs build`, including the
+# build triggered by `mkdocs gh-deploy`. This is the load-bearing
+# reason we use a hook rather than a post-build shell step in
+# deploy-docs.sh: `mkdocs gh-deploy` always runs its own `mkdocs
+# build` before pushing to gh-pages, so any site/ we pagefind from
+# a prior step is wiped. The hook runs INSIDE that embedded build.
+hooks:
+  - scripts/pagefind_hook.py
 
 # nav is the English (default-locale) nav. The i18n plugin resolves
 # each per-locale file from docs/<locale>/<page>.md automatically, so

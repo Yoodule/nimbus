@@ -55,19 +55,23 @@ echo "→ Building site (strict)..."
 # results because the multiLanguage tokenizer can't segment Korean and
 # 78 English docs dominate scoring against 31 Korean docs.
 #
-# Pagefix reads <html lang="..."> at index time and at search time, and
+# Pagefind reads <html lang="..."> at index time and at search time, and
 # ships one .pf_index shard per locale. /ko/ search input → ko shard only,
 # with proper Korean (bigram) segmentation.
 #
 # The [extended] extra pulls the pagefind_extended binary; the non-extended
 # binary silently skips word segmentation for ja/ko/zh, which would
-# reproduce the original bug for those locales. npx pagefind is the
-# equivalent for npm-driven setups, but uv is already on PATH from the
-# Nimbus install script and the rest of this deploy uses uvx.
-echo "→ Building Pagefind search index..."
-uvx --from "pagefind[extended]" python -m pagefind \
-    --site site \
-    --output-subdir pagefind
+# reproduce the original bug for those locales.
+#
+# HOW/WHERE pagefind runs: it is invoked by the mkdocs hook at
+# scripts/pagefind_hook.py, registered in mkdocs.yml's `hooks:` block.
+# The hook fires on `on_post_build` so the per-locale shards land in
+# site/pagefind/ INSIDE the mkdocs build itself — which is required
+# because `mkdocs gh-deploy` always runs its own `mkdocs build` before
+# pushing, and any site/ we pagefind from a prior step is wiped by
+# that embedded build. Running pagefind from THIS shell script would
+# therefore produce a perfectly indexed site/ that is then overwritten
+# with an empty one by gh-deploy. The hook is the load-bearing path.
 
 # -- TDD guard --------------------------------------------------------------
 # Run the per-locale pagefind shard gate before the human preview. If
