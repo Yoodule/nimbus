@@ -320,3 +320,85 @@
   color: #525252;
   font-weight: 400;
 }
+
+/* ------------------------------------------------------------------ */
+/* Pagefind trigger in the header.                                    */
+/* pagefind-component-ui.css ships a default trigger style that is a   */
+/* full-width white pill (background: var(--pf-background) = #fff,     */
+/* width: 100%, 36px tall, with rounded corners and a 1px border).     */
+/* That is the right shape for a search-bar hero on a docs landing     */
+/* page, but it is wrong for a header slot next to the language       */
+/* picker — there it needs to look like the other md-header__button   */
+/* md-icon buttons (a square 36×36 icon-only tile, transparent         */
+/* background, slate-on-hover). The `compact` and `hide-shortcut`      */
+/* attributes on the trigger hide the inline "Search" text + "Ctrl+K"  */
+/* hint, leaving just the magnifier glyph. The selectors below match   */
+/* the pagefind-internal `.pf-trigger-btn` / `.pf-trigger-icon`       */
+/* classes the component UI appends. The `:is(*, \#)` specificity      */
+/* trick pagefind uses is intact; we layer our override on top with    */
+/* a higher-specificity selector of our own.                          */
+/* ------------------------------------------------------------------ */
+
+/* The host element: make it look like the other header buttons so the
+   layout reserves a square slot, and so the clickable area matches. */
+.md-header pagefind-modal-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0.2rem;
+  color: inherit;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+/* The inner button pagefind generates: kill the full-width white
+   pill, drop the border, transparent background, square 36×36. */
+.md-header pagefind-modal-trigger .pf-trigger-btn {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0.2rem;
+  color: inherit;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+}
+
+/* Hover/focus: same slate wash as the other md-icon header buttons. */
+.md-header pagefind-modal-trigger:hover,
+.md-header pagefind-modal-trigger:focus-visible,
+.md-header pagefind-modal-trigger .pf-trigger-btn:hover,
+.md-header pagefind-modal-trigger .pf-trigger-btn:focus-visible {
+  background: var(--md-default-fg-color--lightest, rgba(255, 255, 255, 0.1));
+  outline: none;
+}
+
+/* The magnifier glyph: pagefind ships its own SVG as a CSS background
+   variable, but it is hard-coded to a dark fill (#000) which is
+   invisible on our dark slate header. Override the icon to inherit
+   currentColor and let mkdocs-material's palette color it. */
+.md-header pagefind-modal-trigger .pf-trigger-icon {
+  width: 1.2rem;
+  height: 1.2rem;
+  background: currentColor;
+  -webkit-mask: var(--pf-icon-search) no-repeat center / contain;
+          mask: var(--pf-icon-search) no-repeat center / contain;
+  color: inherit;
+  /* The default pagefind CSS sets the icon as an inline background
+     fill. Our mask approach makes it inherit currentColor so the
+     magnifier matches the language-picker and drawer icons. */
+}
+
+/* Light mode (slate palette flip): keep the same contrast story.
+   The default light fg in mkdocs-material is dark grey; currentColor
+   follows whatever color the surrounding header uses. */
