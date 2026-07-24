@@ -205,15 +205,31 @@ def _run_pagefind(site_dir: Path, config) -> None:
 
     # Pipe pagefind's own output to mkdocs's logger so it shows up
     # in the build log alongside the "Documentation built in" line.
+    #
+    # Note: pagefind's returncode is 0 here (the `if` above would have
+    # returned on a non-zero exit). Any remaining stderr lines from a
+    # successful run are informational, not errors — typically the
+    # per-locale "Search will still work, but will not match across
+    # root words." notice for languages that don't have a stemmer
+    # (the CJK ones). Logging those as `warning` would abort a
+    # `mkdocs build --strict` run with "Aborted with N warnings" —
+    # so we down-classify them to INFO. The TDD gate below
+    # (`_verify_per_locale_shards`) is the real fail-fast for index
+    # quality.
     for line in result.stdout.splitlines():
         if line.strip():
             log.info("pagefind: %s", line)
     for line in result.stderr.splitlines():
-        if line.strip() and "Pagefind" not in line and "stemming" not in line:
-            # pagefind writes "Note: Pagefind doesn't support stemming
-            # for the language ko." to stderr. That's informational,
-            # not an error — drop those lines from the log.
-            log.warning("pagefind: %s", line)
+        if not line.strip():
+            continue
+        if "Pagefind" in line or "stemming" in line:
+            continue
+        if "Search will still work" in line or "root words" in line:
+            # pagefind's per-locale CJK stemming notice. Informational;
+            # log at INFO so `--strict` builds don't fail on it.
+            log.info("pagefind: %s", line)
+            continue
+        log.warning("pagefind: %s", line)
 
     # Run the per-locale TDD gate. Same check as scripts/check_search_index.py
     # — we don't import that module because mkdocs's hook context
