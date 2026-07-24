@@ -46,6 +46,37 @@ fi
 echo "→ Building site (strict)..."
 "${MKDOCS[@]}" build --strict --clean
 
+# -- Pagefind search index --------------------------------------------------
+# mkdocs-material's built-in search plugin is intentionally omitted from
+# mkdocs.yml — it produces a single shared lunr multiLanguage index whose
+# union of stemmers is broken for CJK (lunr-languages#45, open since 2022;
+# the upstream fix in lunr-languages 1.15.0 has not reached mkdocs-material's
+# bundled lunr copy as of 2026-07). On /ko/ that index returns English
+# results because the multiLanguage tokenizer can't segment Korean and
+# 78 English docs dominate scoring against 31 Korean docs.
+#
+# Pagefix reads <html lang="..."> at index time and at search time, and
+# ships one .pf_index shard per locale. /ko/ search input → ko shard only,
+# with proper Korean (bigram) segmentation.
+#
+# The [extended] extra pulls the pagefind_extended binary; the non-extended
+# binary silently skips word segmentation for ja/ko/zh, which would
+# reproduce the original bug for those locales. npx pagefind is the
+# equivalent for npm-driven setups, but uv is already on PATH from the
+# Nimbus install script and the rest of this deploy uses uvx.
+echo "→ Building Pagefind search index..."
+uvx --from "pagefind[extended]" python -m pagefind \
+    --site site \
+    --output-subdir pagefind
+
+# -- TDD guard --------------------------------------------------------------
+# Run the per-locale pagefind shard gate before the human preview. If
+# pagefind didn't produce one shard per locale (e.g., the CJK binary
+# wasn't extended, or pagefind ran on an empty site/), fail fast here
+# rather than ship a search bar that returns nothing on /ko/.
+echo "→ Verifying per-locale search index..."
+python3 scripts/check_search_index.py
+
 # -- Preview gate -----------------------------------------------------------
 # mkdocs gh-deploy has no built-in review step — once it runs, the change is
 # on the public site. The mkdocs docs explicitly warn about this. Open the

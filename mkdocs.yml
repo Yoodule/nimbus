@@ -6,6 +6,26 @@ copyright: Built by <a href="https://www.linkedin.com/in/sundayj1213/?utm_source
 extra_css:
   - extra.css
 
+# Pagefind's UI is loaded by overrides/main.html (extrahead + extrafooter
+# blocks). We do NOT need an `extra_javascript:` entry here because
+# Pagefind's index is built as a post-build step in scripts/deploy-docs.sh
+# (see `uvx --from 'pagefind[extended]' python -m pagefind --site site`)
+# and the runtime JS is mounted by the search.html block override.
+#
+# Why Pagefind instead of mkdocs-material's built-in search:
+#   - The built-in search plugin uses a single shared lunr multiLanguage
+#     index, with config.lang = [en, ko, es, fr, ja, zh]. lunr-languages'
+#     multiLanguage tokenizer is broken for CJK (lunr-languages#45, open
+#     since 2022; upstream fix in 1.15.0 has not reached mkdocs-material's
+#     bundled lunr copy as of 2026-07). On /ko/, the multiLanguage index
+#     returns English results because (a) the union of stemmers doesn't
+#     segment ja/ko/zh, and (b) 78 English docs dominate scoring against
+#     31 Korean docs.
+#   - Pagefind reads <html lang="..."> at index time and at search time,
+#     and ships one .pf_index shard per locale. The /ko/ search input
+#     hits only the ko shard with a Korean-tuned tokenizer (jieba for zh,
+#     bigram for ja/ko). Search results are per-locale by construction.
+
 theme:
   name: material
   custom_dir: overrides
@@ -28,9 +48,10 @@ theme:
     # language switcher is a hard product requirement.
     - navigation.tracking
     - navigation.tabs
-    - search.suggest
-    - search.highlight
     - content.code.copy
+    # search.suggest / search.highlight are removed: Pagefind ships
+    # its own suggestion + highlight UI in the modal it mounts in
+    # the search button we inject via overrides/main.html.
 
 markdown_extensions:
   - pymdownx.highlight:
@@ -120,11 +141,11 @@ plugins:
             Official License: 官方许可
             Terms of Service: 服务条款
             Privacy Policy: 隐私政策
-  # search is a built-in plugin; required for the search box to render
-  # in the header. Without this entry, only the `search.suggest` /
-  # `search.highlight` features are configured but no search index is
-  # built, so the input does not appear.
-  - search
+  # The built-in `search` plugin is intentionally omitted. Pagefind
+  # ships its own search UI mounted via overrides/main.html; keeping
+  # the built-in plugin here would write a stale site/search/
+  # search_index.json that no one reads (the user lands on the
+  # Pagefind modal from the header).
 
 # nav is the English (default-locale) nav. The i18n plugin resolves
 # each per-locale file from docs/<locale>/<page>.md automatically, so
