@@ -1,27 +1,399 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <url>
-         <loc>https://nimbus.yoodule.com/</loc>
-         <lastmod>2026-07-23</lastmod>
+        <loc>https://nimbus.yoodule.com/</loc>
+        <lastmod>2026-07-24</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nimbus.yoodule.com/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://nimbus.yoodule.com/es/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://nimbus.yoodule.com/fr/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://nimbus.yoodule.com/ja/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://nimbus.yoodule.com/ko/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://nimbus.yoodule.com/zh/"/>
     </url>
     <url>
-         <loc>https://nimbus.yoodule.com/cloud/</loc>
-         <lastmod>2026-07-23</lastmod>
+        <loc>https://nimbus.yoodule.com/cloud/</loc>
+        <lastmod>2026-07-24</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nimbus.yoodule.com/cloud/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://nimbus.yoodule.com/es/cloud/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://nimbus.yoodule.com/fr/cloud/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://nimbus.yoodule.com/ja/cloud/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://nimbus.yoodule.com/ko/cloud/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://nimbus.yoodule.com/zh/cloud/"/>
     </url>
     <url>
-         <loc>https://nimbus.yoodule.com/download/</loc>
-         <lastmod>2026-07-23</lastmod>
+        <loc>https://nimbus.yoodule.com/download/</loc>
+        <lastmod>2026-07-24</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nimbus.yoodule.com/download/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://nimbus.yoodule.com/es/download/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://nimbus.yoodule.com/fr/download/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://nimbus.yoodule.com/ja/download/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://nimbus.yoodule.com/ko/download/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://nimbus.yoodule.com/zh/download/"/>
     </url>
     <url>
-         <loc>https://nimbus.yoodule.com/license/</loc>
-         <lastmod>2026-07-23</lastmod>
+        <loc>https://nimbus.yoodule.com/license/</loc>
+        <lastmod>2026-07-24</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nimbus.yoodule.com/license/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://nimbus.yoodule.com/es/license/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://nimbus.yoodule.com/fr/license/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://nimbus.yoodule.com/ja/license/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://nimbus.yoodule.com/ko/license/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://nimbus.yoodule.com/zh/license/"/>
     </url>
     <url>
-         <loc>https://nimbus.yoodule.com/privacy_policy/</loc>
-         <lastmod>2026-07-23</lastmod>
+        <loc>https://nimbus.yoodule.com/privacy_policy/</loc>
+        <lastmod>2026-07-24</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nimbus.yoodule.com/privacy_policy/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://nimbus.yoodule.com/es/privacy_policy/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://nimbus.yoodule.com/fr/privacy_policy/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://nimbus.yoodule.com/ja/privacy_policy/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://nimbus.yoodule.com/ko/privacy_policy/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://nimbus.yoodule.com/zh/privacy_policy/"/>
     </url>
     <url>
-         <loc>https://nimbus.yoodule.com/terms_of_service/</loc>
-         <lastmod>2026-07-23</lastmod>
+        <loc>https://nimbus.yoodule.com/terms_of_service/</loc>
+        <lastmod>2026-07-24</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nimbus.yoodule.com/terms_of_service/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://nimbus.yoodule.com/es/terms_of_service/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://nimbus.yoodule.com/fr/terms_of_service/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://nimbus.yoodule.com/ja/terms_of_service/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://nimbus.yoodule.com/ko/terms_of_service/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://nimbus.yoodule.com/zh/terms_of_service/"/>
+    </url>
+    <url>
+        <loc>https://nimbus.yoodule.com/ko/</loc>
+        <lastmod>2026-07-24</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://nimbus.yoodule.com/ko/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nimbus.yoodule.com/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://nimbus.yoodule.com/es/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://nimbus.yoodule.com/fr/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://nimbus.yoodule.com/ja/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://nimbus.yoodule.com/zh/"/>
+    </url>
+    <url>
+        <loc>https://nimbus.yoodule.com/ko/cloud/</loc>
+        <lastmod>2026-07-24</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://nimbus.yoodule.com/ko/cloud/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nimbus.yoodule.com/cloud/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://nimbus.yoodule.com/es/cloud/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://nimbus.yoodule.com/fr/cloud/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://nimbus.yoodule.com/ja/cloud/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://nimbus.yoodule.com/zh/cloud/"/>
+    </url>
+    <url>
+        <loc>https://nimbus.yoodule.com/ko/download/</loc>
+        <lastmod>2026-07-24</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://nimbus.yoodule.com/ko/download/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nimbus.yoodule.com/download/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://nimbus.yoodule.com/es/download/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://nimbus.yoodule.com/fr/download/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://nimbus.yoodule.com/ja/download/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://nimbus.yoodule.com/zh/download/"/>
+    </url>
+    <url>
+        <loc>https://nimbus.yoodule.com/ko/license/</loc>
+        <lastmod>2026-07-24</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://nimbus.yoodule.com/ko/license/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nimbus.yoodule.com/license/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://nimbus.yoodule.com/es/license/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://nimbus.yoodule.com/fr/license/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://nimbus.yoodule.com/ja/license/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://nimbus.yoodule.com/zh/license/"/>
+    </url>
+    <url>
+        <loc>https://nimbus.yoodule.com/ko/privacy_policy/</loc>
+        <lastmod>2026-07-24</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://nimbus.yoodule.com/ko/privacy_policy/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nimbus.yoodule.com/privacy_policy/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://nimbus.yoodule.com/es/privacy_policy/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://nimbus.yoodule.com/fr/privacy_policy/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://nimbus.yoodule.com/ja/privacy_policy/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://nimbus.yoodule.com/zh/privacy_policy/"/>
+    </url>
+    <url>
+        <loc>https://nimbus.yoodule.com/ko/terms_of_service/</loc>
+        <lastmod>2026-07-24</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://nimbus.yoodule.com/ko/terms_of_service/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nimbus.yoodule.com/terms_of_service/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://nimbus.yoodule.com/es/terms_of_service/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://nimbus.yoodule.com/fr/terms_of_service/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://nimbus.yoodule.com/ja/terms_of_service/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://nimbus.yoodule.com/zh/terms_of_service/"/>
+    </url>
+    <url>
+        <loc>https://nimbus.yoodule.com/es/</loc>
+        <lastmod>2026-07-24</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="es" href="https://nimbus.yoodule.com/es/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nimbus.yoodule.com/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://nimbus.yoodule.com/fr/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://nimbus.yoodule.com/ja/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://nimbus.yoodule.com/ko/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://nimbus.yoodule.com/zh/"/>
+    </url>
+    <url>
+        <loc>https://nimbus.yoodule.com/es/cloud/</loc>
+        <lastmod>2026-07-24</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="es" href="https://nimbus.yoodule.com/es/cloud/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nimbus.yoodule.com/cloud/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://nimbus.yoodule.com/fr/cloud/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://nimbus.yoodule.com/ja/cloud/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://nimbus.yoodule.com/ko/cloud/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://nimbus.yoodule.com/zh/cloud/"/>
+    </url>
+    <url>
+        <loc>https://nimbus.yoodule.com/es/download/</loc>
+        <lastmod>2026-07-24</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="es" href="https://nimbus.yoodule.com/es/download/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nimbus.yoodule.com/download/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://nimbus.yoodule.com/fr/download/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://nimbus.yoodule.com/ja/download/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://nimbus.yoodule.com/ko/download/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://nimbus.yoodule.com/zh/download/"/>
+    </url>
+    <url>
+        <loc>https://nimbus.yoodule.com/es/license/</loc>
+        <lastmod>2026-07-24</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="es" href="https://nimbus.yoodule.com/es/license/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nimbus.yoodule.com/license/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://nimbus.yoodule.com/fr/license/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://nimbus.yoodule.com/ja/license/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://nimbus.yoodule.com/ko/license/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://nimbus.yoodule.com/zh/license/"/>
+    </url>
+    <url>
+        <loc>https://nimbus.yoodule.com/es/privacy_policy/</loc>
+        <lastmod>2026-07-24</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="es" href="https://nimbus.yoodule.com/es/privacy_policy/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nimbus.yoodule.com/privacy_policy/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://nimbus.yoodule.com/fr/privacy_policy/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://nimbus.yoodule.com/ja/privacy_policy/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://nimbus.yoodule.com/ko/privacy_policy/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://nimbus.yoodule.com/zh/privacy_policy/"/>
+    </url>
+    <url>
+        <loc>https://nimbus.yoodule.com/es/terms_of_service/</loc>
+        <lastmod>2026-07-24</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="es" href="https://nimbus.yoodule.com/es/terms_of_service/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nimbus.yoodule.com/terms_of_service/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://nimbus.yoodule.com/fr/terms_of_service/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://nimbus.yoodule.com/ja/terms_of_service/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://nimbus.yoodule.com/ko/terms_of_service/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://nimbus.yoodule.com/zh/terms_of_service/"/>
+    </url>
+    <url>
+        <loc>https://nimbus.yoodule.com/fr/</loc>
+        <lastmod>2026-07-24</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://nimbus.yoodule.com/fr/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nimbus.yoodule.com/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://nimbus.yoodule.com/es/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://nimbus.yoodule.com/ja/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://nimbus.yoodule.com/ko/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://nimbus.yoodule.com/zh/"/>
+    </url>
+    <url>
+        <loc>https://nimbus.yoodule.com/fr/cloud/</loc>
+        <lastmod>2026-07-24</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://nimbus.yoodule.com/fr/cloud/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nimbus.yoodule.com/cloud/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://nimbus.yoodule.com/es/cloud/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://nimbus.yoodule.com/ja/cloud/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://nimbus.yoodule.com/ko/cloud/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://nimbus.yoodule.com/zh/cloud/"/>
+    </url>
+    <url>
+        <loc>https://nimbus.yoodule.com/fr/download/</loc>
+        <lastmod>2026-07-24</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://nimbus.yoodule.com/fr/download/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nimbus.yoodule.com/download/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://nimbus.yoodule.com/es/download/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://nimbus.yoodule.com/ja/download/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://nimbus.yoodule.com/ko/download/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://nimbus.yoodule.com/zh/download/"/>
+    </url>
+    <url>
+        <loc>https://nimbus.yoodule.com/fr/license/</loc>
+        <lastmod>2026-07-24</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://nimbus.yoodule.com/fr/license/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nimbus.yoodule.com/license/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://nimbus.yoodule.com/es/license/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://nimbus.yoodule.com/ja/license/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://nimbus.yoodule.com/ko/license/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://nimbus.yoodule.com/zh/license/"/>
+    </url>
+    <url>
+        <loc>https://nimbus.yoodule.com/fr/privacy_policy/</loc>
+        <lastmod>2026-07-24</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://nimbus.yoodule.com/fr/privacy_policy/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nimbus.yoodule.com/privacy_policy/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://nimbus.yoodule.com/es/privacy_policy/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://nimbus.yoodule.com/ja/privacy_policy/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://nimbus.yoodule.com/ko/privacy_policy/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://nimbus.yoodule.com/zh/privacy_policy/"/>
+    </url>
+    <url>
+        <loc>https://nimbus.yoodule.com/fr/terms_of_service/</loc>
+        <lastmod>2026-07-24</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://nimbus.yoodule.com/fr/terms_of_service/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nimbus.yoodule.com/terms_of_service/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://nimbus.yoodule.com/es/terms_of_service/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://nimbus.yoodule.com/ja/terms_of_service/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://nimbus.yoodule.com/ko/terms_of_service/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://nimbus.yoodule.com/zh/terms_of_service/"/>
+    </url>
+    <url>
+        <loc>https://nimbus.yoodule.com/ja/</loc>
+        <lastmod>2026-07-24</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://nimbus.yoodule.com/ja/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nimbus.yoodule.com/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://nimbus.yoodule.com/es/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://nimbus.yoodule.com/fr/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://nimbus.yoodule.com/ko/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://nimbus.yoodule.com/zh/"/>
+    </url>
+    <url>
+        <loc>https://nimbus.yoodule.com/ja/cloud/</loc>
+        <lastmod>2026-07-24</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://nimbus.yoodule.com/ja/cloud/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nimbus.yoodule.com/cloud/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://nimbus.yoodule.com/es/cloud/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://nimbus.yoodule.com/fr/cloud/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://nimbus.yoodule.com/ko/cloud/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://nimbus.yoodule.com/zh/cloud/"/>
+    </url>
+    <url>
+        <loc>https://nimbus.yoodule.com/ja/download/</loc>
+        <lastmod>2026-07-24</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://nimbus.yoodule.com/ja/download/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nimbus.yoodule.com/download/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://nimbus.yoodule.com/es/download/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://nimbus.yoodule.com/fr/download/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://nimbus.yoodule.com/ko/download/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://nimbus.yoodule.com/zh/download/"/>
+    </url>
+    <url>
+        <loc>https://nimbus.yoodule.com/ja/license/</loc>
+        <lastmod>2026-07-24</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://nimbus.yoodule.com/ja/license/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nimbus.yoodule.com/license/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://nimbus.yoodule.com/es/license/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://nimbus.yoodule.com/fr/license/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://nimbus.yoodule.com/ko/license/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://nimbus.yoodule.com/zh/license/"/>
+    </url>
+    <url>
+        <loc>https://nimbus.yoodule.com/ja/privacy_policy/</loc>
+        <lastmod>2026-07-24</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://nimbus.yoodule.com/ja/privacy_policy/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nimbus.yoodule.com/privacy_policy/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://nimbus.yoodule.com/es/privacy_policy/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://nimbus.yoodule.com/fr/privacy_policy/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://nimbus.yoodule.com/ko/privacy_policy/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://nimbus.yoodule.com/zh/privacy_policy/"/>
+    </url>
+    <url>
+        <loc>https://nimbus.yoodule.com/ja/terms_of_service/</loc>
+        <lastmod>2026-07-24</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://nimbus.yoodule.com/ja/terms_of_service/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nimbus.yoodule.com/terms_of_service/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://nimbus.yoodule.com/es/terms_of_service/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://nimbus.yoodule.com/fr/terms_of_service/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://nimbus.yoodule.com/ko/terms_of_service/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://nimbus.yoodule.com/zh/terms_of_service/"/>
+    </url>
+    <url>
+        <loc>https://nimbus.yoodule.com/zh/</loc>
+        <lastmod>2026-07-24</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://nimbus.yoodule.com/zh/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nimbus.yoodule.com/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://nimbus.yoodule.com/es/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://nimbus.yoodule.com/fr/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://nimbus.yoodule.com/ja/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://nimbus.yoodule.com/ko/"/>
+    </url>
+    <url>
+        <loc>https://nimbus.yoodule.com/zh/cloud/</loc>
+        <lastmod>2026-07-24</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://nimbus.yoodule.com/zh/cloud/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nimbus.yoodule.com/cloud/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://nimbus.yoodule.com/es/cloud/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://nimbus.yoodule.com/fr/cloud/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://nimbus.yoodule.com/ja/cloud/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://nimbus.yoodule.com/ko/cloud/"/>
+    </url>
+    <url>
+        <loc>https://nimbus.yoodule.com/zh/download/</loc>
+        <lastmod>2026-07-24</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://nimbus.yoodule.com/zh/download/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nimbus.yoodule.com/download/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://nimbus.yoodule.com/es/download/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://nimbus.yoodule.com/fr/download/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://nimbus.yoodule.com/ja/download/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://nimbus.yoodule.com/ko/download/"/>
+    </url>
+    <url>
+        <loc>https://nimbus.yoodule.com/zh/license/</loc>
+        <lastmod>2026-07-24</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://nimbus.yoodule.com/zh/license/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nimbus.yoodule.com/license/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://nimbus.yoodule.com/es/license/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://nimbus.yoodule.com/fr/license/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://nimbus.yoodule.com/ja/license/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://nimbus.yoodule.com/ko/license/"/>
+    </url>
+    <url>
+        <loc>https://nimbus.yoodule.com/zh/privacy_policy/</loc>
+        <lastmod>2026-07-24</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://nimbus.yoodule.com/zh/privacy_policy/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nimbus.yoodule.com/privacy_policy/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://nimbus.yoodule.com/es/privacy_policy/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://nimbus.yoodule.com/fr/privacy_policy/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://nimbus.yoodule.com/ja/privacy_policy/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://nimbus.yoodule.com/ko/privacy_policy/"/>
+    </url>
+    <url>
+        <loc>https://nimbus.yoodule.com/zh/terms_of_service/</loc>
+        <lastmod>2026-07-24</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://nimbus.yoodule.com/zh/terms_of_service/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nimbus.yoodule.com/terms_of_service/"/>
+        <xhtml:link rel="alternate" hreflang="es" href="https://nimbus.yoodule.com/es/terms_of_service/"/>
+        <xhtml:link rel="alternate" hreflang="fr" href="https://nimbus.yoodule.com/fr/terms_of_service/"/>
+        <xhtml:link rel="alternate" hreflang="ja" href="https://nimbus.yoodule.com/ja/terms_of_service/"/>
+        <xhtml:link rel="alternate" hreflang="ko" href="https://nimbus.yoodule.com/ko/terms_of_service/"/>
     </url>
 </urlset>
