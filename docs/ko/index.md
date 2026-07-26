@@ -25,7 +25,7 @@
     <li>전체 소스 제공, BUSL-1.1 라이선스</li>
     <li>SHA256 검증 및 SLSA 증명된 릴리스</li>
   </ul>
-  <a href="download.md" style="display: flex; align-items: center; justify-content: center; gap: 8px; background: #ffffff; color: #000000; text-decoration: none; font-weight: 600; padding: 14px 24px; border-radius: 0; font-size: 1em; width: 100%; box-sizing: border-box; margin-top: auto;">
+  <a href="download/" style="display: flex; align-items: center; justify-content: center; gap: 8px; background: #ffffff; color: #000000; text-decoration: none; font-weight: 600; padding: 14px 24px; border-radius: 0; font-size: 1em; width: 100%; box-sizing: border-box; margin-top: auto;">
     설치 프로그램 받기
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
   </a>
