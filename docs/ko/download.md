@@ -18,6 +18,16 @@ docker ps
 
 </div>
 
+## 설치 안내 영상을 시청하세요
+
+<div class="video-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; border-radius: 12px; margin: 24px 0 16px 0; box-shadow: 0 4px 20px rgba(0,0,0,0.35);">
+  <iframe src="https://www.youtube.com/embed/7IWGp7vRJbA" title="Nimbus 설치 안내" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"></iframe>
+</div>
+
+<p style="color: #737373; font-size: 0.9em; margin: 0 0 32px 0;">
+  영상은 macOS 설치를 처음부터 끝까지 따라갑니다: Docker 확인, 설치 명령, 대시보드 설치 안내, OpenRouter API 키, 그리고 대시보드에서 starter 워크플로를 가져오는 과정. Linux와 Windows도 흐름은 같으며, 아래 각 설치 프로그램을 사용합니다.
+</p>
+
 ## 플랫폼별 설치
 
 === "macOS"

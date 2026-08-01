@@ -18,6 +18,16 @@ docker ps
 
 </div>
 
+## インストールの解説動画を見る
+
+<div class="video-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; border-radius: 12px; margin: 24px 0 16px 0; box-shadow: 0 4px 20px rgba(0,0,0,0.35);">
+  <iframe src="https://www.youtube.com/embed/7IWGp7vRJbA" title="Nimbus インストール解説" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"></iframe>
+</div>
+
+<p style="color: #737373; font-size: 0.9em; margin: 0 0 32px 0;">
+  動画では macOS へのインストールを最後まで追いかけます:Docker の確認、インストールコマンド、ダッシュボードのインストール選択、OpenRouter API キー、そしてダッシュボードからのスターターワークフローのインポート。Linux と Windows も流れは同じで、以下のそれぞれのインストーラーで進めます。
+</p>
+
 ## お使いのプラットフォームでインストール
 
 === "macOS"

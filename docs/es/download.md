@@ -18,6 +18,16 @@ Si ves una tabla `CONTAINER ID` (o una fila "no containers"), Docker está arrib
 
 </div>
 
+## Mira el tutorial de instalación
+
+<div class="video-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; border-radius: 12px; margin: 24px 0 16px 0; box-shadow: 0 4px 20px rgba(0,0,0,0.35);">
+  <iframe src="https://www.youtube.com/embed/7IWGp7vRJbA" title="Tutorial de instalación de Nimbus" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"></iframe>
+</div>
+
+<p style="color: #737373; font-size: 0.9em; margin: 0 0 32px 0;">
+  El vídeo recorre la instalación en macOS de principio a fin: la verificación de Docker, el comando de instalación, el aviso del dashboard, la clave de API de OpenRouter y la importación de un flujo de trabajo inicial desde el dashboard. Linux y Windows siguen el mismo flujo con sus respectivos instaladores más abajo.
+</p>
+
 ## Instala para tu plataforma
 
 === "macOS"

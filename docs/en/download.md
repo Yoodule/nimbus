@@ -18,6 +18,16 @@ If you see a `CONTAINER ID` table (or a "no containers" row), Docker is up and y
 
 </div>
 
+## Watch the install walkthrough
+
+<div class="video-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; border-radius: 12px; margin: 24px 0 16px 0; box-shadow: 0 4px 20px rgba(0,0,0,0.35);">
+  <iframe src="https://www.youtube.com/embed/7IWGp7vRJbA" title="Nimbus install walkthrough" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"></iframe>
+</div>
+
+<p style="color: #737373; font-size: 0.9em; margin: 0 0 32px 0;">
+  The video follows the macOS install end-to-end: Docker check, the install command, the dashboard prompt, the OpenRouter API key, and importing a starter workflow from the dashboard. Linux and Windows follow the same flow with their respective installers below.
+</p>
+
 ## Install for your platform
 
 === "macOS"

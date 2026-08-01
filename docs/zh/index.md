@@ -12,6 +12,16 @@
   由 <a href="https://www.linkedin.com/in/sundayj1213/?utm_source=nimbus&utm_medium=docs&utm_campaign=homepage" target="_blank">Sunday Johnson</a> 在 <a href="https://yoodule.com?utm_source=nimbus&utm_medium=docs&utm_campaign=homepage" target="_blank">Yoodule</a> 开发。
 </p>
 
+## 观看 90 秒演示
+
+<div class="video-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; border-radius: 12px; margin: 24px 0 16px 0; box-shadow: 0 4px 20px rgba(0,0,0,0.35);">
+  <iframe src="https://www.youtube.com/embed/7IWGp7vRJbA" title="Nimbus 安装演示" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"></iframe>
+</div>
+
+<p style="color: #737373; font-size: 0.9em; margin: 0 0 32px 0; text-align: center;">
+  一条命令即可安装 CLI、网关和所有捆绑的 MCP 服务器。视频依次演示 Docker 前置条件、OpenRouter API 密钥步骤、可选的 Agent Dashboard,以及导入工作流的过程。
+</p>
+
 ## 使用 Nimbus 的两种方式
 
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin: 32px 0;">

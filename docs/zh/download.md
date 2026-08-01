@@ -18,6 +18,16 @@ docker ps
 
 </div>
 
+## 观看安装讲解视频
+
+<div class="video-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; border-radius: 12px; margin: 24px 0 16px 0; box-shadow: 0 4px 20px rgba(0,0,0,0.35);">
+  <iframe src="https://www.youtube.com/embed/7IWGp7vRJbA" title="Nimbus 安装讲解" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"></iframe>
+</div>
+
+<p style="color: #737373; font-size: 0.9em; margin: 0 0 32px 0;">
+  视频完整演示了 macOS 上的安装流程:Docker 检查、安装命令、仪表盘安装提示、OpenRouter API 密钥,以及从仪表盘导入入门工作流。Linux 和 Windows 流程相同,只是使用下面的相应安装程序。
+</p>
+
 ## 根据你的平台安装
 
 === "macOS"
