@@ -18,8 +18,6 @@ Si vous voyez un tableau `CONTAINER ID` (ou une ligne « no containers »), Dock
 
 </div>
 
-## Regardez le guide d'installation
-
 <div class="video-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; border-radius: 12px; margin: 24px 0 16px 0; box-shadow: 0 4px 20px rgba(0,0,0,0.35);">
   <iframe src="https://www.youtube.com/embed/7IWGp7vRJbA" title="Guide d'installation de Nimbus" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"></iframe>
 </div>
