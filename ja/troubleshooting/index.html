@@ -1,0 +1,1577 @@
+
+<!doctype html>
+<html lang="ja" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Your 24/7 Employee">
+      
+      
+      
+        <link rel="canonical" href="https://nimbus.yoodule.com/ja/troubleshooting/">
+      
+      
+        <link rel="prev" href="../cloud/">
+      
+      
+        <link rel="next" href="../license/">
+      
+      
+        
+          <link rel="alternate" href="../../troubleshooting/" hreflang="en">
+        
+          <link rel="alternate" href="../../ko/troubleshooting/" hreflang="ko">
+        
+          <link rel="alternate" href="../../es/troubleshooting/" hreflang="es">
+        
+          <link rel="alternate" href="../../fr/troubleshooting/" hreflang="fr">
+        
+          <link rel="alternate" href="./" hreflang="ja">
+        
+          <link rel="alternate" href="../../zh/troubleshooting/" hreflang="zh">
+        
+      
+      
+      <link rel="icon" href="../../static/favicon.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>トラブルシューティング - Nimbus</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  
+  <script type="text/javascript">
+      (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "wtl608oyum");
+  </script>
+
+  
+  <link href="../../pagefind/pagefind-component-ui.css" rel="stylesheet">
+  <script src="../../pagefind/pagefind-component-ui.js" type="module"></script>
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="white">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          コンテンツにスキップ
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="ヘッダー">
+    <a href="../" title="Nimbus" class="md-header__button md-logo" aria-label="Nimbus" data-md-component="logo">
+      
+  <img src="../../static/favicon.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Nimbus
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              トラブルシューティング
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="white"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="言語切り替え">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="../../troubleshooting/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../ko/troubleshooting/" hreflang="ko" class="md-select__link">
+              한국어
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../es/troubleshooting/" hreflang="es" class="md-select__link">
+              Español
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../fr/troubleshooting/" hreflang="fr" class="md-select__link">
+              Français
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="ja" class="md-select__link">
+              日本語
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../zh/troubleshooting/" hreflang="zh" class="md-select__link">
+              中文
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+    <pagefind-modal-trigger
+        class="md-header__button md-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+    </pagefind-modal-trigger>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="タブ" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  ホーム
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../download/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  ダウンロード
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../cloud/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  クラウド
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  トラブルシューティング
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../license/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  公式ライセンス
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../terms_of_service/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  利用規約
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../privacy_policy/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  プライバシーポリシー
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="ナビゲーション" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../" title="Nimbus" class="md-nav__button md-logo" aria-label="Nimbus" data-md-component="logo">
+      
+  <img src="../../static/favicon.svg" alt="logo">
+
+    </a>
+    Nimbus
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ホーム
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../download/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ダウンロード
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cloud/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    クラウド
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    トラブルシューティング
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    トラブルシューティング
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#nimbus-doctor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        まずここから：nimbus doctor
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        インストールの問題
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="インストールの問題">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nimbus-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        インストール後に nimbus が PATH にない
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apple-silicon-arm64-not-found" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Apple Silicon で「arm64 not found」と表示される
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#curl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        インストールが固まる、または curl が失敗する
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nimbus-start-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        インストールは成功したが nimbus start が Docker に到達できないと言う
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        コンテナーの問題
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="コンテナーの問題">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        コンテナーが繰り返し再起動する
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nimbus-start-port-already-in-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        nimbus start が「port already in use」と言う
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gateway-unreachable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ダッシュボードが「gateway unreachable」と言う
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#oauth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OAuth 関連の問題
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OAuth 関連の問題">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#approve-oauth-callback-failed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Approve をクリックしたときに「OAuth callback failed」
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upwork-oauthredirect_uri_mismatch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Upwork OAuth：「redirect_uri_mismatch」
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        再起動後にトークンが消える
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MCP サーバーの問題
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MCP サーバーの問題">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mcp_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        バンドルされた MCP サーバーが起動しない
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#find_tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        find_tools が何も返さない
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mcpjson" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        mcp.json にサーバーを追加したのに表示されない
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#openrouter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OpenRouter / モデルの問題
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OpenRouter / モデルの問題">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#invalid-api-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        初めてのチャットで「Invalid API key」
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#id-model-not-found" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        特定のモデル ID で「Model not found」
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        埋め込みの失敗
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        復旧
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="復旧">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nimbus-was-installed-by-a-different-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        「Nimbus was installed by a different version」
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        すべてを消去してやり直す
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CLI の以前のバージョンにロールバックしたい
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        それでも解決しない？
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../license/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    公式ライセンス
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../terms_of_service/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    利用規約
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../privacy_policy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    プライバシーポリシー
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#nimbus-doctor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        まずここから：nimbus doctor
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        インストールの問題
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="インストールの問題">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nimbus-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        インストール後に nimbus が PATH にない
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apple-silicon-arm64-not-found" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Apple Silicon で「arm64 not found」と表示される
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#curl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        インストールが固まる、または curl が失敗する
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nimbus-start-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        インストールは成功したが nimbus start が Docker に到達できないと言う
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        コンテナーの問題
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="コンテナーの問題">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        コンテナーが繰り返し再起動する
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nimbus-start-port-already-in-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        nimbus start が「port already in use」と言う
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gateway-unreachable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ダッシュボードが「gateway unreachable」と言う
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#oauth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OAuth 関連の問題
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OAuth 関連の問題">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#approve-oauth-callback-failed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Approve をクリックしたときに「OAuth callback failed」
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upwork-oauthredirect_uri_mismatch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Upwork OAuth：「redirect_uri_mismatch」
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        再起動後にトークンが消える
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MCP サーバーの問題
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MCP サーバーの問題">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mcp_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        バンドルされた MCP サーバーが起動しない
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#find_tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        find_tools が何も返さない
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mcpjson" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        mcp.json にサーバーを追加したのに表示されない
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#openrouter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OpenRouter / モデルの問題
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OpenRouter / モデルの問題">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#invalid-api-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        初めてのチャットで「Invalid API key」
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#id-model-not-found" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        特定のモデル ID で「Model not found」
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        埋め込みの失敗
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        復旧
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="復旧">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nimbus-was-installed-by-a-different-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        「Nimbus was installed by a different version」
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        すべてを消去してやり直す
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CLI の以前のバージョンにロールバックしたい
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        それでも解決しない？
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="_1">トラブルシューティング</h1>
+<p style="color: #a3a3a3; font-size: 1.1em; margin: -8px 0 32px 0;">
+  <code>nimbus</code> が期待通りに動作しない場合は、まず <code>nimbus doctor</code> を実行してください。Docker への到達性、CLI/ゲートウェイのバージョンスキュー、コンテナーの健全性、インストールが最新リリースより遅れていないかを網羅するヘルスダッシュボードを出力します。ほとんどの問題はここに出てきます。
+</p>
+
+<p><code>doctor</code> が症状をカバーしていない場合、以下のセクションは疑わしいコンポーネントではなく <strong>目に見える症状</strong> で構成されています。最も近いものを選んでください。</p>
+<hr />
+<h2 id="nimbus-doctor">まずここから：<code>nimbus doctor</code></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>nimbus<span class="w"> </span>doctor
+</code></pre></div>
+<p>次の 4 つを確認し、それぞれ 1 行ずつ出力します：</p>
+<ul>
+<li><strong>Docker プローブ</strong> — daemon に到達できるか？新しいマシンが <code>nimbus start</code> の失敗直前に「すべて正常」と誤表示しないように、これは最初に実行されます。</li>
+<li><strong>CLI / ゲートウェイ スキュー</strong> — 実行中のゲートウェイコンテナーが CLI より 1 つ以上のマイナーバージョン古くないか？スキューがある CLI は警告は出しますが起動拒否はしません。</li>
+<li><strong>コンテナーの健全性</strong> — gateway、postgres、redis、qdrant コンテナーは健全か？</li>
+<li><strong>アップデートの新しさ</strong> — GitHub に新しいリリースはあるか？（埋め込まれた minisign 公開鍵がプレースホルダーの dev ビルドではスキップされます。）</li>
+</ul>
+<p>終了コードは常に <code>0</code> — <code>doctor</code> は失敗しません。CI や監視からのステータスチェックとして使えるように、警告を表示する設計です。</p>
+<hr />
+<h2 id="_2">インストールの問題</h2>
+<h3 id="nimbus-path">インストール後に <code>nimbus</code> が <code>PATH</code> にない</h3>
+<p>インストーラは <code>export NIMBUS_HOME=~/.nimbus</code> と <code>PATH</code> 更新を <code>~/.zshrc</code>、<code>~/.bashrc</code>、または Windows の <code>$PROFILE</code> に書き込みます。新しいシェルを開くか、現在のシェルで rc を <code>source</code> してください：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># macOS / Linux — 実際に使用しているシェルを選択</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nb">source</span><span class="w"> </span>~/.zshrc
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nb">source</span><span class="w"> </span>~/.bashrc
+</code></pre></div>
+<p>それでも <code>nimbus</code> が見つからない場合、インストールがサイレントに失敗した可能性があります。インストールログ（成功した実行の最後にパスが出力されます）を確認し、明示的なスクリプトで再実行してください：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://nimbus.yoodule.com/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+</code></pre></div>
+<h3 id="apple-silicon-arm64-not-found">Apple Silicon で「arm64 not found」と表示される</h3>
+<p>このメッセージは古いインストーラが出しています。スクリプトの新しいコピーを取得して再実行してください：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://raw.githubusercontent.com/Yoodule/nimbus/main/install.sh<span class="w"> </span>-o<span class="w"> </span>/tmp/install.sh<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>bash<span class="w"> </span>/tmp/install.sh
+</code></pre></div>
+<p>現行のインストーラは GitHub の CDN リダイレクトに従い、<code>uname -m</code> でアーキテクチャを検出し、成果物が本当に見つからない場合は実用的なエラーで早期失敗します。</p>
+<h3 id="curl">インストールが固まる、または <code>curl</code> が失敗する</h3>
+<p>最も一般的な原因は、企業プロキシが TLS を傍受していることです：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nv">HTTPS_PROXY</span><span class="o">=</span>http://your-proxy:port<span class="w"> </span>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://nimbus.yoodule.com/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+</code></pre></div>
+<p>CDN 自体が問題の場合は、<code>NIMBUS_VERSION</code> で動作確認済みのバージョンに固定してください：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://nimbus.yoodule.com/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nv">NIMBUS_VERSION</span><span class="o">=</span>v1.0.2<span class="w"> </span>bash
+</code></pre></div>
+<p><a href="https://github.com/Yoodule/nimbus/releases">releases ページ</a>から tarball を直接ダウンロードし、<code>~/.nimbus/</code> に手動で展開することもできます。バイナリは自己完結型です。</p>
+<h3 id="nimbus-start-docker">インストールは成功したが <code>nimbus start</code> が Docker に到達できないと言う</h3>
+<p>Docker はインストール済みだが daemon が起動していません。起動してください：</p>
+<ul>
+<li><strong>macOS / Windows</strong> — Docker Desktop（または OrbStack）を開く。メニューバーの鯨アイコンはアニメーションではなく停止している必要があります。</li>
+<li><strong>Linux</strong> — <code>sudo systemctl start docker</code>、systemd を使っていない場合は <code>sudo dockerd</code>。</li>
+</ul>
+<p><code>docker ps</code> で確認してください。<code>Cannot connect to the Docker daemon</code> と表示される場合は daemon がまだ準備できていません。数秒待ってから再試行してください。</p>
+<hr />
+<h2 id="_3">コンテナーの問題</h2>
+<h3 id="_4">コンテナーが繰り返し再起動する</h3>
+<p><code>docker ps</code> で 1 つのコンテナーが <code>Restarting</code> 状態になっています。最も一般的な原因は、古い <code>.env</code> に由来するボリュームの古さです：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>docker<span class="w"> </span>logs<span class="w"> </span>nimbus-gateway-1<span class="w"> </span>--tail<span class="w"> </span><span class="m">100</span><span class="w">    </span><span class="c1"># または nimbus-postgres-1 / nimbus-redis-1 / nimbus-qdrant-1</span>
+</code></pre></div>
+<p>具体的なエラーを探してください。Postgres または Redis の認証エラーの場合、<code>.env</code> の認証情報はローテーション済みですが、名前付きボリュームには古いものが残っています。復旧：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>nimbus<span class="w"> </span>stop
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="c1"># 古いボリュームを脇に退け、init をクリーンに再実行します。</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="c1"># nimbus start は新しいボリュームに新しい認証情報を自動生成します；</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="c1"># 古いボリュームは -corrupt-&lt;timestamp&gt; として残るので必要なら確認できます。</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>docker<span class="w"> </span>volume<span class="w"> </span>rm<span class="w"> </span>nimbus_postgres_data
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>nimbus<span class="w"> </span>start
+</code></pre></div>
+<p>以前の <code>nimbus recover-pg-role</code> / <code>nimbus recover-redis-password</code> サブコマンドは廃止されました — このフローがサポートされている復旧パスです。</p>
+<h3 id="nimbus-start-port-already-in-use"><code>nimbus start</code> が「port already in use」と言う</h3>
+<p>Nimbus は固定のホストポートをバインドします（3000 dashboard、8088 gateway、6080 noVNC、5433 postgres、6379 redis、6333/6334 qdrant）。ホスト上で他のプロセスがすでにこれらのポートを占有している場合、<code>start</code> は競合ポート番号を明記して失敗します。</p>
+<p>競合しているプロセスを見つけて停止してください：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># macOS / Linux</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>sudo<span class="w"> </span>lsof<span class="w"> </span>-iTCP:8088<span class="w"> </span>-sTCP:LISTEN
+</code></pre></div>
+<p>長期的なマルチインスタンス構成については、<a href="../download/#how-do-i-run-multiple-nimbus-instances-on-the-same-host">ダウンロードページ</a>の <strong>複数インスタンス</strong> セクションを参照してください。</p>
+<h3 id="gateway-unreachable">ダッシュボードが「gateway unreachable」と言う</h3>
+<p>ダッシュボードは <code>http://localhost:3000</code> で動作しています。読み込みはできるがすべてのアクションが「gateway unreachable」を返す場合、ゲートウェイコンテナーが実際に 8088 で待ち受けていません。以下を確認してください：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>docker<span class="w"> </span>ps<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>gateway
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>docker<span class="w"> </span>logs<span class="w"> </span>nimbus-gateway-1<span class="w"> </span>--tail<span class="w"> </span><span class="m">50</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>curl<span class="w"> </span>-s<span class="w"> </span>http://localhost:8088/version
+</code></pre></div>
+<p>Apple Silicon + Rosetta でよくある原因はプラットフォームの不一致です — ゲートウェイイメージは <code>linux/arm64</code> ですが、ランタイムが <code>amd64</code> を要求しています。<code>nimbus start</code> の前に <code>NIMBUS_HOST_ARCH=arm64</code> を設定してください。</p>
+<hr />
+<h2 id="oauth">OAuth 関連の問題</h2>
+<h3 id="approve-oauth-callback-failed">Approve をクリックしたときに「OAuth callback failed」</h3>
+<p>デフォルトでは、ゲートウェイは OAuth コールバックを <code>http://localhost:8088/oauth/callback</code> に着地させようとします。トンネルやリモートブラウザの背後で Nimbus を実行している場合、登録されている URL と一致しないため、プロバイダがコールバックを拒否します。</p>
+<p>修正は、<code>NIMBUS_URL</code>（ダッシュボードの OAuth プロキシが使用）と <code>OAUTH_REDIRECT_BASE</code>（ゲートウェイが使用）を、プロバイダがリダイレクトすべき公開 URL に設定することです。両方は <a href="https://github.com/Yoodule/nimbus/blob/main/.env.example"><code>.env.example</code></a> に記載されています。</p>
+<h3 id="upwork-oauthredirect_uri_mismatch">Upwork OAuth：「redirect_uri_mismatch」</h3>
+<p>Upwork の OAuth プロバイダは <code>redirect_uri</code> の一致に対して厳格です。インストーラの <code>UPWORK_REDIRECT_URI</code> は、Upwork 開発者コンソールに登録されているものと、末尾のスラッシュを含め 1 文字ずつ一致している必要があります。</p>
+<p><code>redirect_uri_mismatch</code> が出た場合は、<code>~/.nimbus/.env</code> の値を確認してください：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>nimbus<span class="w"> </span>config<span class="w"> </span>get<span class="w"> </span>UPWORK_REDIRECT_URI
+</code></pre></div>
+<p>…Upwork コンソールの値とバイト単位で比較してください。修正後、ゲートウェイコンテナーを再起動します：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
+</code></pre></div>
+<h3 id="_5">再起動後にトークンが消える</h3>
+<p>仕様です。デフォルトでは OAuth トークンはメモリ上だけに存在し、再起動のたびに再認可が必要です。これは共有 / マルチユーザーのホストにとってより安全なデフォルトです。トークンを永続化したい場合は、ダウンロード FAQ の <a href="../download/#where-do-my-oauth-tokens-live">OAuth 永続化セクション</a>を参照してください。</p>
+<hr />
+<h2 id="mcp">MCP サーバーの問題</h2>
+<h3 id="mcp_1">バンドルされた MCP サーバーが起動しない</h3>
+<p><code>docker logs nimbus-gateway-1 --tail 200</code> で、stdio サブプロセスがインポートエラーまたは環境変数の不足で死んでいるのが表示されます。よくある 2 つの原因：</p>
+<ol>
+<li><strong>API キーが不足</strong> — <code>~/.nimbus/.env</code> で該当する <code>*_API_KEYS</code>（複数形、カンマ区切り）を確認してください。ゲートウェイとダッシュボードは複数形を読み取り、単数形にフォールバックします。プールが空 ⇒ プロバイダが 401 を返します。</li>
+<li><strong>Python バージョンの不一致</strong> — バンドルされた MCP サーバーは <code>uv run python</code> 経由で動作します。システムの Python が 3.12 未満の場合、<code>uv</code> が初回呼び出し時に新しいものを取得するため、初回は ~30 秒かかることがあります。</li>
+</ol>
+<h3 id="find_tools"><code>find_tools</code> が何も返さない</h3>
+<p><code>find_tools</code> は Qdrant ベクトルインデックス上のセマンティック検索です。結果が空ということは：</p>
+<ul>
+<li>Qdrant に到達できない — <code>docker ps | grep qdrant</code> が健全と表示し、<code>curl http://localhost:6333/healthz</code> が 200 を返す必要があります。</li>
+<li>インデックスがまだ構築されていない — ゲートウェイは初回起動時にツール説明を取り込みます。1 分待ってから再試行してください。5 分経っても空のままの場合は再起動します：<code>nimbus stop &amp;&amp; nimbus start</code>。</li>
+</ul>
+<h3 id="mcpjson"><code>mcp.json</code> にサーバーを追加したのに表示されない</h3>
+<p>2 つの可能性があります：</p>
+<ol>
+<li>
+<p><strong><code>mcp.json</code> の構文エラー</strong> — ゲートウェイは不正な形式のエントリをサイレントにスキップします。以下で検証してください：
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>nimbus<span class="w"> </span>mcp<span class="w"> </span>list
+</code></pre></div>
+   新しいサーバーがリストにない場合、JSON が原因です。末尾のカンマやエスケープされていないバックスラッシュが定番の原因です。</p>
+</li>
+<li>
+<p><strong>ゲートウェイがリロードされていない</strong> — <code>mcp.json</code> はコンテナー起動時に読み込まれます。編集後：
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
+</code></pre></div></p>
+</li>
+</ol>
+<p>HTTP サーバーの場合、URL はゲートウェイコンテナーの内側から到達可能である必要があります — ホストマシンの <code>localhost</code> は Docker 内の <code>localhost</code> とは <em>異なります</em>。代わりに <code>host.docker.internal:&lt;port&gt;</code> を使用してください。</p>
+<hr />
+<h2 id="openrouter">OpenRouter / モデルの問題</h2>
+<h3 id="invalid-api-key">初めてのチャットで「Invalid API key」</h3>
+<p>CLI は最初の <code>nimbus start</code> で <code>OPENROUTER_API_KEY</code> を要求し、<code>~/.nimbus/.env</code> に書き込みます。このプロンプトをスキップしたか、キーが古い場合は：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>nimbus<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>OPENROUTER_API_KEYS<span class="w"> </span>sk-or-v1-...
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
+</code></pre></div>
+<p><strong>複数形</strong> に注意してください：<code>OPENROUTER_API_KEYS</code>（複数キー用にカンマ区切り、単数形へのフォールバックあり）。空のキー、または間違ったキープールでは、すべてのリクエストが <code>Authorization</code> ヘッダなしで送信され、プロバイダは 401 を返します。</p>
+<h3 id="id-model-not-found">特定のモデル ID で「Model not found」</h3>
+<p>Nimbus のデフォルトは <code>openrouter/free</code> です。<code>--model &lt;id&gt;</code> を渡したモデルが OpenRouter に存在しない場合、404 が返ります。モデル ID は <a href="https://openrouter.ai/models">openrouter.ai/models</a> で確認してください — 頻繁に変更されます。</p>
+<p>Ollama モデルの場合、ルーティングプレフィックスは <code>ollama/&lt;model-name&gt;</code>（例：<code>ollama/llama3.1</code>）です。プレフィックスなしのベア ID は OpenRouter とみなされます。</p>
+<h3 id="_6">埋め込みの失敗</h3>
+<p>埋め込みのデフォルトは <code>nvidia/llama-nemotron-embed-vl-1b-v2:free</code>（2048-dim、フリーティア）です。このモデルが利用できない、またはレート制限されている場合は、フォールバックを設定してください：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>nimbus<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>EMBEDDING_MODEL<span class="w"> </span>openai/text-embedding-3-small
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
+</code></pre></div>
+<p>これにより、次回起動時にすべてのツール説明が Qdrant に再取り込みされます — コールドキャッシュでは 1 分のインデックス作成時間を予期してください。</p>
+<hr />
+<h2 id="_7">復旧</h2>
+<h3 id="nimbus-was-installed-by-a-different-version">「Nimbus was installed by a different version」</h3>
+<p>以前のインストールが、<code>.env</code> と一致しなくなった認証情報で Postgres または Redis ボリュームを凍結したままだったことを意味します。修正は：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
+</code></pre></div>
+<p><code>start</code> は不一致を自動検出し、現在の <code>.env</code> に対してロール / パスワードを再初期化します。古い <code>recover-pg-role</code> / <code>recover-redis-password</code> サブコマンドは廃止されました。</p>
+<h3 id="_8">すべてを消去してやり直す</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>nimbus<span class="w"> </span>uninstall
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://nimbus.yoodule.com/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>nimbus<span class="w"> </span>start
+</code></pre></div>
+<p>これで CLI、すべてのコンテナー、すべての名前付きボリューム、<code>~/.nimbus/</code> が削除されます。OAuth トークン、<code>.env</code>、Qdrant に保存されたツール説明は失われます。初回起動時に再認可してください。</p>
+<h3 id="cli">CLI の以前のバージョンにロールバックしたい</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>nimbus<span class="w"> </span>update<span class="w"> </span>--version<span class="w"> </span>v1.0.1
+</code></pre></div>
+<p>（または必要なバージョン。）CLI の自己更新は、<code>nimbus update</code> と同じアトミック置換 + SHA256 + minisign パスを、特定のリリースに固定して使用します。</p>
+<hr />
+<h2 id="_9">それでも解決しない？</h2>
+<p><a href="https://github.com/Yoodule/nimbus/issues">Nimbus トラッカー</a>に Issue を作成する際に、以下を添付してください：</p>
+<ul>
+<li><code>nimbus doctor</code> の出力</li>
+<li>ホストのプラットフォームとアーキテクチャ（macOS / Linux では <code>uname -a</code>、Windows では <code>systeminfo</code>）</li>
+<li>関連するコンテナーログ：<code>docker logs nimbus-gateway-1 --tail 200</code>（または <code>nimbus-postgres-1</code> / <code>nimbus-redis-1</code> / <code>nimbus-qdrant-1</code>）</li>
+<li>関連しそうな <code>~/.nimbus/logs/</code> の内容</li>
+</ul>
+<p>CLI は決して <code>.env</code> や OAuth トークンを送信しません —  redact はあなた自身で行う必要がありますが、それ以外の診断情報は共有しても安全です。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+  
+  <pagefind-modal></pagefind-modal>
+  
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Built by <a href="https://www.linkedin.com/in/sundayj1213/?utm_source=nimbus&utm_medium=docs&utm_campaign=footer" target="_blank">Sunday Johnson</a> at <a href="https://yoodule.com?utm_source=nimbus&utm_medium=docs&utm_campaign=footer">Yoodule</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tracking", "navigation.tabs", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u30b3\u30d4\u30fc\u3057\u307e\u3057\u305f", "clipboard.copy": "\u30af\u30ea\u30c3\u30d7\u30dc\u30fc\u30c9\u3078\u30b3\u30d4\u30fc", "search.result.more.one": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3082\u30461\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.more.other": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3042\u3068#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.none": "\u4f55\u3082\u898b\u3064\u304b\u308a\u307e\u305b\u3093\u3067\u3057\u305f", "search.result.one": "1\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.other": "#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.placeholder": "\u691c\u7d22\u30ad\u30fc\u30ef\u30fc\u30c9\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044", "search.result.term.missing": "\u691c\u7d22\u306b\u542b\u307e\u308c\u306a\u3044", "select.version": "\u30d0\u30fc\u30b8\u30e7\u30f3\u5207\u308a\u66ff\u3048"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

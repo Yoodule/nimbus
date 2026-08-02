@@ -294,6 +294,25 @@
   
   
     <li class="md-tabs__item">
+      <a href="troubleshooting/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Dépannage
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
       <a href="license/" class="md-tabs__link">
         
   
@@ -570,6 +589,33 @@
     
   
     Cloud
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dépannage
   
 
     
@@ -892,7 +938,7 @@
 <div style="background: #0a0a0a; border: 1px solid #262626; border-radius: 12px; padding: 24px;">
   <h3 style="color: #ffffff; font-size: 1.15em; margin: 0 0 8px 0;">🗓️ Trier votre boîte de réception</h3>
   <p style="color: #a3a3a3; font-size: 0.95em; line-height: 1.5; margin: 0;">
-    Chaque matin, Nimbus étiquette les nouveaux e-mails, rédige des réponses pour les évidents et signale le reste dans Slack. Vous ne voyez que ceux qui ont besoin de vous.
+    Chaque matin, Nimbus étiquette les nouveaux e-mails, rédige des réponses pour les évidents et signale le reste pour votre revue. Vous ne voyez que ceux qui ont besoin de vous.
   </p>
 </div>
 
@@ -1025,35 +1071,19 @@
 </tr>
 <tr>
 <td style="text-align: left;"><code>nimbus upgrade</code></td>
-<td style="text-align: left;">Met à niveau. Récupère les derniers binaires et met à jour la configuration du wrapper.</td>
+<td style="text-align: left;">Rafraîchit les images des conteneurs. Récupère les nouvelles images gateway/dashboard, exécute la migration unique du schéma Qdrant si nécessaire, et fait un <code>compose up -d --build</code>.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>nimbus update</code></td>
-<td style="text-align: left;">Met à jour le CLI. Rafraîchit l'image du conteneur de la passerelle (avec <code>--gateway</code>).</td>
+<td style="text-align: left;"><code>nimbus update [--gateway]</code></td>
+<td style="text-align: left;">Auto-met à jour le <strong>binaire du CLI</strong>. Télécharge l'archive de la plateforme, vérifie la signature SHA256 + minisign, et remplace atomiquement le binaire en cours. <code>--gateway</code> tire aussi l'image du conteneur de la passerelle et le redémarre dans la même exécution.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>nimbus uninstall</code></td>
-<td style="text-align: left;">Désinstalle. Supprime le CLI Nimbus, les conteneurs et la configuration.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>nimbus uninstall --keep-data</code></td>
-<td style="text-align: left;">Désinstalle mais conserve les bases de données, les clés et la configuration.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>nimbus uninstall --purge</code></td>
-<td style="text-align: left;">Désinstalle et efface tout sans confirmation.</td>
+<td style="text-align: left;">Désinstalle. Supprime le CLI Nimbus, les conteneurs, la configuration et <code>~/.nimbus/</code>.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>nimbus doctor</code></td>
 <td style="text-align: left;">Diagnostique. Vérifie Docker, les écarts de version, la santé des conteneurs, la fraîcheur des mises à jour, la dérive des identifiants.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>nimbus recover-pg-role</code></td>
-<td style="text-align: left;">Répare. Migre le volume <code>nimbus_postgres_data</code> vers les identifiants actuels du <code>.env</code>.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>nimbus recover-redis-password</code></td>
-<td style="text-align: left;">Répare. Fait tourner le mot de passe du volume Redis pour qu'il corresponde au <code>.env</code> actuel.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>nimbus dashboard install</code></td>
@@ -1076,8 +1106,12 @@
 <td style="text-align: left;">Gère <code>~/.nimbus/mcp.json</code> (list, get, set, remove).</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>nimbus chat "prompt"</code></td>
-<td style="text-align: left;">Envoie un prompt au dashboard et diffuse la réponse en streaming.</td>
+<td style="text-align: left;"><code>nimbus agent "&lt;prompt&gt;" [--model &lt;id&gt;]</code></td>
+<td style="text-align: left;">Envoie un prompt au <code>nimbus_agent</code> du dashboard et diffuse la réponse en streaming. Par défaut <code>openrouter/free</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>nimbus activate &lt;key&gt;</code></td>
+<td style="text-align: left;">Active une clé de licence/d'enregistrement.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>nimbus env-init</code></td>

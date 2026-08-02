@@ -296,6 +296,25 @@
   
   
     <li class="md-tabs__item">
+      <a href="../troubleshooting/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  문제 해결
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
       <a href="../license/" class="md-tabs__link">
         
   
@@ -644,6 +663,33 @@
     
   
     클라우드
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    문제 해결
   
 
     
@@ -1038,7 +1084,7 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>nimbus<span class="w"> </span>upgrade
 </code></pre></div>
 <p>특정 버전으로 업그레이드:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>nimbus<span class="w"> </span>upgrade<span class="w"> </span>--version<span class="w"> </span>v1.0.3
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>nimbus<span class="w"> </span>update<span class="w"> </span>--version<span class="w"> </span>v1.0.3
 </code></pre></div>
 <hr />
 <h2 id="_4">제거</h2>
@@ -1068,15 +1114,15 @@
 </code></pre></div>
 <p>현재 설치 프로그램은 GitHub의 CDN 리디렉션을 따르고 아키텍처를 감지합니다. 자산이 실제로 누락된 경우에만 즉시 실패하며 어떤 자산이 문제인지 명확한 오류로 알려줍니다.</p>
 <h3 id="docker">Docker 없이 설치할 수 있나요?</h3>
-<p>가능합니다. CLI와 게이트웨이는 네이티브로 실행됩니다. 번들된 MCP 스택 (Playwright 브라우저, Postgres 에이전트 DB, Qdrant) 은 Docker를 사용하지만 <code>nimbus start --no-deps</code> 로 건너뛰고 대신 <code>mcp.json</code> 으로 원격 MCP 서버를 가리키도록 구성할 수 있습니다.</p>
+<p>아니요. Nimbus 는 실행 중인 Docker 데몬이 필요합니다 — 게이트웨이, Qdrant, Postgres, Redis, 번들된 MCP 서버가 모두 컨테이너에서 실행됩니다. macOS / Windows 에서는 Docker Desktop 또는 OrbStack 을, Linux 에서는 Docker Engine 을 사용하세요. Docker 에 접근할 수 없는 경우 <code>nimbus doctor</code> 가 알려줍니다.</p>
 <h3 id="_6">다운로드 크기는 얼마인가요?</h3>
-<p>CLI 타르볼은 압축 상태로 약 30 MB입니다. 첫 시작 시 Docker 이미지를 추가로 약 2 GB 가져옵니다 (Qdrant, Playwright, Postgres). 대역폭이 제한적인 경우 <code>--no-deps</code> 시작 모드로 Docker 풀을 건너뛸 수 있습니다.</p>
+<p>CLI 타르볼은 압축 상태로 약 30 MB입니다. 첫 시작 시 가져오는 Docker 이미지로 추가로 약 2 GB (게이트웨이, Qdrant, Postgres, Redis, Playwright/Chromium) 가 추가됩니다.</p>
 <h3 id="oauth">OAuth 토큰은 어디에 저장되나요?</h3>
-<p>기본적으로는 메모리에만 존재 — 재시작 시 다시 승인해야 합니다. <code>~/.nimbus/.env</code> 에 <code>NIMBUS_PERSIST_TOKENS=1</code> 을 설정하면 <code>~/.nimbus/tokens/</code> 아래에 암호화되어 저장됩니다.</p>
+<p>기본적으로는 메모리에만 존재 — 재시작 시 다시 승인해야 합니다. 게이트웨이의 OAuth 클라이언트가 흐름을 관리하며, 기본 설치에서는 토큰이 디스크에 저장되지 않습니다.</p>
 <h3 id="apple-silicon-rosetta">Apple Silicon에서 Rosetta로 동작하나요?</h3>
 <p>네 — 설치 명령 전에 <code>NIMBUS_HOST_ARCH=amd64</code> 를 설정하면 Intel 빌드를 받습니다. 게이트키퍼 도구로 인해 60 MB 이상 늘어나는 데 비해 소수의 사용자에게만 해당하므로 유니버설 바이너리는 제공하지 않습니다. Rosetta가 투명하게 처리합니다.</p>
 <h3 id="how-do-i-run-multiple-nimbus-instances-on-the-same-host">한 호스트에서 Nimbus 인스턴스를 여러 개 실행하려면?</h3>
-<p>Nimbus는 고정 호스트 포트 (<code>3000</code>, <code>8088</code>, <code>6333</code>, <code>5433</code>, <code>6080</code>, <code>8006</code>, <code>8007</code>, <code>8081</code>) 에 바인딩하므로 기본 설치는 단일 인스턴스입니다. 두 번째 인스턴스를 실행하려면 저장소를 클론하고 <code>compose.yaml</code> 에서 포트를 재매핑한 뒤, 고유한 <code>NIMBUS_HOME</code> 을 설정하고, 두 스택이 충돌하지 않도록 <code>COMPOSE_PROJECT_NAME</code> 을 설정하세요. 자세한 내용은 아래 <a href="#how-do-i-run-multiple-nimbus-instances-on-the-same-host">다중 인스턴스 섹션</a> 을 참고하세요.</p>
+<p>Nimbus는 고정 호스트 포트 (dashboard <code>3000</code>, gateway <code>8088</code>, noVNC <code>6080</code>, Postgres <code>5433</code>, Redis <code>6379</code>, Qdrant <code>6333</code>/<code>6334</code>) 에 바인딩하므로 기본 설치는 단일 인스턴스입니다. 두 번째 인스턴스를 실행하려면 저장소를 클론하고 <code>compose.yaml</code> 에서 포트를 재매핑한 뒤, 고유한 <code>NIMBUS_HOME</code> 을 설정하고, 두 스택이 충돌하지 않도록 <code>COMPOSE_PROJECT_NAME</code> 을 설정하세요. 자세한 내용은 아래 <a href="#how-do-i-run-multiple-nimbus-instances-on-the-same-host">다중 인스턴스 섹션</a> 을 참고하세요.</p>
 <h3 id="curl">설치가 멈추거나 curl 이 실패합니다 — 어떻게 하나요?</h3>
 <p>가장 흔한 원인은 회사 프록시가 TLS를 가로채는 경우입니다. <code>HTTPS_PROXY</code> 를 설정하고 다시 시도하세요. CDN 자체가 문제라면 설치 스크립트가 알려진 정상 릴리스를 고정할 수 있도록 <code>NIMBUS_VERSION</code> 을 받아들이며, <a href="https://github.com/Yoodule/nimbus/releases">releases 페이지</a> 에서 타르볼을 직접 받아 <code>~/.nimbus/</code> 에 풀어 놓을 수도 있습니다 — 바이너리는 자체 완결형입니다.</p>
 <hr />

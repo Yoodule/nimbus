@@ -294,6 +294,25 @@
   
   
     <li class="md-tabs__item">
+      <a href="troubleshooting/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  문제 해결
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
       <a href="license/" class="md-tabs__link">
         
   
@@ -570,6 +589,33 @@
     
   
     클라우드
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    문제 해결
   
 
     
@@ -892,7 +938,7 @@
 <div style="background: #0a0a0a; border: 1px solid #262626; border-radius: 12px; padding: 24px;">
   <h3 style="color: #ffffff; font-size: 1.15em; margin: 0 0 8px 0;">🗓️ 받은편지함을 분류합니다</h3>
   <p style="color: #a3a3a3; font-size: 0.95em; line-height: 1.5; margin: 0;">
-    매일 아침 Nimbus가 새 이메일을 라벨링하고, 단순 회신은 초안으로 작성하며, 나머지는 Slack에 플래그합니다. 사용자는 직접 봐야 하는 것만 확인합니다.
+    매일 아침 Nimbus가 새 이메일을 라벨링하고, 단순 회신은 초안으로 작성하며, 나머지는 검토용으로 플래그합니다. 사용자는 직접 봐야 하는 것만 확인합니다.
   </p>
 </div>
 
@@ -1025,35 +1071,19 @@
 </tr>
 <tr>
 <td style="text-align: left;"><code>nimbus upgrade</code></td>
-<td style="text-align: left;">업그레이드. 최신 바이너리를 가져오고 래퍼 설정을 업그레이드합니다.</td>
+<td style="text-align: left;">컨테이너 이미지를 새로 고침. 새 gateway/dashboard 이미지를 가져오고, 필요 시 1회성 Qdrant 스키마 마이그레이션을 실행한 뒤 <code>compose up -d --build</code> 를 수행합니다.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>nimbus update</code></td>
-<td style="text-align: left;">CLI 업데이트. 게이트웨이 컨테이너 이미지를 새로 고칩니다 (<code>--gateway</code> 와 함께 사용).</td>
+<td style="text-align: left;"><code>nimbus update [--gateway]</code></td>
+<td style="text-align: left;"><strong>CLI 바이너리 자체</strong>를 자체 업데이트. 플랫폼 아카이브를 다운로드하고, SHA256 + minisign 서명을 검증한 뒤 실행 중인 바이너리를 원자적으로 교체합니다. <code>--gateway</code> 를 함께 사용하면 같은 실행에서 게이트웨이 컨테이너를 풀링하고 재시작합니다.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>nimbus uninstall</code></td>
-<td style="text-align: left;">제거. Nimbus CLI, 컨테이너, 설정을 모두 제거합니다.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>nimbus uninstall --keep-data</code></td>
-<td style="text-align: left;">제거하면서 데이터베이스, 키, 설정은 보존합니다.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>nimbus uninstall --purge</code></td>
-<td style="text-align: left;">확인 없이 모든 것을 제거합니다.</td>
+<td style="text-align: left;">제거. Nimbus CLI, 컨테이너, 설정, <code>~/.nimbus/</code> 를 모두 제거합니다.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>nimbus doctor</code></td>
 <td style="text-align: left;">진단. Docker, 버전 차이, 컨테이너 상태, 업데이트 신선도, 자격 증명 드리프트를 확인합니다.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>nimbus recover-pg-role</code></td>
-<td style="text-align: left;">복구. <code>nimbus_postgres_data</code> 볼륨을 현재 <code>.env</code> 자격 증명으로 마이그레이션합니다.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>nimbus recover-redis-password</code></td>
-<td style="text-align: left;">복구. Redis 볼륨 비밀번호를 현재 <code>.env</code> 와 일치하도록 회전합니다.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>nimbus dashboard install</code></td>
@@ -1076,8 +1106,12 @@
 <td style="text-align: left;"><code>~/.nimbus/mcp.json</code> 을 관리합니다 (list, get, set, remove).</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>nimbus chat "prompt"</code></td>
-<td style="text-align: left;">Dashboard에 프롬프트를 보내고 응답을 스트리밍합니다.</td>
+<td style="text-align: left;"><code>nimbus agent "&lt;prompt&gt;" [--model &lt;id&gt;]</code></td>
+<td style="text-align: left;">Dashboard의 <code>nimbus_agent</code> 로 프롬프트를 보내고 응답을 스트리밍합니다. 기본값은 <code>openrouter/free</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>nimbus activate &lt;key&gt;</code></td>
+<td style="text-align: left;">라이선스/등록 키를 활성화합니다.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>nimbus env-init</code></td>

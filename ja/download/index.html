@@ -296,6 +296,25 @@
   
   
     <li class="md-tabs__item">
+      <a href="../troubleshooting/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  トラブルシューティング
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
       <a href="../license/" class="md-tabs__link">
         
   
@@ -644,6 +663,33 @@
     
   
     クラウド
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    トラブルシューティング
   
 
     
@@ -1038,7 +1084,7 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>nimbus<span class="w"> </span>upgrade
 </code></pre></div>
 <p>特定のバージョンにアップグレードするには:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>nimbus<span class="w"> </span>upgrade<span class="w"> </span>--version<span class="w"> </span>v1.0.3
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>nimbus<span class="w"> </span>update<span class="w"> </span>--version<span class="w"> </span>v1.0.3
 </code></pre></div>
 <hr />
 <h2 id="_4">アンインストール</h2>
@@ -1068,15 +1114,15 @@
 </code></pre></div>
 <p>現在のインストーラーは GitHub の CDN リダイレクトに従い、アーキテクチャを検出し、アセットが本当に欠落している場合は分かりやすいエラーで迅速に失敗します。</p>
 <h3 id="docker">Docker がないマシンにもインストールできますか?</h3>
-<p>はい。CLI とゲートウェイはネイティブで動作します。同梱の MCP スタック (Playwright ブラウザー、Postgres エージェント DB、Qdrant) は Docker を使用しますが、<code>nimbus start --no-deps</code> でスキップし、<code>mcp.json</code> 経由で Nimbus をリモート MCP サーバーに向けることができます。</p>
+<p>いいえ。Nimbus には動作中の Docker デーモンが必要です — ゲートウェイ、Qdrant、Postgres、Redis、バンドルされた MCP サーバーはすべてコンテナで動作します。macOS / Windows では Docker Desktop または OrbStack を使用し、Linux では Docker Engine を使用してください。Docker に到達できない場合は <code>nimbus doctor</code> がその旨を伝えます。</p>
 <h3 id="_6">ダウンロードサイズはどれくらいですか?</h3>
-<p>CLI の tarball は圧縮状態で約 30 MB です。初回起動時に取得される Docker イメージでさらに約 2 GB (Qdrant、Playwright、Postgres) 追加されます。帯域が限られている場合は、<code>--no-deps</code> 起動モードで Docker プル をスキップできます。</p>
+<p>CLI の tarball は圧縮状態で約 30 MB です。初回起動時にプルされる Docker イメージでさらに約 2 GB (ゲートウェイ、Qdrant、Postgres、Redis、Playwright/Chromium) 追加されます。</p>
 <h3 id="oauth">OAuth トークンはどこに保存されますか?</h3>
-<p>デフォルトではメモリ内 — 再起動時に再承認が必要です。<code>~/.nimbus/.env</code> で <code>NIMBUS_PERSIST_TOKENS=1</code> を設定すると、<code>~/.nimbus/tokens/</code> 配下に暗号化して保存されます。</p>
+<p>デフォルトではメモリ内 — 再起動時には再承認が必要です。ゲートウェイの OAuth クライアントが処理を管理し、デフォルトのインストールではトークンはディスクに永続化されません。</p>
 <h3 id="apple-silicon-rosetta">Apple Silicon で Rosetta 経由で動作しますか?</h3>
 <p>はい — インストールコマンドの前に <code>NIMBUS_HOST_ARCH=amd64</code> を設定して Intel ビルドを取得してください。Gatekeeper ツールが 60 MB 以上追加するため、少数のユーザー向けにユニバーサルバイナリは配布していません。Rosetta が透過的に処理します。</p>
 <h3 id="how-do-i-run-multiple-nimbus-instances-on-the-same-host">同じホストで Nimbus インスタンスを複数実行するには?</h3>
-<p>Nimbus は固定のホストポート (<code>3000</code>, <code>8088</code>, <code>6333</code>, <code>5433</code>, <code>6080</code>, <code>8006</code>, <code>8007</code>, <code>8081</code>) にバインドするため、デフォルトのインストールは単一インスタンスです。2 つ目を実行するには、リポジトリをクローンし、<code>compose.yaml</code> でポートを再マッピングし、固有の <code>NIMBUS_HOME</code> を設定し、2 つのスタックが衝突しないように <code>COMPOSE_PROJECT_NAME</code> を設定してください。詳細は下記の <a href="#how-do-i-run-multiple-nimbus-instances-on-the-same-host">複数インスタンスセクション</a> を参照してください。</p>
+<p>Nimbus は固定のホストポート (<code>3000</code> dashboard、<code>8088</code> ゲートウェイ、<code>6080</code> noVNC、<code>5433</code> Postgres、<code>6379</code> Redis、<code>6333</code>/<code>6334</code> Qdrant) をバインドするため、デフォルトのインストールは単一インスタンスです。2 つ目を実行するには、リポジトリをクローンし、<code>compose.yaml</code> でポートを再マッピングし、固有の <code>NIMBUS_HOME</code> を設定し、2 つのスタックが衝突しないように <code>COMPOSE_PROJECT_NAME</code> を設定してください。詳細は下記の <a href="#how-do-i-run-multiple-nimbus-instances-on-the-same-host">複数インスタンスセクション</a> を参照してください。</p>
 <h3 id="curl">インストールがハングする、curl が失敗する場合 — どうすればいいですか?</h3>
 <p>最も多い原因は、企業プロキシが TLS を傍受していることです。<code>HTTPS_PROXY</code> を設定して再試行してください。問題が CDN 特有の場合、インストールスクリプトは <code>NIMBUS_VERSION</code> を受け付けて動作確認済みのリリースに固定でき、また <a href="https://github.com/Yoodule/nimbus/releases">releases ページ</a> から tarball を直接ダウンロードして手動で <code>~/.nimbus/</code> に展開することもできます — バイナリは自己完結しています。</p>
 <hr />

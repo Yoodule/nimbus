@@ -296,6 +296,25 @@
   
   
     <li class="md-tabs__item">
+      <a href="../troubleshooting/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Troubleshooting
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
       <a href="../license/" class="md-tabs__link">
         
   
@@ -644,6 +663,33 @@
     
   
     Cloud
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
   
 
     
@@ -1034,11 +1080,14 @@
 <p>Every release is SLSA-attested by GitHub Actions. You can view the attestation on the <a href="https://github.com/Yoodule/nimbus/releases">releases page</a>.</p>
 <hr />
 <h2 id="upgrade">Upgrade</h2>
-<p>The CLI upgrades itself in place. Your <code>mcp.json</code>, <code>.env</code>, OAuth tokens, and the Qdrant index are preserved:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>nimbus<span class="w"> </span>upgrade
+<p>There are two upgrade paths, for different things:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>nimbus<span class="w"> </span>upgrade<span class="w">           </span><span class="c1"># refresh container images (gateway + dashboard)</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>nimbus<span class="w"> </span>update<span class="w">            </span><span class="c1"># self-update the CLI binary itself</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>nimbus<span class="w"> </span>update<span class="w"> </span>--gateway<span class="w">  </span><span class="c1"># self-update the CLI + pull/restart the gateway container</span>
 </code></pre></div>
-<p>To upgrade to a specific version:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>nimbus<span class="w"> </span>upgrade<span class="w"> </span>--version<span class="w"> </span>v1.0.3
+<p>Your <code>mcp.json</code>, <code>.env</code>, OAuth tokens, and the Qdrant index are preserved across either.</p>
+<p>To pin a version during install, set <code>NIMBUS_VERSION</code> on the right-hand side of the pipe:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://nimbus.yoodule.com/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nv">NIMBUS_VERSION</span><span class="o">=</span>v1.0.3<span class="w"> </span>bash
 </code></pre></div>
 <hr />
 <h2 id="uninstall">Uninstall</h2>
@@ -1068,15 +1117,15 @@
 </code></pre></div>
 <p>The current installer follows GitHub's CDN redirect, detects your architecture, and fails fast with an actionable error if the asset is genuinely missing.</p>
 <h3 id="can-i-install-on-a-machine-without-docker">Can I install on a machine without Docker?</h3>
-<p>Yes. The CLI and gateway run natively. The bundled MCP stack (Playwright browser, Postgres agent DB, Qdrant) uses Docker, but you can skip it with <code>nimbus start --no-deps</code> and point Nimbus at remote MCP servers via <code>mcp.json</code> instead.</p>
+<p>No. Nimbus requires a running Docker daemon — the gateway, Qdrant, Postgres, Redis, and the bundled MCP servers all run containerized. On macOS / Windows use Docker Desktop or OrbStack; on Linux use Docker Engine. <code>nimbus doctor</code> will tell you if Docker isn't reachable.</p>
 <h3 id="how-big-is-the-download">How big is the download?</h3>
-<p>The CLI tarball is ~30 MB compressed. The Docker images it pulls on first start add another ~2 GB (Qdrant, Playwright, Postgres). If you're bandwidth-constrained, the <code>--no-deps</code> start mode skips the Docker pull.</p>
+<p>The CLI tarball is ~30 MB compressed. The Docker images it pulls on first start add another ~2 GB (gateway, Qdrant, Postgres, Redis, Playwright/Chromium).</p>
 <h3 id="where-do-my-oauth-tokens-live">Where do my OAuth tokens live?</h3>
-<p>In-memory by default — re-approve on restart. Set <code>NIMBUS_PERSIST_TOKENS=1</code> in <code>~/.nimbus/.env</code> to encrypt them at rest under <code>~/.nimbus/tokens/</code>.</p>
+<p>In-memory by default — re-approve on restart. The gateway's OAuth client manages the dance; tokens are not persisted to disk in the default install.</p>
 <h3 id="does-this-work-on-apple-silicon-under-rosetta">Does this work on Apple Silicon under Rosetta?</h3>
 <p>Yes — set <code>NIMBUS_HOST_ARCH=amd64</code> before the install command to pull the Intel build. We don't ship a universal binary because the gatekeeper tooling adds 60+ MB for a small subset of users; Rosetta handles it transparently.</p>
 <h3 id="how-do-i-run-multiple-nimbus-instances-on-the-same-host">How do I run multiple Nimbus instances on the same host?</h3>
-<p>Nimbus binds to fixed host ports (<code>3000</code>, <code>8088</code>, <code>6333</code>, <code>5433</code>, <code>6080</code>, <code>8006</code>, <code>8007</code>, <code>8081</code>), so the default install is single-instance. To run a second, clone the repo, remap ports in <code>compose.yaml</code>, set a unique <code>NIMBUS_HOME</code>, and set <code>COMPOSE_PROJECT_NAME</code> so the two stacks don't collide. Full details in the <a href="#how-do-i-run-multiple-nimbus-instances-on-the-same-host">Multiple Instances section</a> below.</p>
+<p>Nimbus binds to fixed host ports (<code>3000</code> for the dashboard, <code>8088</code> for the gateway, <code>6080</code> for noVNC, <code>5433</code> for Postgres, <code>6379</code> for Redis, <code>6333</code>/<code>6334</code> for Qdrant), so the default install is single-instance. To run a second, clone the repo, remap ports in <code>compose.yaml</code>, set a unique <code>NIMBUS_HOME</code>, and set <code>COMPOSE_PROJECT_NAME</code> so the two stacks don't collide. Full details in the <a href="#how-do-i-run-multiple-nimbus-instances-on-the-same-host">Multiple Instances section</a> below.</p>
 <h3 id="the-install-hangs-or-curl-fails-what-now">The install hangs or curl fails — what now?</h3>
 <p>Most common cause: a corporate proxy intercepting TLS. Set <code>HTTPS_PROXY</code> and try again. If the issue is the CDN specifically, the install script accepts <code>NIMBUS_VERSION</code> to pin a known-good release, and you can also download the tarball directly from the <a href="https://github.com/Yoodule/nimbus/releases">releases page</a> and untar it into <code>~/.nimbus/</code> by hand — the binary is self-contained.</p>
 <hr />

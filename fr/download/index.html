@@ -296,6 +296,25 @@
   
   
     <li class="md-tabs__item">
+      <a href="../troubleshooting/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Dépannage
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
       <a href="../license/" class="md-tabs__link">
         
   
@@ -644,6 +663,33 @@
     
   
     Cloud
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dépannage
   
 
     
@@ -1038,7 +1084,7 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>nimbus<span class="w"> </span>upgrade
 </code></pre></div>
 <p>Pour mettre à jour vers une version spécifique :</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>nimbus<span class="w"> </span>upgrade<span class="w"> </span>--version<span class="w"> </span>v1.0.3
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>nimbus<span class="w"> </span>update<span class="w"> </span>--version<span class="w"> </span>v1.0.3
 </code></pre></div>
 <hr />
 <h2 id="desinstallation">Désinstallation</h2>
@@ -1068,15 +1114,15 @@
 </code></pre></div>
 <p>L'installateur actuel suit la redirection CDN de GitHub, détecte votre architecture et échoue rapidement avec un message d'erreur actionnable si l'asset manque réellement.</p>
 <h3 id="puis-je-installer-sur-une-machine-sans-docker">Puis-je installer sur une machine sans Docker ?</h3>
-<p>Oui. Le CLI et la passerelle s'exécutent nativement. La pile MCP incluse (navigateur Playwright, base Postgres pour agents, Qdrant) utilise Docker, mais vous pouvez la sauter avec <code>nimbus start --no-deps</code> et pointer Nimbus vers des serveurs MCP distants via <code>mcp.json</code>.</p>
+<p>Non. Nimbus nécessite un daemon Docker en cours d'exécution — la passerelle, Qdrant, Postgres, Redis et les serveurs MCP inclus s'exécutent tous en conteneurs. Sur macOS / Windows utilisez Docker Desktop ou OrbStack ; sur Linux utilisez Docker Engine. <code>nimbus doctor</code> vous indiquera si Docker n'est pas joignable.</p>
 <h3 id="quelle-est-la-taille-du-telechargement">Quelle est la taille du téléchargement ?</h3>
-<p>L'archive du CLI pèse environ 30 Mo compressés. Les images Docker téléchargées au premier démarrage ajoutent environ 2 Go (Qdrant, Playwright, Postgres). Si votre bande passante est limitée, le mode de démarrage <code>--no-deps</code> ignore le téléchargement Docker.</p>
+<p>L'archive du CLI pèse environ 30 Mo compressés. Les images Docker récupérées au premier démarrage ajoutent environ 2 Go (passerelle, Qdrant, Postgres, Redis, Playwright/Chromium).</p>
 <h3 id="ou-sont-stockes-mes-tokens-oauth">Où sont stockés mes tokens OAuth ?</h3>
-<p>En mémoire par défaut — réautorisez au redémarrage. Définissez <code>NIMBUS_PERSIST_TOKENS=1</code> dans <code>~/.nimbus/.env</code> pour les chiffrer au repos sous <code>~/.nimbus/tokens/</code>.</p>
+<p>En mémoire par défaut — réautorisez au redémarrage. Le client OAuth de la passerelle gère la danse ; les tokens ne sont pas persistés sur le disque dans l'installation par défaut.</p>
 <h3 id="cela-fonctionne-t-il-sur-apple-silicon-avec-rosetta">Cela fonctionne-t-il sur Apple Silicon avec Rosetta ?</h3>
 <p>Oui — définissez <code>NIMBUS_HOST_ARCH=amd64</code> avant la commande d'installation pour récupérer la build Intel. Nous ne distribuons pas de binaire universel, car l'outillage de gatekeeper ajoute plus de 60 Mo pour une petite minorité d'utilisateurs ; Rosetta gère la traduction de manière transparente.</p>
 <h3 id="how-do-i-run-multiple-nimbus-instances-on-the-same-host">Comment exécuter plusieurs instances de Nimbus sur le même hôte ?</h3>
-<p>Nimbus se lie à des ports fixes de l'hôte (<code>3000</code>, <code>8088</code>, <code>6333</code>, <code>5433</code>, <code>6080</code>, <code>8006</code>, <code>8007</code>, <code>8081</code>), donc l'installation par défaut est mono-instance. Pour en exécuter une seconde, clonez le dépôt, remappez les ports dans <code>compose.yaml</code>, définissez un <code>NIMBUS_HOME</code> unique et configurez <code>COMPOSE_PROJECT_NAME</code> pour éviter les collisions entre les deux piles. Tous les détails dans la <a href="#how-do-i-run-multiple-nimbus-instances-on-the-same-host">section Instances multiples</a> ci-dessous.</p>
+<p>Nimbus se lie à des ports fixes de l'hôte (<code>3000</code> pour le dashboard, <code>8088</code> pour la passerelle, <code>6080</code> pour noVNC, <code>5433</code> pour Postgres, <code>6379</code> pour Redis, <code>6333</code>/<code>6334</code> pour Qdrant), donc l'installation par défaut est mono-instance. Pour en exécuter une seconde, clonez le dépôt, remappez les ports dans <code>compose.yaml</code>, définissez un <code>NIMBUS_HOME</code> unique et configurez <code>COMPOSE_PROJECT_NAME</code> pour éviter les collisions entre les deux piles. Tous les détails dans la <a href="#how-do-i-run-multiple-nimbus-instances-on-the-same-host">section Instances multiples</a> ci-dessous.</p>
 <h3 id="linstallation-se-bloque-ou-curl-echoue-que-faire">L'installation se bloque ou curl échoue — que faire ?</h3>
 <p>La cause la plus fréquente est un proxy d'entreprise qui intercepte le TLS. Définissez <code>HTTPS_PROXY</code> et réessayez. Si le problème vient spécifiquement du CDN, le script d'installation accepte <code>NIMBUS_VERSION</code> pour épingler une release réputée fonctionnelle, et vous pouvez aussi télécharger l'archive directement depuis la <a href="https://github.com/Yoodule/nimbus/releases">page des releases</a> et la décompresser vous-même dans <code>~/.nimbus/</code> — le binaire est autonome.</p>
 <hr />

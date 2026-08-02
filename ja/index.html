@@ -294,6 +294,25 @@
   
   
     <li class="md-tabs__item">
+      <a href="troubleshooting/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  トラブルシューティング
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
       <a href="license/" class="md-tabs__link">
         
   
@@ -570,6 +589,33 @@
     
   
     クラウド
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    トラブルシューティング
   
 
     
@@ -892,7 +938,7 @@
 <div style="background: #0a0a0a; border: 1px solid #262626; border-radius: 12px; padding: 24px;">
   <h3 style="color: #ffffff; font-size: 1.15em; margin: 0 0 8px 0;">🗓️ 受信箱をトリアージ</h3>
   <p style="color: #a3a3a3; font-size: 0.95em; line-height: 1.5; margin: 0;">
-    毎朝、Nimbus が新しいメールにラベルを付け、明らかなものには返信の下書きを作成し、残りは Slack でフラグします。あなたが見るのは対応が必要なものだけです。
+    毎朝、Nimbus が新しいメールにラベルを付け、明らかなものには返信の下書きを作成し、残りは確認用にフラグします。あなたが見るのは対応が必要なものだけです。
   </p>
 </div>
 
@@ -1025,35 +1071,19 @@
 </tr>
 <tr>
 <td style="text-align: left;"><code>nimbus upgrade</code></td>
-<td style="text-align: left;">アップグレード。最新のバイナリを取得し、ラッパーの設定をアップグレードします。</td>
+<td style="text-align: left;">コンテナーイメージを更新。最新の gateway/dashboard イメージを取得し、必要に応じて 1 回限りの Qdrant スキーママイグレーションを実行し、<code>compose up -d --build</code> を行います。</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>nimbus update</code></td>
-<td style="text-align: left;">CLI を更新。ゲートウェイコンテナーのイメージをリフレッシュします（<code>--gateway</code> 併用）。</td>
+<td style="text-align: left;"><code>nimbus update [--gateway]</code></td>
+<td style="text-align: left;"><strong>CLI バイナリ自体</strong>を自己更新。プラットフォームアーカイブをダウンロードし、SHA256 + minisign 署名を検証して、実行中のバイナリをアトミックに置き換えます。<code>--gateway</code> を付けると、同じ実行でゲートウェイコンテナーの pull + 再起動も行います。</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>nimbus uninstall</code></td>
-<td style="text-align: left;">アンインストール。Nimbus CLI、コンテナー、設定を削除します。</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>nimbus uninstall --keep-data</code></td>
-<td style="text-align: left;">アンインストールするがデータベース、鍵、設定は保持します。</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>nimbus uninstall --purge</code></td>
-<td style="text-align: left;">確認なしでアンインストールし、すべてを消去します。</td>
+<td style="text-align: left;">アンインストール。Nimbus CLI、コンテナー、設定、および <code>~/.nimbus/</code> を削除します。</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>nimbus doctor</code></td>
 <td style="text-align: left;">診断。Docker、バージョン差分、コンテナーの健全性、アップデートの新しさ、認証情報のドリフトを確認します。</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>nimbus recover-pg-role</code></td>
-<td style="text-align: left;">修復。<code>nimbus_postgres_data</code> ボリュームを現在の <code>.env</code> の認証情報に移行します。</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>nimbus recover-redis-password</code></td>
-<td style="text-align: left;">修復。Redis ボリュームのパスワードを現在の <code>.env</code> に一致するようにローテーションします。</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>nimbus dashboard install</code></td>
@@ -1076,8 +1106,12 @@
 <td style="text-align: left;"><code>~/.nimbus/mcp.json</code> を管理（list、get、set、remove）。</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>nimbus chat "プロンプト"</code></td>
-<td style="text-align: left;">Dashboard にプロンプトを送信し、応答をストリーミングします。</td>
+<td style="text-align: left;"><code>nimbus agent "&lt;プロンプト&gt;" [--model &lt;id&gt;]</code></td>
+<td style="text-align: left;">Dashboard の <code>nimbus_agent</code> にプロンプトを送信し、応答をストリーミングします。デフォルトは <code>openrouter/free</code> です。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>nimbus activate &lt;key&gt;</code></td>
+<td style="text-align: left;">ライセンス / 登録キーを有効化します。</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>nimbus env-init</code></td>

@@ -1,0 +1,1578 @@
+
+<!doctype html>
+<html lang="fr" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Your 24/7 Employee">
+      
+      
+      
+        <link rel="canonical" href="https://nimbus.yoodule.com/fr/troubleshooting/">
+      
+      
+        <link rel="prev" href="../cloud/">
+      
+      
+        <link rel="next" href="../license/">
+      
+      
+        
+          <link rel="alternate" href="../../troubleshooting/" hreflang="en">
+        
+          <link rel="alternate" href="../../ko/troubleshooting/" hreflang="ko">
+        
+          <link rel="alternate" href="../../es/troubleshooting/" hreflang="es">
+        
+          <link rel="alternate" href="./" hreflang="fr">
+        
+          <link rel="alternate" href="../../ja/troubleshooting/" hreflang="ja">
+        
+          <link rel="alternate" href="../../zh/troubleshooting/" hreflang="zh">
+        
+      
+      
+      <link rel="icon" href="../../static/favicon.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Dépannage - Nimbus</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  
+  <script type="text/javascript">
+      (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "wtl608oyum");
+  </script>
+
+  
+  <link href="../../pagefind/pagefind-component-ui.css" rel="stylesheet">
+  <script src="../../pagefind/pagefind-component-ui.js" type="module"></script>
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="white">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#depannage" class="md-skip">
+          Aller au contenu
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="En-tête">
+    <a href="../" title="Nimbus" class="md-header__button md-logo" aria-label="Nimbus" data-md-component="logo">
+      
+  <img src="../../static/favicon.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Nimbus
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Dépannage
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="white"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Sélectionner la langue">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="../../troubleshooting/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../ko/troubleshooting/" hreflang="ko" class="md-select__link">
+              한국어
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../es/troubleshooting/" hreflang="es" class="md-select__link">
+              Español
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="fr" class="md-select__link">
+              Français
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../ja/troubleshooting/" hreflang="ja" class="md-select__link">
+              日本語
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../zh/troubleshooting/" hreflang="zh" class="md-select__link">
+              中文
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+    <pagefind-modal-trigger
+        class="md-header__button md-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+    </pagefind-modal-trigger>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Onglets" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Accueil
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../download/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Téléchargement
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../cloud/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Cloud
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Dépannage
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../license/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Licence officielle
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../terms_of_service/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Conditions d'utilisation
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../privacy_policy/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Politique de confidentialité
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../" title="Nimbus" class="md-nav__button md-logo" aria-label="Nimbus" data-md-component="logo">
+      
+  <img src="../../static/favicon.svg" alt="logo">
+
+    </a>
+    Nimbus
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Accueil
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../download/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Téléchargement
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cloud/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cloud
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dépannage
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dépannage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#commencez-ici-nimbus-doctor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Commencez ici : nimbus doctor
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#problemes-dinstallation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problèmes d'installation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Problèmes d&#39;installation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nimbus-nest-pas-dans-mon-path-apres-linstallation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        nimbus n'est pas dans mon PATH après l'installation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#linstallateur-dit-arm64-not-found-sur-apple-silicon" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        L'installateur dit « arm64 not found » sur Apple Silicon
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#linstallation-bloque-ou-curl-echoue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        L'installation bloque ou curl échoue
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#linstallation-reussit-mais-nimbus-start-dit-que-docker-nest-pas-joignable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        L'installation réussit mais nimbus start dit que Docker n'est pas joignable
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#problemes-de-conteneurs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problèmes de conteneurs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Problèmes de conteneurs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#un-conteneur-redemarre-en-boucle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Un conteneur redémarre en boucle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nimbus-start-dit-port-already-in-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        nimbus start dit « port already in use »
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#le-dashboard-dit-gateway-unreachable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Le dashboard dit « gateway unreachable »
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#problemes-oauth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problèmes OAuth
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Problèmes OAuth">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#oauth-callback-failed-quand-je-clique-sur-approve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        « OAuth callback failed » quand je clique sur Approve
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oauth-upwork-redirect_uri_mismatch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OAuth Upwork : « redirect_uri_mismatch »
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#les-tokens-disparaissent-apres-un-redemarrage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Les tokens disparaissent après un redémarrage
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#problemes-de-serveurs-mcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problèmes de serveurs MCP
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Problèmes de serveurs MCP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#un-serveur-mcp-inclus-ne-demarre-pas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Un serveur MCP inclus ne démarre pas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#find_tools-ne-renvoie-rien" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        find_tools ne renvoie rien
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jai-ajoute-un-serveur-a-mcpjson-mais-il-napparait-pas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        J'ai ajouté un serveur à mcp.json mais il n'apparaît pas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#problemes-openrouter-modeles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problèmes OpenRouter / modèles
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Problèmes OpenRouter / modèles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#invalid-api-key-au-premier-chat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        « Invalid API key » au premier chat
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-not-found-pour-un-id-de-modele-precis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        « Model not found » pour un ID de modèle précis
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#echecs-dembeddings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Échecs d'embeddings
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recuperation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Récupération
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Récupération">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nimbus-was-installed-by-a-different-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        « Nimbus was installed by a different version »
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tout-effacer-et-repartir-de-zero" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tout effacer et repartir de zéro
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#je-veux-revenir-a-une-version-anterieure-du-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Je veux revenir à une version antérieure du CLI
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#toujours-bloque" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Toujours bloqué ?
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../license/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Licence officielle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../terms_of_service/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Conditions d'utilisation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../privacy_policy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Politique de confidentialité
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#commencez-ici-nimbus-doctor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Commencez ici : nimbus doctor
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#problemes-dinstallation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problèmes d'installation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Problèmes d&#39;installation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nimbus-nest-pas-dans-mon-path-apres-linstallation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        nimbus n'est pas dans mon PATH après l'installation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#linstallateur-dit-arm64-not-found-sur-apple-silicon" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        L'installateur dit « arm64 not found » sur Apple Silicon
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#linstallation-bloque-ou-curl-echoue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        L'installation bloque ou curl échoue
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#linstallation-reussit-mais-nimbus-start-dit-que-docker-nest-pas-joignable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        L'installation réussit mais nimbus start dit que Docker n'est pas joignable
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#problemes-de-conteneurs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problèmes de conteneurs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Problèmes de conteneurs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#un-conteneur-redemarre-en-boucle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Un conteneur redémarre en boucle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nimbus-start-dit-port-already-in-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        nimbus start dit « port already in use »
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#le-dashboard-dit-gateway-unreachable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Le dashboard dit « gateway unreachable »
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#problemes-oauth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problèmes OAuth
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Problèmes OAuth">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#oauth-callback-failed-quand-je-clique-sur-approve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        « OAuth callback failed » quand je clique sur Approve
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oauth-upwork-redirect_uri_mismatch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OAuth Upwork : « redirect_uri_mismatch »
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#les-tokens-disparaissent-apres-un-redemarrage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Les tokens disparaissent après un redémarrage
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#problemes-de-serveurs-mcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problèmes de serveurs MCP
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Problèmes de serveurs MCP">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#un-serveur-mcp-inclus-ne-demarre-pas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Un serveur MCP inclus ne démarre pas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#find_tools-ne-renvoie-rien" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        find_tools ne renvoie rien
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jai-ajoute-un-serveur-a-mcpjson-mais-il-napparait-pas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        J'ai ajouté un serveur à mcp.json mais il n'apparaît pas
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#problemes-openrouter-modeles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problèmes OpenRouter / modèles
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Problèmes OpenRouter / modèles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#invalid-api-key-au-premier-chat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        « Invalid API key » au premier chat
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-not-found-pour-un-id-de-modele-precis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        « Model not found » pour un ID de modèle précis
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#echecs-dembeddings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Échecs d'embeddings
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recuperation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Récupération
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Récupération">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nimbus-was-installed-by-a-different-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        « Nimbus was installed by a different version »
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tout-effacer-et-repartir-de-zero" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tout effacer et repartir de zéro
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#je-veux-revenir-a-une-version-anterieure-du-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Je veux revenir à une version antérieure du CLI
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#toujours-bloque" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Toujours bloqué ?
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="depannage">Dépannage</h1>
+<p style="color: #a3a3a3; font-size: 1.1em; margin: -8px 0 32px 0;">
+  Si <code>nimbus</code> ne se comporte pas comme prévu, commencez par <code>nimbus doctor</code> : il imprime un tableau de santé couvrant l'accessibilité de Docker, le décalage de version CLI/gateway, la santé des conteneurs et si votre installation est en retard sur la dernière version. La plupart des problèmes y apparaissent.
+</p>
+
+<p>Si <code>doctor</code> ne couvre pas votre symptôme, les sections ci-dessous sont organisées par <strong>ce que vous voyez</strong> plutôt que par le composant suspecté : choisissez la correspondance la plus proche.</p>
+<hr />
+<h2 id="commencez-ici-nimbus-doctor">Commencez ici : <code>nimbus doctor</code></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>nimbus<span class="w"> </span>doctor
+</code></pre></div>
+<p>Il vérifie quatre choses et imprime une ligne par vérification :</p>
+<ul>
+<li><strong>Sonde Docker</strong> — le daemon est-il joignable ? Cette vérification s'exécute en premier pour qu'une machine neuve ne voie pas un trompeur « tout va bien » pendant que <code>nimbus start</code> est sur le point d'échouer.</li>
+<li><strong>Décalage CLI / gateway</strong> — le conteneur gateway en cours est-il plus ancien que votre CLI de plus d'une version mineure ? Un CLI décalé avertira mais ne refusera pas de démarrer.</li>
+<li><strong>Santé des conteneurs</strong> — les conteneurs gateway, postgres, redis et qdrant sont-ils sains ?</li>
+<li><strong>Fraîcheur des mises à jour</strong> — existe-t-il une release plus récente sur GitHub ? (Ignoré sur les builds de dev où la clé publique minisign embarquée est un placeholder.)</li>
+</ul>
+<p>Le code de sortie est toujours <code>0</code> — <code>doctor</code> n'échoue jamais, il affiche des avertissements pour rester utilisable comme vérification d'état depuis CI et la supervision.</p>
+<hr />
+<h2 id="problemes-dinstallation">Problèmes d'installation</h2>
+<h3 id="nimbus-nest-pas-dans-mon-path-apres-linstallation"><code>nimbus</code> n'est pas dans mon <code>PATH</code> après l'installation</h3>
+<p>Le programme d'installation écrit <code>export NIMBUS_HOME=~/.nimbus</code> et les mises à jour de <code>PATH</code> dans <code>~/.zshrc</code>, <code>~/.bashrc</code> ou <code>$PROFILE</code> (Windows). Ouvrez un nouveau shell, ou <code>source</code> votre fichier rc dans celui en cours :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># macOS / Linux — choisissez le shell que vous utilisez vraiment</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nb">source</span><span class="w"> </span>~/.zshrc
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nb">source</span><span class="w"> </span>~/.bashrc
+</code></pre></div>
+<p>Si <code>nimbus</code> est toujours absent, l'installation a peut-être échoué en silence. Vérifiez le journal d'installation (il imprime le chemin à la fin d'une exécution réussie) et relancez avec le script explicite :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://nimbus.yoodule.com/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+</code></pre></div>
+<h3 id="linstallateur-dit-arm64-not-found-sur-apple-silicon">L'installateur dit « arm64 not found » sur Apple Silicon</h3>
+<p>Ce message provient d'un installateur obsolète. Récupérez une copie fraîche du script et relancez :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://raw.githubusercontent.com/Yoodule/nimbus/main/install.sh<span class="w"> </span>-o<span class="w"> </span>/tmp/install.sh<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>bash<span class="w"> </span>/tmp/install.sh
+</code></pre></div>
+<p>L'installateur actuel suit la redirection CDN de GitHub, détecte votre architecture via <code>uname -m</code>, et échoue rapidement avec une erreur actionable si l'asset manque vraiment.</p>
+<h3 id="linstallation-bloque-ou-curl-echoue">L'installation bloque ou <code>curl</code> échoue</h3>
+<p>La cause la plus fréquente est un proxy d'entreprise qui intercepte TLS :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nv">HTTPS_PROXY</span><span class="o">=</span>http://votre-proxy:port<span class="w"> </span>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://nimbus.yoodule.com/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+</code></pre></div>
+<p>Si le CDN lui-même est le problème, épinglez une version connue avec <code>NIMBUS_VERSION</code> :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://nimbus.yoodule.com/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nv">NIMBUS_VERSION</span><span class="o">=</span>v1.0.2<span class="w"> </span>bash
+</code></pre></div>
+<p>Vous pouvez aussi télécharger le tarball directement depuis la <a href="https://github.com/Yoodule/nimbus/releases">page des releases</a> et le décompresser à la main dans <code>~/.nimbus/</code> — le binaire est autonome.</p>
+<h3 id="linstallation-reussit-mais-nimbus-start-dit-que-docker-nest-pas-joignable">L'installation réussit mais <code>nimbus start</code> dit que Docker n'est pas joignable</h3>
+<p>Docker est installé mais le daemon ne tourne pas. Démarrez-le :</p>
+<ul>
+<li><strong>macOS / Windows</strong> — ouvrez Docker Desktop (ou OrbStack). L'icône de la baleine dans la barre de menus doit être fixe, pas animée.</li>
+<li><strong>Linux</strong> — <code>sudo systemctl start docker</code>, ou <code>sudo dockerd</code> si vous n'êtes pas sur systemd.</li>
+</ul>
+<p>Vérifiez avec <code>docker ps</code>. Si vous voyez <code>Cannot connect to the Docker daemon</code>, le daemon n'est pas encore prêt — attendez quelques secondes et réessayez.</p>
+<hr />
+<h2 id="problemes-de-conteneurs">Problèmes de conteneurs</h2>
+<h3 id="un-conteneur-redemarre-en-boucle">Un conteneur redémarre en boucle</h3>
+<p><code>docker ps</code> montre un conteneur dans l'état <code>Restarting</code>. La cause la plus fréquente est un volume obsolète issu d'un ancien <code>.env</code> :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>docker<span class="w"> </span>logs<span class="w"> </span>nimbus-gateway-1<span class="w"> </span>--tail<span class="w"> </span><span class="m">100</span><span class="w">    </span><span class="c1"># ou nimbus-postgres-1 / nimbus-redis-1 / nimbus-qdrant-1</span>
+</code></pre></div>
+<p>Cherchez l'erreur précise. S'il s'agit d'un échec d'authentification Postgres ou Redis, votre <code>.env</code> a fait tourner les identifiants mais le volume nommé conserve les anciens. Récupération :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>nimbus<span class="w"> </span>stop
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="c1"># Mettez le volume obsolète de côté pour que l&#39;init se ré-exécute proprement.</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="c1"># nimbus start régénère des identifiants frais sur un volume neuf ;</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="c1"># l&#39;ancien est préservé en -corrupt-&lt;timestamp&gt; au cas où vous auriez besoin</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="c1"># de l&#39;inspecter.</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>docker<span class="w"> </span>volume<span class="w"> </span>rm<span class="w"> </span>nimbus_postgres_data
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>nimbus<span class="w"> </span>start
+</code></pre></div>
+<p>Les anciennes sous-commandes <code>nimbus recover-pg-role</code> / <code>nimbus recover-redis-password</code> ont disparu — ce flux est le chemin de récupération supporté.</p>
+<h3 id="nimbus-start-dit-port-already-in-use"><code>nimbus start</code> dit « port already in use »</h3>
+<p>Nimbus lie des ports fixes sur l'hôte (3000 dashboard, 8088 gateway, 6080 noVNC, 5433 postgres, 6379 redis, 6333/6334 qdrant). Si autre chose sur l'hôte occupe déjà l'un de ces ports, <code>start</code> échouera en indiquant le numéro en conflit.</p>
+<p>Trouvez et arrêtez le processus en conflit :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># macOS / Linux</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>sudo<span class="w"> </span>lsof<span class="w"> </span>-iTCP:8088<span class="w"> </span>-sTCP:LISTEN
+</code></pre></div>
+<p>Pour une configuration multi-instance durable, consultez la section <strong>Instances multiples</strong> de la <a href="../download/#how-do-i-run-multiple-nimbus-instances-on-the-same-host">page de téléchargement</a>.</p>
+<h3 id="le-dashboard-dit-gateway-unreachable">Le dashboard dit « gateway unreachable »</h3>
+<p>Le dashboard tourne sur <code>http://localhost:3000</code>. S'il charge mais que chaque action renvoie « gateway unreachable », le conteneur gateway n'écoute pas réellement sur 8088. Vérifiez :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>docker<span class="w"> </span>ps<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>gateway
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>docker<span class="w"> </span>logs<span class="w"> </span>nimbus-gateway-1<span class="w"> </span>--tail<span class="w"> </span><span class="m">50</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>curl<span class="w"> </span>-s<span class="w"> </span>http://localhost:8088/version
+</code></pre></div>
+<p>Une cause fréquente sur Apple Silicon sous Rosetta est une incompatibilité de plateforme — l'image du gateway est <code>linux/arm64</code> mais le runtime réclame <code>amd64</code>. Définissez <code>NIMBUS_HOST_ARCH=arm64</code> avant <code>nimbus start</code>.</p>
+<hr />
+<h2 id="problemes-oauth">Problèmes OAuth</h2>
+<h3 id="oauth-callback-failed-quand-je-clique-sur-approve">« OAuth callback failed » quand je clique sur Approve</h3>
+<p>Le gateway tente d'atterrir le callback OAuth sur <code>http://localhost:8088/oauth/callback</code> par défaut. Si vous exécutez Nimbus derrière un tunnel ou un navigateur distant, le fournisseur rejettera le callback car l'URL ne correspond pas à celle enregistrée.</p>
+<p>La solution est de définir <code>NIMBUS_URL</code> (utilisé par le proxy OAuth du dashboard) et <code>OAUTH_REDIRECT_BASE</code> (utilisé par le gateway) à l'URL publique vers laquelle le fournisseur doit rediriger. Les deux sont documentés dans <a href="https://github.com/Yoodule/nimbus/blob/main/.env.example"><code>.env.example</code></a>.</p>
+<h3 id="oauth-upwork-redirect_uri_mismatch">OAuth Upwork : « redirect_uri_mismatch »</h3>
+<p>Le fournisseur OAuth d'Upwork est strict sur la correspondance exacte de <code>redirect_uri</code>. Le <code>UPWORK_REDIRECT_URI</code> de l'installateur doit être identique à celui enregistré dans la console développeur Upwork — caractère pour caractère, slash final inclus.</p>
+<p>Si vous voyez <code>redirect_uri_mismatch</code>, vérifiez la valeur dans <code>~/.nimbus/.env</code> :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>nimbus<span class="w"> </span>config<span class="w"> </span>get<span class="w"> </span>UPWORK_REDIRECT_URI
+</code></pre></div>
+<p>…puis comparez octet par octet avec la console Upwork. Après correction, redémarrez le conteneur gateway :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
+</code></pre></div>
+<h3 id="les-tokens-disparaissent-apres-un-redemarrage">Les tokens disparaissent après un redémarrage</h3>
+<p>C'est voulu. Par défaut, les tokens OAuth vivent uniquement en mémoire — chaque redémarrage est une re-autorisation. C'est le défaut le plus sûr pour les hôtes partagés / multi-utilisateur. Si vous voulez des tokens persistants, consultez la <a href="../download/#where-do-my-oauth-tokens-live">section de persistance OAuth</a> de la FAQ de téléchargement.</p>
+<hr />
+<h2 id="problemes-de-serveurs-mcp">Problèmes de serveurs MCP</h2>
+<h3 id="un-serveur-mcp-inclus-ne-demarre-pas">Un serveur MCP inclus ne démarre pas</h3>
+<p><code>docker logs nimbus-gateway-1 --tail 200</code> montrera le sous-processus stdio mourir avec une erreur d'import ou une variable d'environnement manquante. Les deux coupables habituels :</p>
+<ol>
+<li><strong>Clé API manquante</strong> — vérifiez <code>~/.nimbus/.env</code> pour les <code>*_API_KEYS</code> concernées (pluriel, séparées par des virgules). Le gateway et le dashboard lisent la forme plurielle et se rabattent sur la forme singulière ; pool vide ⇒ le fournisseur renvoie 401.</li>
+<li><strong>Décalage de version Python</strong> — les serveurs MCP inclus tournent via <code>uv run python</code>. Si vous avez un Python système plus ancien que 3.12, <code>uv</code> en récupérera un plus récent à la première invocation, ce qui peut prendre ~30 secondes la première fois.</li>
+</ol>
+<h3 id="find_tools-ne-renvoie-rien"><code>find_tools</code> ne renvoie rien</h3>
+<p><code>find_tools</code> est une recherche sémantique sur l'index vectoriel Qdrant. Des résultats vides signifient :</p>
+<ul>
+<li>Qdrant n'est pas joignable — <code>docker ps | grep qdrant</code> doit afficher sain ; <code>curl http://localhost:6333/healthz</code> doit renvoyer 200.</li>
+<li>L'index n'a pas encore été construit — le gateway ingère les descriptions d'outils au premier démarrage. Attendez une minute puis réessayez. Si c'est toujours vide après 5 minutes, redémarrez : <code>nimbus stop &amp;&amp; nimbus start</code>.</li>
+</ul>
+<h3 id="jai-ajoute-un-serveur-a-mcpjson-mais-il-napparait-pas">J'ai ajouté un serveur à <code>mcp.json</code> mais il n'apparaît pas</h3>
+<p>Deux possibilités :</p>
+<ol>
+<li>
+<p><strong>Erreur de syntaxe dans <code>mcp.json</code></strong> — le gateway ignore silencieusement les entrées malformées. Validez avec :
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>nimbus<span class="w"> </span>mcp<span class="w"> </span>list
+</code></pre></div>
+   Si votre nouveau serveur n'est pas dans la liste, le JSON est en cause. Une virgule en trop ou un antislash non échappé est le coupable habituel.</p>
+</li>
+<li>
+<p><strong>Le gateway ne s'est pas rechargé</strong> — <code>mcp.json</code> est lu au démarrage du conteneur. Après modification :
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
+</code></pre></div></p>
+</li>
+</ol>
+<p>Pour les serveurs HTTP, l'URL doit être joignable depuis l'intérieur du conteneur gateway — <code>localhost</code> depuis votre machine hôte n'est <em>pas</em> le même <code>localhost</code> dans Docker. Utilisez <code>host.docker.internal:&lt;port&gt;</code> à la place.</p>
+<hr />
+<h2 id="problemes-openrouter-modeles">Problèmes OpenRouter / modèles</h2>
+<h3 id="invalid-api-key-au-premier-chat">« Invalid API key » au premier chat</h3>
+<p>Le CLI demande <code>OPENROUTER_API_KEY</code> au tout premier <code>nimbus start</code> et l'écrit dans <code>~/.nimbus/.env</code>. Si vous avez ignoré ce prompt ou que la clé est obsolète :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>nimbus<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>OPENROUTER_API_KEYS<span class="w"> </span>sk-or-v1-...
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
+</code></pre></div>
+<p>Notez le pluriel : <code>OPENROUTER_API_KEYS</code> (séparées par des virgules pour plusieurs clés, avec repli sur la forme singulière). Un pool de clés vide ou incorrect fait que chaque requête part sans en-tête <code>Authorization</code> et le fournisseur renvoie 401.</p>
+<h3 id="model-not-found-pour-un-id-de-modele-precis">« Model not found » pour un ID de modèle précis</h3>
+<p>Nimbus utilise par défaut <code>openrouter/free</code>. Si vous passez <code>--model &lt;id&gt;</code> et que le modèle n'existe pas sur OpenRouter, vous obtenez un 404. Vérifiez l'ID du modèle sur <a href="https://openrouter.ai/models">openrouter.ai/models</a> — ils changent fréquemment.</p>
+<p>Pour les modèles Ollama, le préfixe de routage est <code>ollama/&lt;nom-du-modèle&gt;</code> (par exemple <code>ollama/llama3.1</code>). Les ID sans préfixe sont supposés être OpenRouter.</p>
+<h3 id="echecs-dembeddings">Échecs d'embeddings</h3>
+<p>Les embeddings utilisent par défaut <code>nvidia/llama-nemotron-embed-vl-1b-v2:free</code> (2048-dim, tier gratuit). Si ce modèle est indisponible ou limité en débit, définissez un repli :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>nimbus<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>EMBEDDING_MODEL<span class="w"> </span>openai/text-embedding-3-small
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
+</code></pre></div>
+<p>Ceci ré-ingère chaque description d'outil dans Qdrant au prochain démarrage — prévoyez une minute d'indexation sur un cache froid.</p>
+<hr />
+<h2 id="recuperation">Récupération</h2>
+<h3 id="nimbus-was-installed-by-a-different-version">« Nimbus was installed by a different version »</h3>
+<p>Signifie qu'une installation antérieure a laissé un volume Postgres ou Redis figé sous des identifiants qui ne correspondent plus à votre <code>.env</code>. La solution :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
+</code></pre></div>
+<p><code>start</code> détecte automatiquement la discordance et ré-initialise le rôle/mot de passe avec le <code>.env</code> actuel. Les anciennes sous-commandes <code>recover-pg-role</code> / <code>recover-redis-password</code> ont disparu.</p>
+<h3 id="tout-effacer-et-repartir-de-zero">Tout effacer et repartir de zéro</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>nimbus<span class="w"> </span>uninstall
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://nimbus.yoodule.com/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>nimbus<span class="w"> </span>start
+</code></pre></div>
+<p>Ceci supprime le CLI, tous les conteneurs, tous les volumes nommés et <code>~/.nimbus/</code>. Vous perdrez les tokens OAuth, le <code>.env</code> et toutes les descriptions d'outils stockées dans Qdrant. Réautorisez au premier lancement.</p>
+<h3 id="je-veux-revenir-a-une-version-anterieure-du-cli">Je veux revenir à une version antérieure du CLI</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>nimbus<span class="w"> </span>update<span class="w"> </span>--version<span class="w"> </span>v1.0.1
+</code></pre></div>
+<p>(Ou la version dont vous avez besoin.) Le self-update du CLI utilise le même remplacement atomique + SHA256 + minisign que <code>nimbus update</code>, simplement épinglé à une release précise.</p>
+<hr />
+<h2 id="toujours-bloque">Toujours bloqué ?</h2>
+<p>Ouvrez un ticket sur le <a href="https://github.com/Yoodule/nimbus/issues">tracker Nimbus</a> avec :</p>
+<ul>
+<li>La sortie de <code>nimbus doctor</code></li>
+<li>Plateforme et architecture de l'hôte (<code>uname -a</code> sur macOS/Linux, <code>systeminfo</code> sur Windows)</li>
+<li>Les journaux de conteneurs pertinents : <code>docker logs nimbus-gateway-1 --tail 200</code> (ou <code>nimbus-postgres-1</code> / <code>nimbus-redis-1</code> / <code>nimbus-qdrant-1</code>)</li>
+<li>Tout ce qui semble lié dans <code>~/.nimbus/logs/</code></li>
+</ul>
+<p>Le CLI n'envoie jamais votre <code>.env</code> ni vos tokens OAuth — c'est à vous de les censurer, mais le reste des diagnostics est sûr à partager.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+  
+  <pagefind-modal></pagefind-modal>
+  
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Built by <a href="https://www.linkedin.com/in/sundayj1213/?utm_source=nimbus&utm_medium=docs&utm_campaign=footer" target="_blank">Sunday Johnson</a> at <a href="https://yoodule.com?utm_source=nimbus&utm_medium=docs&utm_campaign=footer">Yoodule</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tracking", "navigation.tabs", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copi\u00e9 dans le presse-papier", "clipboard.copy": "Copier dans le presse-papier", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.term.missing": "Non trouv\u00e9", "select.version": "S\u00e9lectionner la version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1577 @@
+
+<!doctype html>
+<html lang="ko" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Your 24/7 Employee">
+      
+      
+      
+        <link rel="canonical" href="https://nimbus.yoodule.com/ko/troubleshooting/">
+      
+      
+        <link rel="prev" href="../cloud/">
+      
+      
+        <link rel="next" href="../license/">
+      
+      
+        
+          <link rel="alternate" href="../../troubleshooting/" hreflang="en">
+        
+          <link rel="alternate" href="./" hreflang="ko">
+        
+          <link rel="alternate" href="../../es/troubleshooting/" hreflang="es">
+        
+          <link rel="alternate" href="../../fr/troubleshooting/" hreflang="fr">
+        
+          <link rel="alternate" href="../../ja/troubleshooting/" hreflang="ja">
+        
+          <link rel="alternate" href="../../zh/troubleshooting/" hreflang="zh">
+        
+      
+      
+      <link rel="icon" href="../../static/favicon.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>문제 해결 - Nimbus</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  
+  <script type="text/javascript">
+      (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "wtl608oyum");
+  </script>
+
+  
+  <link href="../../pagefind/pagefind-component-ui.css" rel="stylesheet">
+  <script src="../../pagefind/pagefind-component-ui.js" type="module"></script>
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="white">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          콘텐츠로 이동
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="상단/헤더">
+    <a href="../" title="Nimbus" class="md-header__button md-logo" aria-label="Nimbus" data-md-component="logo">
+      
+  <img src="../../static/favicon.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Nimbus
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              문제 해결
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="white"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="언어설정">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="../../troubleshooting/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="ko" class="md-select__link">
+              한국어
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../es/troubleshooting/" hreflang="es" class="md-select__link">
+              Español
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../fr/troubleshooting/" hreflang="fr" class="md-select__link">
+              Français
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../ja/troubleshooting/" hreflang="ja" class="md-select__link">
+              日本語
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../zh/troubleshooting/" hreflang="zh" class="md-select__link">
+              中文
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+    <pagefind-modal-trigger
+        class="md-header__button md-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+    </pagefind-modal-trigger>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="탭" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  홈
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../download/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  다운로드
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../cloud/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  클라우드
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  문제 해결
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../license/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  공식 라이선스
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../terms_of_service/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  서비스 약관
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../privacy_policy/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  개인정보처리방침
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../" title="Nimbus" class="md-nav__button md-logo" aria-label="Nimbus" data-md-component="logo">
+      
+  <img src="../../static/favicon.svg" alt="logo">
+
+    </a>
+    Nimbus
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    홈
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../download/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    다운로드
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cloud/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    클라우드
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    문제 해결
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    문제 해결
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#nimbus-doctor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        여기서부터: nimbus doctor
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        설치 문제
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="설치 문제">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nimbus-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        설치 후 nimbus 가 PATH 에 없습니다
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apple-silicon-arm64-not-found" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Apple Silicon 에서 "arm64 not found" 가 표시됩니다
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#curl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        설치가 멈추거나 curl 이 실패합니다
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nimbus-start-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        설치는 성공했지만 nimbus start 가 Docker 에 접근할 수 없다고 합니다
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        컨테이너 문제
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="컨테이너 문제">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        컨테이너가 계속 재시작됩니다
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nimbus-start-port-already-in-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        nimbus start 가 "port already in use" 라고 합니다
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gateway-unreachable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        대시보드가 "gateway unreachable" 라고 합니다
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#oauth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OAuth 문제
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OAuth 문제">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#approve-oauth-callback-failed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Approve 를 클릭했을 때 "OAuth callback failed"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upwork-oauth-redirect_uri_mismatch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Upwork OAuth: "redirect_uri_mismatch"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        재시작 후 토큰이 사라집니다
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MCP 서버 문제
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MCP 서버 문제">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mcp_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        번들된 MCP 서버가 시작되지 않습니다
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#find_tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        find_tools 가 아무것도 반환하지 않습니다
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mcpjson" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        mcp.json 에 서버를 추가했는데 표시되지 않습니다
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#openrouter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OpenRouter / 모델 문제
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OpenRouter / 모델 문제">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#invalid-api-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        첫 채팅에서 "Invalid API key"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#id-model-not-found" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        특정 모델 ID 에서 "Model not found"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        임베딩 실패
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        복구
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="복구">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nimbus-was-installed-by-a-different-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "Nimbus was installed by a different version"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        모두 지우고 처음부터 다시 시작
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CLI 의 이전 버전으로 롤백하고 싶습니다
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        여전히 막혔나요?
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../license/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    공식 라이선스
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../terms_of_service/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    서비스 약관
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../privacy_policy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개인정보처리방침
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#nimbus-doctor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        여기서부터: nimbus doctor
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        설치 문제
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="설치 문제">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nimbus-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        설치 후 nimbus 가 PATH 에 없습니다
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apple-silicon-arm64-not-found" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Apple Silicon 에서 "arm64 not found" 가 표시됩니다
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#curl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        설치가 멈추거나 curl 이 실패합니다
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nimbus-start-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        설치는 성공했지만 nimbus start 가 Docker 에 접근할 수 없다고 합니다
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        컨테이너 문제
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="컨테이너 문제">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        컨테이너가 계속 재시작됩니다
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nimbus-start-port-already-in-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        nimbus start 가 "port already in use" 라고 합니다
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gateway-unreachable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        대시보드가 "gateway unreachable" 라고 합니다
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#oauth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OAuth 문제
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OAuth 문제">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#approve-oauth-callback-failed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Approve 를 클릭했을 때 "OAuth callback failed"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upwork-oauth-redirect_uri_mismatch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Upwork OAuth: "redirect_uri_mismatch"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        재시작 후 토큰이 사라집니다
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MCP 서버 문제
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MCP 서버 문제">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mcp_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        번들된 MCP 서버가 시작되지 않습니다
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#find_tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        find_tools 가 아무것도 반환하지 않습니다
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mcpjson" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        mcp.json 에 서버를 추가했는데 표시되지 않습니다
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#openrouter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OpenRouter / 모델 문제
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OpenRouter / 모델 문제">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#invalid-api-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        첫 채팅에서 "Invalid API key"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#id-model-not-found" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        특정 모델 ID 에서 "Model not found"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        임베딩 실패
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        복구
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="복구">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nimbus-was-installed-by-a-different-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "Nimbus was installed by a different version"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        모두 지우고 처음부터 다시 시작
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CLI 의 이전 버전으로 롤백하고 싶습니다
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        여전히 막혔나요?
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="_1">문제 해결</h1>
+<p style="color: #a3a3a3; font-size: 1.1em; margin: -8px 0 32px 0;">
+  <code>nimbus</code> 가 기대대로 동작하지 않으면 <code>nimbus doctor</code> 부터 시작하세요. Docker 접근성, CLI/게이트웨이 버전 차이, 컨테이너 상태, 설치가 최신 릴리스에서 뒤처졌는지 여부를 다루는 상태 대시보드를 출력합니다. 대부분의 문제는 여기서 드러납니다.
+</p>
+
+<p><code>doctor</code> 가 증상을 다루고 있지 않다면, 아래 섹션은 의심되는 컴포넌트가 아니라 <strong>볼 수 있는 증상</strong> 별로 정리되어 있습니다. 가장 가까운 항목을 고르세요.</p>
+<hr />
+<h2 id="nimbus-doctor">여기서부터: <code>nimbus doctor</code></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>nimbus<span class="w"> </span>doctor
+</code></pre></div>
+<p>네 가지를 확인하고 각 검사마다 한 줄을 출력합니다:</p>
+<ul>
+<li><strong>Docker 프로브</strong> — 데몬에 접근할 수 있는가? 새 머신이 <code>nimbus start</code> 가 곧 실패할 때쯤 거짓으로 "모두 정상"을 보지 않도록 가장 먼저 실행됩니다.</li>
+<li><strong>CLI / 게이트웨이 차이</strong> — 실행 중인 게이트웨이 컨테이너가 CLI 보다 한 단계 이상의 마이너 버전 뒤처져 있는가? 차이가 나는 CLI 는 경고는 띄우지만 시작을 거부하지는 않습니다.</li>
+<li><strong>컨테이너 상태</strong> — gateway, postgres, redis, qdrant 컨테이너가 정상인가?</li>
+<li><strong>업데이트 신선도</strong> — GitHub 에 더 새로운 릴리스가 있는가? (내장된 minisign 공개키가 placeholder 인 dev 빌드에서는 건너뜁니다.)</li>
+</ul>
+<p>종료 코드는 항상 <code>0</code> 입니다 — <code>doctor</code> 는 실패하지 않으며, CI 와 모니터링에서 상태 체크로 사용할 수 있도록 경고만 표시합니다.</p>
+<hr />
+<h2 id="_2">설치 문제</h2>
+<h3 id="nimbus-path">설치 후 <code>nimbus</code> 가 <code>PATH</code> 에 없습니다</h3>
+<p>설치 프로그램은 <code>export NIMBUS_HOME=~/.nimbus</code> 와 <code>PATH</code> 변경을 <code>~/.zshrc</code>, <code>~/.bashrc</code>, Windows 의 <code>$PROFILE</code> 에 기록합니다. 새 셸을 열거나 현재 셸에서 rc 를 <code>source</code> 하세요:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># macOS / Linux — 실제로 사용하는 셸을 선택</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nb">source</span><span class="w"> </span>~/.zshrc
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nb">source</span><span class="w"> </span>~/.bashrc
+</code></pre></div>
+<p>그래도 <code>nimbus</code> 가 없으면 설치가 조용히 실패한 것일 수 있습니다. 설치 로그(성공한 실행의 끝에 경로가 출력됩니다)를 확인하고 명시적인 스크립트로 다시 실행하세요:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://nimbus.yoodule.com/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+</code></pre></div>
+<h3 id="apple-silicon-arm64-not-found">Apple Silicon 에서 "arm64 not found" 가 표시됩니다</h3>
+<p>이 메시지는 오래된 설치 프로그램에서 나옵니다. 스크립트의 새 복사본을 받아 다시 실행하세요:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://raw.githubusercontent.com/Yoodule/nimbus/main/install.sh<span class="w"> </span>-o<span class="w"> </span>/tmp/install.sh<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>bash<span class="w"> </span>/tmp/install.sh
+</code></pre></div>
+<p>현재 설치 프로그램은 GitHub 의 CDN 리디렉션을 따르고, <code>uname -m</code> 으로 아키텍처를 감지하며, 자산이 정말 없을 때는 즉시 actionable 오류로 실패합니다.</p>
+<h3 id="curl">설치가 멈추거나 <code>curl</code> 이 실패합니다</h3>
+<p>가장 흔한 원인은 TLS 를 가로채는 회사 프록시입니다:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nv">HTTPS_PROXY</span><span class="o">=</span>http://your-proxy:port<span class="w"> </span>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://nimbus.yoodule.com/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+</code></pre></div>
+<p>CDN 자체가 문제라면 <code>NIMBUS_VERSION</code> 으로 검증된 버전을 고정하세요:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://nimbus.yoodule.com/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nv">NIMBUS_VERSION</span><span class="o">=</span>v1.0.2<span class="w"> </span>bash
+</code></pre></div>
+<p><a href="https://github.com/Yoodule/nimbus/releases">releases 페이지</a> 에서 tarball 을 직접 받아 <code>~/.nimbus/</code> 에 직접 풀어도 됩니다 — 바이너리는 self-contained 입니다.</p>
+<h3 id="nimbus-start-docker">설치는 성공했지만 <code>nimbus start</code> 가 Docker 에 접근할 수 없다고 합니다</h3>
+<p>Docker 는 설치돼 있지만 데몬이 실행 중이지 않습니다. 시작하세요:</p>
+<ul>
+<li><strong>macOS / Windows</strong> — Docker Desktop (또는 OrbStack) 을 엽니다. 메뉴 바의 고래 아이콘이 애니메이션이 아닌 고정 상태여야 합니다.</li>
+<li><strong>Linux</strong> — <code>sudo systemctl start docker</code>, systemd 가 아니면 <code>sudo dockerd</code>.</li>
+</ul>
+<p><code>docker ps</code> 로 확인하세요. <code>Cannot connect to the Docker daemon</code> 이 보이면 데몬이 아직 준비되지 않은 것입니다 — 잠시 기다렸다가 다시 시도하세요.</p>
+<hr />
+<h2 id="_3">컨테이너 문제</h2>
+<h3 id="_4">컨테이너가 계속 재시작됩니다</h3>
+<p><code>docker ps</code> 에서 한 컨테이너가 <code>Restarting</code> 상태입니다. 가장 흔한 원인은 이전 <code>.env</code> 에서 남은 오래된 볼륨입니다:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>docker<span class="w"> </span>logs<span class="w"> </span>nimbus-gateway-1<span class="w"> </span>--tail<span class="w"> </span><span class="m">100</span><span class="w">    </span><span class="c1"># 또는 nimbus-postgres-1 / nimbus-redis-1 / nimbus-qdrant-1</span>
+</code></pre></div>
+<p>구체적인 에러를 찾으세요. Postgres 나 Redis 인증 실패라면 <code>.env</code> 의 자격 증명은 회전했지만 명명된 볼륨에는 이전 값이 남아 있는 것입니다. 복구:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>nimbus<span class="w"> </span>stop
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="c1"># 오래된 볼륨을 옆으로 옮겨 init 가 깨끗하게 다시 실행되도록 합니다.</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="c1"># nimbus start 는 새 볼륨에서 새 자격 증명을 자동 생성합니다;</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="c1"># 기존 볼륨은 -corrupt-&lt;timestamp&gt; 로 보존되어 필요 시 확인할 수 있습니다.</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>docker<span class="w"> </span>volume<span class="w"> </span>rm<span class="w"> </span>nimbus_postgres_data
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>nimbus<span class="w"> </span>start
+</code></pre></div>
+<p>이전 <code>nimbus recover-pg-role</code> / <code>nimbus recover-redis-password</code> 서브커맨드는 더 이상 존재하지 않습니다 — 이 흐름이 지원되는 복구 경로입니다.</p>
+<h3 id="nimbus-start-port-already-in-use"><code>nimbus start</code> 가 "port already in use" 라고 합니다</h3>
+<p>Nimbus 는 고정 호스트 포트 (3000 dashboard, 8088 gateway, 6080 noVNC, 5433 postgres, 6379 redis, 6333/6334 qdrant) 를 바인딩합니다. 호스트의 다른 프로세스가 이 포트 중 하나를 이미 점유하고 있으면 <code>start</code> 가 충돌 포트 번호를 명시하며 실패합니다.</p>
+<p>충돌하는 프로세스를 찾아 종료하세요:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># macOS / Linux</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>sudo<span class="w"> </span>lsof<span class="w"> </span>-iTCP:8088<span class="w"> </span>-sTCP:LISTEN
+</code></pre></div>
+<p>장기적인 다중 인스턴스 구성은 <a href="../download/#how-do-i-run-multiple-nimbus-instances-on-the-same-host">다운로드 페이지</a> 의 <strong>다중 인스턴스</strong> 섹션을 참고하세요.</p>
+<h3 id="gateway-unreachable">대시보드가 "gateway unreachable" 라고 합니다</h3>
+<p>대시보드는 <code>http://localhost:3000</code> 에서 실행됩니다. 로딩은 되지만 모든 동작이 "gateway unreachable" 을 반환한다면 게이트웨이 컨테이너가 실제로 8088 에서 수신 대기 중이 아닙니다. 확인:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>docker<span class="w"> </span>ps<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>gateway
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>docker<span class="w"> </span>logs<span class="w"> </span>nimbus-gateway-1<span class="w"> </span>--tail<span class="w"> </span><span class="m">50</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>curl<span class="w"> </span>-s<span class="w"> </span>http://localhost:8088/version
+</code></pre></div>
+<p>Apple Silicon + Rosetta 에서 흔한 원인은 플랫폼 불일치입니다 — 게이트웨이 이미지는 <code>linux/arm64</code> 인데 런타임이 <code>amd64</code> 를 요구합니다. <code>nimbus start</code> 전에 <code>NIMBUS_HOST_ARCH=arm64</code> 를 설정하세요.</p>
+<hr />
+<h2 id="oauth">OAuth 문제</h2>
+<h3 id="approve-oauth-callback-failed">Approve 를 클릭했을 때 "OAuth callback failed"</h3>
+<p>기본적으로 게이트웨이는 OAuth 콜백을 <code>http://localhost:8088/oauth/callback</code> 으로 착지시키려 합니다. 터널 뒤나 원격 브라우저에서 Nimbus 를 실행 중이라면, 등록된 URL 과 일치하지 않아 공급자가 콜백을 거부합니다.</p>
+<p>해결책은 <code>NIMBUS_URL</code> (대시보드의 OAuth 프록시가 사용) 과 <code>OAUTH_REDIRECT_BASE</code> (게이트웨이가 사용) 를 공급자가 리디렉션해야 할 공개 URL 로 설정하는 것입니다. 둘 다 <a href="https://github.com/Yoodule/nimbus/blob/main/.env.example"><code>.env.example</code></a> 에 문서화돼 있습니다.</p>
+<h3 id="upwork-oauth-redirect_uri_mismatch">Upwork OAuth: "redirect_uri_mismatch"</h3>
+<p>Upwork 의 OAuth 공급자는 <code>redirect_uri</code> 의 정확한 일치를 엄격히 요구합니다. 설치 프로그램의 <code>UPWORK_REDIRECT_URI</code> 는 Upwork 개발자 콘솔에 등록된 값과 — 마지막 슬래시까지 포함해 — 한 글자도 다르지 않아야 합니다.</p>
+<p><code>redirect_uri_mismatch</code> 가 보이면 <code>~/.nimbus/.env</code> 의 값을 확인하세요:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>nimbus<span class="w"> </span>config<span class="w"> </span>get<span class="w"> </span>UPWORK_REDIRECT_URI
+</code></pre></div>
+<p>…그리고 Upwork 콘솔 값과 바이트 단위로 비교하세요. 수정 후 게이트웨이 컨테이너를 재시작합니다:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
+</code></pre></div>
+<h3 id="_5">재시작 후 토큰이 사라집니다</h3>
+<p>의도된 동작입니다. 기본적으로 OAuth 토큰은 메모리에만 존재하며, 매 재시작이 새로운 재승인을 의미합니다. 공유 / 다중 사용자 호스트에서 더 안전한 기본값이기 때문입니다. 영구 토큰을 원한다면 다운로드 FAQ 의 <a href="../download/#where-do-my-oauth-tokens-live">OAuth 영구화 섹션</a> 을 참고하세요.</p>
+<hr />
+<h2 id="mcp">MCP 서버 문제</h2>
+<h3 id="mcp_1">번들된 MCP 서버가 시작되지 않습니다</h3>
+<p><code>docker logs nimbus-gateway-1 --tail 200</code> 에서 import 오류나 환경 변수 누락으로 stdio 서브프로세스가 죽는 모습이 보일 겁니다. 흔한 두 가지 원인:</p>
+<ol>
+<li><strong>API 키 누락</strong> — <code>~/.nimbus/.env</code> 에서 관련 <code>*_API_KEYS</code> (복수형, 쉼표로 구분) 를 확인하세요. 게이트웨이와 대시보드는 모두 복수형을 읽고 단수형으로 폴백합니다. 풀이 비어 있으면 ⇒ 공급자가 401 을 반환합니다.</li>
+<li><strong>Python 버전 차이</strong> — 번들된 MCP 서버는 <code>uv run python</code> 으로 실행됩니다. 시스템 Python 이 3.12 보다 낮으면 <code>uv</code> 가 첫 호출 시 더 높은 버전을 가져오며, 첫 호출은 ~30 초 걸릴 수 있습니다.</li>
+</ol>
+<h3 id="find_tools"><code>find_tools</code> 가 아무것도 반환하지 않습니다</h3>
+<p><code>find_tools</code> 는 Qdrant 벡터 인덱스에 대한 시맨틱 검색입니다. 결과가 비어 있다면:</p>
+<ul>
+<li>Qdrant 에 접근할 수 없음 — <code>docker ps | grep qdrant</code> 가 healthy 로 표시되고, <code>curl http://localhost:6333/healthz</code> 가 200 을 반환해야 합니다.</li>
+<li>인덱스가 아직 구축되지 않음 — 게이트웨이는 첫 시작 시 도구 설명을 수집합니다. 1 분 정도 기다린 뒤 다시 시도하세요. 5 분이 지나도 계속 비어 있으면 재시작: <code>nimbus stop &amp;&amp; nimbus start</code>.</li>
+</ul>
+<h3 id="mcpjson"><code>mcp.json</code> 에 서버를 추가했는데 표시되지 않습니다</h3>
+<p>두 가지 가능성이 있습니다:</p>
+<ol>
+<li>
+<p><strong><code>mcp.json</code> 의 구문 오류</strong> — 게이트웨이는 잘못된 형식의 항목을 조용히 건너뜁니다. 다음으로 검증:
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>nimbus<span class="w"> </span>mcp<span class="w"> </span>list
+</code></pre></div>
+   새 서버가 목록에 없다면 JSON 문제입니다. 마지막 쉼표나 이스케이프되지 않은 백슬래시가 흔한 원인입니다.</p>
+</li>
+<li>
+<p><strong>게이트웨이가 리로드되지 않음</strong> — <code>mcp.json</code> 은 컨테이너 시작 시 읽힙니다. 수정 후:
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
+</code></pre></div></p>
+</li>
+</ol>
+<p>HTTP 서버의 경우 URL 은 게이트웨이 컨테이너 내부에서 접근 가능해야 합니다 — 호스트의 <code>localhost</code> 는 Docker 내부의 <code>localhost</code> 와 <em>같지 않습니다</em>. 대신 <code>host.docker.internal:&lt;port&gt;</code> 를 사용하세요.</p>
+<hr />
+<h2 id="openrouter">OpenRouter / 모델 문제</h2>
+<h3 id="invalid-api-key">첫 채팅에서 "Invalid API key"</h3>
+<p>CLI 는 첫 <code>nimbus start</code> 시 <code>OPENROUTER_API_KEY</code> 를 입력받고 <code>~/.nimbus/.env</code> 에 기록합니다. 그 프롬프트를 건너뛰었거나 키가 오래되었다면:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>nimbus<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>OPENROUTER_API_KEYS<span class="w"> </span>sk-or-v1-...
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
+</code></pre></div>
+<p><strong>복수형</strong> 임에 주의하세요: <code>OPENROUTER_API_KEYS</code> (복수 키는 쉼표로 구분, 단수형으로 폴백). 비어 있거나 잘못된 키 풀은 모든 요청을 <code>Authorization</code> 헤더 없이 보내게 만들어 공급자가 401 을 반환합니다.</p>
+<h3 id="id-model-not-found">특정 모델 ID 에서 "Model not found"</h3>
+<p>Nimbus 의 기본값은 <code>openrouter/free</code> 입니다. <code>--model &lt;id&gt;</code> 를 전달했는데 해당 모델이 OpenRouter 에 존재하지 않으면 404 가 옵니다. <a href="https://openrouter.ai/models">openrouter.ai/models</a> 에서 모델 ID 를 확인하세요 — 자주 바뀝니다.</p>
+<p>Ollama 모델의 경우 라우팅 접두사는 <code>ollama/&lt;model-name&gt;</code> 입니다 (예: <code>ollama/llama3.1</code>). 접두사 없는 bare ID 는 OpenRouter 로 간주됩니다.</p>
+<h3 id="_6">임베딩 실패</h3>
+<p>임베딩의 기본값은 <code>nvidia/llama-nemotron-embed-vl-1b-v2:free</code> (2048-dim, 무료 등급) 입니다. 이 모델을 사용할 수 없거나 rate limit 이 걸렸다면 폴백을 설정하세요:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>nimbus<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>EMBEDDING_MODEL<span class="w"> </span>openai/text-embedding-3-small
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
+</code></pre></div>
+<p>다음 시작 시 모든 도구 설명이 Qdrant 에 재수집됩니다 — 콜드 캐시에서는 1 분 정도의 인덱싱 시간을 예상하세요.</p>
+<hr />
+<h2 id="_7">복구</h2>
+<h3 id="nimbus-was-installed-by-a-different-version">"Nimbus was installed by a different version"</h3>
+<p>이전 설치가 <code>.env</code> 와 더 이상 맞지 않는 자격 증명으로 Postgres / Redis 볼륨을 동결시켜 둔 경우입니다. 해결책:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
+</code></pre></div>
+<p><code>start</code> 가 불일치를 자동 감지하고 현재 <code>.env</code> 에 맞게 role/password 를 재초기화합니다. 이전 <code>recover-pg-role</code> / <code>recover-redis-password</code> 서브커맨드는 더 이상 없습니다.</p>
+<h3 id="_8">모두 지우고 처음부터 다시 시작</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>nimbus<span class="w"> </span>uninstall
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://nimbus.yoodule.com/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>nimbus<span class="w"> </span>start
+</code></pre></div>
+<p>이 명령은 CLI, 모든 컨테이너, 모든 명명된 볼륨, <code>~/.nimbus/</code> 를 제거합니다. OAuth 토큰, <code>.env</code>, Qdrant 에 저장된 도구 설명을 잃게 됩니다. 첫 실행 시 재승인하세요.</p>
+<h3 id="cli">CLI 의 이전 버전으로 롤백하고 싶습니다</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>nimbus<span class="w"> </span>update<span class="w"> </span>--version<span class="w"> </span>v1.0.1
+</code></pre></div>
+<p>(필요한 버전을 지정하세요.) CLI 자체 업데이트는 <code>nimbus update</code> 와 같은 atomic replace + SHA256 + minisign 경로를 특정 릴리스에 고정한 방식으로 사용합니다.</p>
+<hr />
+<h2 id="_9">여전히 막혔나요?</h2>
+<p><a href="https://github.com/Yoodule/nimbus/issues">Nimbus 트래커</a> 에 다음 내용과 함께 이슈를 열어주세요:</p>
+<ul>
+<li><code>nimbus doctor</code> 출력</li>
+<li>호스트 플랫폼과 아키텍처 (macOS / Linux 는 <code>uname -a</code>, Windows 는 <code>systeminfo</code>)</li>
+<li>관련 컨테이너 로그: <code>docker logs nimbus-gateway-1 --tail 200</code> (또는 <code>nimbus-postgres-1</code> / <code>nimbus-redis-1</code> / <code>nimbus-qdrant-1</code>)</li>
+<li>관련 있을 만한 <code>~/.nimbus/logs/</code> 의 모든 항목</li>
+</ul>
+<p>CLI 는 <code>.env</code> 나 OAuth 토큰을 절대 전송하지 않습니다 — redact 는 직접 해야 하지만, 다른 진단 정보는 공유해도 안전합니다.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+  
+  <pagefind-modal></pagefind-modal>
+  
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Built by <a href="https://www.linkedin.com/in/sundayj1213/?utm_source=nimbus&utm_medium=docs&utm_campaign=footer" target="_blank">Sunday Johnson</a> at <a href="https://yoodule.com?utm_source=nimbus&utm_medium=docs&utm_campaign=footer">Yoodule</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tracking", "navigation.tabs", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

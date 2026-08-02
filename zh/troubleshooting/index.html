@@ -1,0 +1,1577 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Your 24/7 Employee">
+      
+      
+      
+        <link rel="canonical" href="https://nimbus.yoodule.com/zh/troubleshooting/">
+      
+      
+        <link rel="prev" href="../cloud/">
+      
+      
+        <link rel="next" href="../license/">
+      
+      
+        
+          <link rel="alternate" href="../../troubleshooting/" hreflang="en">
+        
+          <link rel="alternate" href="../../ko/troubleshooting/" hreflang="ko">
+        
+          <link rel="alternate" href="../../es/troubleshooting/" hreflang="es">
+        
+          <link rel="alternate" href="../../fr/troubleshooting/" hreflang="fr">
+        
+          <link rel="alternate" href="../../ja/troubleshooting/" hreflang="ja">
+        
+          <link rel="alternate" href="./" hreflang="zh">
+        
+      
+      
+      <link rel="icon" href="../../static/favicon.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>故障排查 - Nimbus</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  
+  <script type="text/javascript">
+      (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "wtl608oyum");
+  </script>
+
+  
+  <link href="../../pagefind/pagefind-component-ui.css" rel="stylesheet">
+  <script src="../../pagefind/pagefind-component-ui.js" type="module"></script>
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="white">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../" title="Nimbus" class="md-header__button md-logo" aria-label="Nimbus" data-md-component="logo">
+      
+  <img src="../../static/favicon.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Nimbus
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              故障排查
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="white"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="选择当前语言">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="../../troubleshooting/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../ko/troubleshooting/" hreflang="ko" class="md-select__link">
+              한국어
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../es/troubleshooting/" hreflang="es" class="md-select__link">
+              Español
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../fr/troubleshooting/" hreflang="fr" class="md-select__link">
+              Français
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../ja/troubleshooting/" hreflang="ja" class="md-select__link">
+              日本語
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="zh" class="md-select__link">
+              中文
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+    <pagefind-modal-trigger
+        class="md-header__button md-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+    </pagefind-modal-trigger>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  首页
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../download/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  下载
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../cloud/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  云
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+  
+    
+  
+  故障排查
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../license/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  官方许可
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../terms_of_service/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  服务条款
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../privacy_policy/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  隐私政策
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../" title="Nimbus" class="md-nav__button md-logo" aria-label="Nimbus" data-md-component="logo">
+      
+  <img src="../../static/favicon.svg" alt="logo">
+
+    </a>
+    Nimbus
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../download/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    下载
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cloud/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    云
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    故障排查
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    故障排查
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#nimbus-doctor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        从这里开始：nimbus doctor
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        安装问题
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="安装问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nimbus-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        安装后 nimbus 不在我的 PATH 中
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apple-silicon-arm64-not-found" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        在 Apple Silicon 上安装器报告 "arm64 not found"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#curl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        安装卡住或 curl 失败
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nimbus-start-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        安装成功但 nimbus start 提示 Docker 不可达
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        容器问题
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="容器问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        容器反复重启
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nimbus-start-port-already-in-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        nimbus start 提示 "port already in use"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gateway-unreachable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        仪表板提示 "gateway unreachable"
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#oauth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OAuth 问题
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OAuth 问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#approve-oauth-callback-failed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        点击 Approve 时提示 "OAuth callback failed"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upwork-oauthredirect_uri_mismatch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Upwork OAuth:"redirect_uri_mismatch"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        重启后令牌消失了
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MCP 服务器问题
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MCP 服务器问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mcp_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        捆绑的 MCP 服务器无法启动
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#find_tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        find_tools 不返回任何结果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mcpjson" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        我在 mcp.json 中添加了服务器但没显示
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#openrouter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OpenRouter / 模型问题
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OpenRouter / 模型问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#invalid-api-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        首次聊天时提示 "Invalid API key"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#id-model-not-found" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        特定模型 ID 提示 "Model not found"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        嵌入失败
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        恢复
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="恢复">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nimbus-was-installed-by-a-different-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "Nimbus was installed by a different version"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        清除一切并重新开始
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        我想回滚到之前的 CLI 版本
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        仍然卡住？
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../license/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    官方许可
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../terms_of_service/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    服务条款
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../privacy_policy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    隐私政策
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#nimbus-doctor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        从这里开始：nimbus doctor
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        安装问题
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="安装问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nimbus-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        安装后 nimbus 不在我的 PATH 中
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apple-silicon-arm64-not-found" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        在 Apple Silicon 上安装器报告 "arm64 not found"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#curl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        安装卡住或 curl 失败
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nimbus-start-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        安装成功但 nimbus start 提示 Docker 不可达
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        容器问题
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="容器问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        容器反复重启
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nimbus-start-port-already-in-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        nimbus start 提示 "port already in use"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gateway-unreachable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        仪表板提示 "gateway unreachable"
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#oauth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OAuth 问题
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OAuth 问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#approve-oauth-callback-failed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        点击 Approve 时提示 "OAuth callback failed"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upwork-oauthredirect_uri_mismatch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Upwork OAuth:"redirect_uri_mismatch"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        重启后令牌消失了
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MCP 服务器问题
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MCP 服务器问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mcp_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        捆绑的 MCP 服务器无法启动
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#find_tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        find_tools 不返回任何结果
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mcpjson" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        我在 mcp.json 中添加了服务器但没显示
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#openrouter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OpenRouter / 模型问题
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OpenRouter / 模型问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#invalid-api-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        首次聊天时提示 "Invalid API key"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#id-model-not-found" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        特定模型 ID 提示 "Model not found"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        嵌入失败
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        恢复
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="恢复">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nimbus-was-installed-by-a-different-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "Nimbus was installed by a different version"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        清除一切并重新开始
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        我想回滚到之前的 CLI 版本
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        仍然卡住？
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="_1">故障排查</h1>
+<p style="color: #a3a3a3; font-size: 1.1em; margin: -8px 0 32px 0;">
+  如果 <code>nimbus</code> 行为不符合预期,先运行 <code>nimbus doctor</code>：它会输出一个健康仪表板,涵盖 Docker 可达性、CLI/网关版本差异、容器健康状况,以及你的安装是否落后于最新版本。大多数问题都会在这里暴露。
+</p>
+
+<p>如果 <code>doctor</code> 没有覆盖你的症状,下面的章节按 <strong>你看到的现象</strong> 而不是怀疑的组件来组织——选择最接近的一条。</p>
+<hr />
+<h2 id="nimbus-doctor">从这里开始：<code>nimbus doctor</code></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>nimbus<span class="w"> </span>doctor
+</code></pre></div>
+<p>它会检查四项内容,每项打印一行:</p>
+<ul>
+<li><strong>Docker 探针</strong>——守护进程是否可达？该检查先于其他一切执行,这样新机器在 <code>nimbus start</code> 即将失败时,不会先看到误导性的"一切正常"。</li>
+<li><strong>CLI / 网关版本差</strong>——正在运行的网关容器是否比你的 CLI 落后一个次要版本以上？版本差过大的 CLI 会发出警告,但不会拒绝启动。</li>
+<li><strong>容器健康</strong>——gateway、postgres、redis 和 qdrant 容器是否健康？</li>
+<li><strong>更新新鲜度</strong>——GitHub 上是否有更新的版本？（在 dev 构建中,内嵌的 minisign 公钥为占位符时会跳过此项。）</li>
+</ul>
+<p>退出码始终为 <code>0</code> —— <code>doctor</code> 永远不会失败,只会显示警告,这样它可以作为 CI 和监控中的状态检查使用。</p>
+<hr />
+<h2 id="_2">安装问题</h2>
+<h3 id="nimbus-path">安装后 <code>nimbus</code> 不在我的 <code>PATH</code> 中</h3>
+<p>安装脚本会将 <code>export NIMBUS_HOME=~/.nimbus</code> 和 <code>PATH</code> 更新写入 <code>~/.zshrc</code>、<code>~/.bashrc</code> 或 Windows 的 <code>$PROFILE</code>。打开一个新的 shell,或在当前 shell 中 <code>source</code> rc 文件:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># macOS / Linux —— 选择你实际使用的 shell</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nb">source</span><span class="w"> </span>~/.zshrc
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nb">source</span><span class="w"> </span>~/.bashrc
+</code></pre></div>
+<p>如果 <code>nimbus</code> 仍然找不到,可能是安装静默失败。检查安装日志(成功执行的末尾会打印路径)并用显式脚本重新运行:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://nimbus.yoodule.com/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+</code></pre></div>
+<h3 id="apple-silicon-arm64-not-found">在 Apple Silicon 上安装器报告 "arm64 not found"</h3>
+<p>这条消息来自过时的安装器。拉取一份新的脚本并重新运行:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://raw.githubusercontent.com/Yoodule/nimbus/main/install.sh<span class="w"> </span>-o<span class="w"> </span>/tmp/install.sh<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>bash<span class="w"> </span>/tmp/install.sh
+</code></pre></div>
+<p>当前安装器遵循 GitHub 的 CDN 重定向,通过 <code>uname -m</code> 检测架构,如果资产确实缺失会以可操作的错误快速失败。</p>
+<h3 id="curl">安装卡住或 <code>curl</code> 失败</h3>
+<p>最常见的原因是公司代理拦截了 TLS:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nv">HTTPS_PROXY</span><span class="o">=</span>http://your-proxy:port<span class="w"> </span>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://nimbus.yoodule.com/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+</code></pre></div>
+<p>如果问题就出在 CDN 上,可以用 <code>NIMBUS_VERSION</code> 钉住一个已知可用的版本:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://nimbus.yoodule.com/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="nv">NIMBUS_VERSION</span><span class="o">=</span>v1.0.2<span class="w"> </span>bash
+</code></pre></div>
+<p>你也可以直接从 <a href="https://github.com/Yoodule/nimbus/releases">releases 页面</a> 下载 tarball,手动解压到 <code>~/.nimbus/</code> —— 二进制是自包含的。</p>
+<h3 id="nimbus-start-docker">安装成功但 <code>nimbus start</code> 提示 Docker 不可达</h3>
+<p>Docker 已安装,但守护进程未运行。启动它:</p>
+<ul>
+<li><strong>macOS / Windows</strong> —— 打开 Docker Desktop(或 OrbStack)。菜单栏的鲸鱼图标应该是静止的,而不是动画状态。</li>
+<li><strong>Linux</strong> —— <code>sudo systemctl start docker</code>,如果你不用 systemd 就用 <code>sudo dockerd</code>。</li>
+</ul>
+<p>用 <code>docker ps</code> 验证。如果看到 <code>Cannot connect to the Docker daemon</code>,说明守护进程还没准备好 —— 等几秒再试。</p>
+<hr />
+<h2 id="_3">容器问题</h2>
+<h3 id="_4">容器反复重启</h3>
+<p><code>docker ps</code> 显示某个容器处于 <code>Restarting</code> 状态。最常见的原因是旧 <code>.env</code> 留下的过时卷:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>docker<span class="w"> </span>logs<span class="w"> </span>nimbus-gateway-1<span class="w"> </span>--tail<span class="w"> </span><span class="m">100</span><span class="w">    </span><span class="c1"># 或 nimbus-postgres-1 / nimbus-redis-1 / nimbus-qdrant-1</span>
+</code></pre></div>
+<p>寻找具体的错误。如果是 Postgres 或 Redis 鉴权失败,说明你的 <code>.env</code> 已经轮换过凭据,但命名卷里仍然是旧值。恢复:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>nimbus<span class="w"> </span>stop
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="c1"># 把过时的卷移到一边,让 init 干净地重新执行。</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="c1"># nimbus start 会在新的卷上自动生成新的凭据;</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="c1"># 旧的卷会被保留为 -corrupt-&lt;timestamp&gt;,以防你需要检查。</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>docker<span class="w"> </span>volume<span class="w"> </span>rm<span class="w"> </span>nimbus_postgres_data
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>nimbus<span class="w"> </span>start
+</code></pre></div>
+<p>旧的 <code>nimbus recover-pg-role</code> / <code>nimbus recover-redis-password</code> 子命令已经移除 —— 上述流程是受支持的恢复路径。</p>
+<h3 id="nimbus-start-port-already-in-use"><code>nimbus start</code> 提示 "port already in use"</h3>
+<p>Nimbus 绑定固定的宿主机端口(3000 dashboard、8088 gateway、6080 noVNC、5433 postgres、6379 redis、6333/6334 qdrant)。如果宿主机上其他进程已经占用了这些端口,<code>start</code> 会失败并指出冲突的端口号。</p>
+<p>查找并停止冲突的进程:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># macOS / Linux</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>sudo<span class="w"> </span>lsof<span class="w"> </span>-iTCP:8088<span class="w"> </span>-sTCP:LISTEN
+</code></pre></div>
+<p>对于长期的多实例配置,请参阅<a href="../download/#how-do-i-run-multiple-nimbus-instances-on-the-same-host">下载页面</a>中的 <strong>多实例</strong> 一节。</p>
+<h3 id="gateway-unreachable">仪表板提示 "gateway unreachable"</h3>
+<p>仪表板运行在 <code>http://localhost:3000</code>。如果页面能加载但每个动作都返回 "gateway unreachable",说明网关容器实际上没有在 8088 上监听。检查:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>docker<span class="w"> </span>ps<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>gateway
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>docker<span class="w"> </span>logs<span class="w"> </span>nimbus-gateway-1<span class="w"> </span>--tail<span class="w"> </span><span class="m">50</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>curl<span class="w"> </span>-s<span class="w"> </span>http://localhost:8088/version
+</code></pre></div>
+<p>在 Apple Silicon 上的 Rosetta 环境下,一个常见原因是平台不匹配 —— 网关镜像是 <code>linux/arm64</code>,但运行时要求 <code>amd64</code>。在 <code>nimbus start</code> 之前设置 <code>NIMBUS_HOST_ARCH=arm64</code>。</p>
+<hr />
+<h2 id="oauth">OAuth 问题</h2>
+<h3 id="approve-oauth-callback-failed">点击 Approve 时提示 "OAuth callback failed"</h3>
+<p>默认情况下,网关会尝试让 OAuth 回调落在 <code>http://localhost:8088/oauth/callback</code>。如果你在隧道或远程浏览器后面运行 Nimbus,提供商因 URL 与注册的不匹配而拒绝回调。</p>
+<p>解决方法是将 <code>NIMBUS_URL</code>(仪表板 OAuth 代理使用)和 <code>OAUTH_REDIRECT_BASE</code>(网关使用)设置为提供商应当回跳到的公开 URL。两者都记录在 <a href="https://github.com/Yoodule/nimbus/blob/main/.env.example"><code>.env.example</code></a> 中。</p>
+<h3 id="upwork-oauthredirect_uri_mismatch">Upwork OAuth:"redirect_uri_mismatch"</h3>
+<p>Upwork 的 OAuth 提供商对 <code>redirect_uri</code> 的精确匹配很严格。安装器生成的 <code>UPWORK_REDIRECT_URI</code> 必须与 Upwork 开发者控制台中注册的值完全一致 —— 包括末尾的斜杠,逐字符相同。</p>
+<p>如果看到 <code>redirect_uri_mismatch</code>,检查 <code>~/.nimbus/.env</code> 中的值:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>nimbus<span class="w"> </span>config<span class="w"> </span>get<span class="w"> </span>UPWORK_REDIRECT_URI
+</code></pre></div>
+<p>……与 Upwork 控制台中的值进行逐字节比对。修正后,重启网关容器:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
+</code></pre></div>
+<h3 id="_5">重启后令牌消失了</h3>
+<p>这是设计如此。默认情况下,OAuth 令牌只存在于内存中 —— 每次重启都需要重新授权。这对共享 / 多用户宿主机来说是更安全的默认值。如果你希望令牌持久化,请参阅下载 FAQ 中的 <a href="../download/#where-do-my-oauth-tokens-live">OAuth 持久化章节</a>。</p>
+<hr />
+<h2 id="mcp">MCP 服务器问题</h2>
+<h3 id="mcp_1">捆绑的 MCP 服务器无法启动</h3>
+<p><code>docker logs nimbus-gateway-1 --tail 200</code> 会显示 stdio 子进程因导入错误或缺失环境变量而死亡。两个常见原因:</p>
+<ol>
+<li><strong>缺少 API 密钥</strong> —— 检查 <code>~/.nimbus/.env</code> 中相关的 <code>*_API_KEYS</code>(复数形式,逗号分隔)。网关和仪表板都读取复数形式,在缺失时回退到单数形式;键池为空 ⇒ 提供商返回 401。</li>
+<li><strong>Python 版本差异</strong> —— 捆绑的 MCP 服务器通过 <code>uv run python</code> 运行。如果你的系统 Python 低于 3.12,<code>uv</code> 会在首次调用时拉取较新版本,首次可能耗时约 30 秒。</li>
+</ol>
+<h3 id="find_tools"><code>find_tools</code> 不返回任何结果</h3>
+<p><code>find_tools</code> 是对 Qdrant 向量索引的语义搜索。空结果意味着:</p>
+<ul>
+<li>无法访问 Qdrant —— <code>docker ps | grep qdrant</code> 应该显示健康;<code>curl http://localhost:6333/healthz</code> 应返回 200。</li>
+<li>索引尚未构建 —— 网关在首次启动时摄取工具描述。等一分钟后再试。如果 5 分钟后仍然为空,请重启:<code>nimbus stop &amp;&amp; nimbus start</code>。</li>
+</ul>
+<h3 id="mcpjson">我在 <code>mcp.json</code> 中添加了服务器但没显示</h3>
+<p>两种可能:</p>
+<ol>
+<li>
+<p><strong><code>mcp.json</code> 语法错误</strong> —— 网关会静默跳过格式错误的条目。用以下命令验证:
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>nimbus<span class="w"> </span>mcp<span class="w"> </span>list
+</code></pre></div>
+   如果你的新服务器不在列表中,问题就出在 JSON 上。末尾多余的逗号或未转义的反斜杠是最常见的元凶。</p>
+</li>
+<li>
+<p><strong>网关尚未重新加载</strong> —— <code>mcp.json</code> 在容器启动时读取。编辑后:
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
+</code></pre></div></p>
+</li>
+</ol>
+<p>对于 HTTP 服务器,URL 必须能够从网关容器内部访问 —— 宿主机上的 <code>localhost</code> 并不等于 Docker 容器内的 <code>localhost</code>。请改用 <code>host.docker.internal:&lt;port&gt;</code>。</p>
+<hr />
+<h2 id="openrouter">OpenRouter / 模型问题</h2>
+<h3 id="invalid-api-key">首次聊天时提示 "Invalid API key"</h3>
+<p>CLI 在第一次 <code>nimbus start</code> 时会提示输入 <code>OPENROUTER_API_KEY</code> 并写入 <code>~/.nimbus/.env</code>。如果你跳过了该提示或密钥已过期:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>nimbus<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>OPENROUTER_API_KEYS<span class="w"> </span>sk-or-v1-...
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
+</code></pre></div>
+<p>注意复数形式:<code>OPENROUTER_API_KEYS</code>(多个密钥用逗号分隔,在缺失时回退到单数形式)。空或错误的密钥池会让每个请求都不带 <code>Authorization</code> 头发出,提供商返回 401。</p>
+<h3 id="id-model-not-found">特定模型 ID 提示 "Model not found"</h3>
+<p>Nimbus 默认使用 <code>openrouter/free</code>。如果你传入了 <code>--model &lt;id&gt;</code>,但该模型在 OpenRouter 上不存在,你会收到 404。请在 <a href="https://openrouter.ai/models">openrouter.ai/models</a> 上核对模型 ID —— 它们经常变化。</p>
+<p>对于 Ollama 模型,路由前缀是 <code>ollama/&lt;model-name&gt;</code>(例如 <code>ollama/llama3.1</code>)。没有前缀的裸 ID 会被视为 OpenRouter。</p>
+<h3 id="_6">嵌入失败</h3>
+<p>嵌入默认使用 <code>nvidia/llama-nemotron-embed-vl-1b-v2:free</code>(2048 维,免费层)。如果该模型不可用或被限流,请设置一个回退:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>nimbus<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>EMBEDDING_MODEL<span class="w"> </span>openai/text-embedding-3-small
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
+</code></pre></div>
+<p>下次启动时会将所有工具描述重新摄取到 Qdrant —— 冷缓存下预计需要约 1 分钟的索引时间。</p>
+<hr />
+<h2 id="_7">恢复</h2>
+<h3 id="nimbus-was-installed-by-a-different-version">"Nimbus was installed by a different version"</h3>
+<p>这意味着之前的安装将 Postgres 或 Redis 卷冻结在了与当前 <code>.env</code> 不再匹配的凭据上。解决方法:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
+</code></pre></div>
+<p><code>start</code> 会自动检测不匹配,并根据当前 <code>.env</code> 重新初始化角色 / 密码。旧的 <code>recover-pg-role</code> / <code>recover-redis-password</code> 子命令已不存在。</p>
+<h3 id="_8">清除一切并重新开始</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>nimbus<span class="w"> </span>uninstall
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://nimbus.yoodule.com/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>nimbus<span class="w"> </span>start
+</code></pre></div>
+<p>这会删除 CLI、所有容器、所有命名卷,以及 <code>~/.nimbus/</code>。你将丢失 OAuth 令牌、<code>.env</code> 和 Qdrant 中存储的所有工具描述。首次启动时需要重新授权。</p>
+<h3 id="cli">我想回滚到之前的 CLI 版本</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>nimbus<span class="w"> </span>update<span class="w"> </span>--version<span class="w"> </span>v1.0.1
+</code></pre></div>
+<p>(或者你需要的版本。)CLI 的自我更新使用与 <code>nimbus update</code> 相同的原子替换 + SHA256 + minisign 路径,只是被钉在了指定的版本上。</p>
+<hr />
+<h2 id="_9">仍然卡住？</h2>
+<p>在 <a href="https://github.com/Yoodule/nimbus/issues">Nimbus tracker</a> 上开一个 issue,并附上:</p>
+<ul>
+<li><code>nimbus doctor</code> 的输出</li>
+<li>宿主机平台和架构(macOS / Linux 用 <code>uname -a</code>,Windows 用 <code>systeminfo</code>)</li>
+<li>相关的容器日志:<code>docker logs nimbus-gateway-1 --tail 200</code>(或 <code>nimbus-postgres-1</code> / <code>nimbus-redis-1</code> / <code>nimbus-qdrant-1</code>)</li>
+<li><code>~/.nimbus/logs/</code> 中任何看起来相关的内容</li>
+</ul>
+<p>CLI 永远不会发送你的 <code>.env</code> 或 OAuth 令牌 —— 这些由你来脱敏,但其余诊断信息是可以安全分享的。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+  
+  <pagefind-modal></pagefind-modal>
+  
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Built by <a href="https://www.linkedin.com/in/sundayj1213/?utm_source=nimbus&utm_medium=docs&utm_campaign=footer" target="_blank">Sunday Johnson</a> at <a href="https://yoodule.com?utm_source=nimbus&utm_medium=docs&utm_campaign=footer">Yoodule</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tracking", "navigation.tabs", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

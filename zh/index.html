@@ -294,6 +294,25 @@
   
   
     <li class="md-tabs__item">
+      <a href="troubleshooting/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  故障排查
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
       <a href="license/" class="md-tabs__link">
         
   
@@ -570,6 +589,33 @@
     
   
     云
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    故障排查
   
 
     
@@ -892,7 +938,7 @@
 <div style="background: #0a0a0a; border: 1px solid #262626; border-radius: 12px; padding: 24px;">
   <h3 style="color: #ffffff; font-size: 1.15em; margin: 0 0 8px 0;">🗓️ 整理你的收件箱</h3>
   <p style="color: #a3a3a3; font-size: 0.95em; line-height: 1.5; margin: 0;">
-    每天早上,Nimbus 为新邮件打标签、为明确的内容起草回复,其余的在 Slack 中标记出来。你看到的只是需要你处理的部分。
+    每天早上,Nimbus 为新邮件打标签、为明确的内容起草回复,其余的标记出来供你审阅。你看到的只是需要你处理的部分。
   </p>
 </div>
 
@@ -1025,35 +1071,19 @@
 </tr>
 <tr>
 <td style="text-align: left;"><code>nimbus upgrade</code></td>
-<td style="text-align: left;">升级。获取最新二进制并升级包装器的配置。</td>
+<td style="text-align: left;">刷新容器镜像。拉取最新的 gateway/dashboard 镜像,必要时执行一次性的 Qdrant schema 迁移,然后运行 <code>compose up -d --build</code>。</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>nimbus update</code></td>
-<td style="text-align: left;">更新 CLI。刷新网关容器的镜像(与 <code>--gateway</code> 配合使用)。</td>
+<td style="text-align: left;"><code>nimbus update [--gateway]</code></td>
+<td style="text-align: left;">自更新 <strong>CLI 二进制本身</strong>。下载平台归档,校验 SHA256 + minisign 签名,以原子方式替换正在运行的二进制。<code>--gateway</code> 会在同一次执行中拉取并重启网关容器。</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>nimbus uninstall</code></td>
-<td style="text-align: left;">卸载。删除 Nimbus CLI、容器和配置。</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>nimbus uninstall --keep-data</code></td>
-<td style="text-align: left;">卸载但保留数据库、密钥和配置。</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>nimbus uninstall --purge</code></td>
-<td style="text-align: left;">卸载并在不确认的情况下清除所有内容。</td>
+<td style="text-align: left;">卸载。删除 Nimbus CLI、容器、配置以及 <code>~/.nimbus/</code>。</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>nimbus doctor</code></td>
 <td style="text-align: left;">诊断。检查 Docker、版本差异、容器健康状况、更新新旧、凭据漂移。</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>nimbus recover-pg-role</code></td>
-<td style="text-align: left;">修复。将 <code>nimbus_postgres_data</code> 卷迁移到当前 <code>.env</code> 的凭据。</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>nimbus recover-redis-password</code></td>
-<td style="text-align: left;">修复。轮换 Redis 卷的密码以匹配当前 <code>.env</code>。</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>nimbus dashboard install</code></td>
@@ -1076,8 +1106,12 @@
 <td style="text-align: left;">管理 <code>~/.nimbus/mcp.json</code>(list、get、set、remove)。</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>nimbus chat "提示词"</code></td>
-<td style="text-align: left;">向 dashboard 发送提示词并以流式获取响应。</td>
+<td style="text-align: left;"><code>nimbus agent "&lt;提示词&gt;" [--model &lt;id&gt;]</code></td>
+<td style="text-align: left;">向 dashboard 的 <code>nimbus_agent</code> 发送提示词并以流式获取响应。默认使用 <code>openrouter/free</code>。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>nimbus activate &lt;key&gt;</code></td>
+<td style="text-align: left;">激活许可证/注册密钥。</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>nimbus env-init</code></td>

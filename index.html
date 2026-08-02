@@ -294,6 +294,25 @@
   
   
     <li class="md-tabs__item">
+      <a href="troubleshooting/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Troubleshooting
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
       <a href="license/" class="md-tabs__link">
         
   
@@ -570,6 +589,33 @@
     
   
     Cloud
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
   
 
     
@@ -893,7 +939,7 @@
 <div style="background: #0a0a0a; border: 1px solid #262626; border-radius: 12px; padding: 24px;">
   <h3 style="color: #ffffff; font-size: 1.15em; margin: 0 0 8px 0;">🗓️ Triage your inbox</h3>
   <p style="color: #a3a3a3; font-size: 0.95em; line-height: 1.5; margin: 0;">
-    Every morning, Nimbus labels new emails, drafts replies for the obvious ones, and flags the rest in Slack. You only look at the ones that need you.
+    Every morning, Nimbus labels new emails, drafts replies for the obvious ones, and flags the rest for your review. You only look at the ones that need you.
   </p>
 </div>
 
@@ -1026,35 +1072,19 @@
 </tr>
 <tr>
 <td style="text-align: left;"><code>nimbus upgrade</code></td>
-<td style="text-align: left;">Upgrade. Pulls the latest binaries and upgrades the wrapper setup.</td>
+<td style="text-align: left;">Refresh container images. Pulls new gateway/dashboard images, runs the one-time Qdrant schema migration if needed, and <code>compose up -d --build</code>.</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>nimbus update</code></td>
-<td style="text-align: left;">Update the CLI. Refreshes the gateway container image (with <code>--gateway</code>).</td>
+<td style="text-align: left;"><code>nimbus update [--gateway]</code></td>
+<td style="text-align: left;">Self-update the <strong>CLI binary</strong> itself. Downloads the platform archive, verifies SHA256 + minisign signature, atomic-replaces the running binary. <code>--gateway</code> also pulls + restarts the gateway container in the same run.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>nimbus uninstall</code></td>
-<td style="text-align: left;">Uninstall. Removes the Nimbus CLI, containers, and configuration.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>nimbus uninstall --keep-data</code></td>
-<td style="text-align: left;">Uninstall but preserve databases, keys, and configuration.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>nimbus uninstall --purge</code></td>
-<td style="text-align: left;">Uninstall and wipe everything without prompting.</td>
+<td style="text-align: left;">Uninstall. Removes the Nimbus CLI, containers, configuration, and <code>~/.nimbus/</code>.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>nimbus doctor</code></td>
-<td style="text-align: left;">Diagnose. Checks Docker, version skew, container health, update freshness, credential drift.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>nimbus recover-pg-role</code></td>
-<td style="text-align: left;">Repair. Migrates the <code>nimbus_postgres_data</code> volume to the current <code>.env</code> credentials.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>nimbus recover-redis-password</code></td>
-<td style="text-align: left;">Repair. Rotates the Redis volume password to match the current <code>.env</code>.</td>
+<td style="text-align: left;">Diagnose. Checks Docker, version skew, container health, update freshness, credential drift. Exit code: 0 = clean, 1 = any warning.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>nimbus dashboard install</code></td>
@@ -1077,12 +1107,16 @@
 <td style="text-align: left;">Manage <code>~/.nimbus/mcp.json</code> (list, get, set, remove).</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>nimbus chat "prompt"</code></td>
-<td style="text-align: left;">Send a prompt to the dashboard and stream the response.</td>
+<td style="text-align: left;"><code>nimbus agent "&lt;prompt&gt;" [--model &lt;id&gt;]</code></td>
+<td style="text-align: left;">Send a prompt to the dashboard's <code>nimbus_agent</code> and stream the response. Defaults to <code>openrouter/free</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>nimbus activate &lt;key&gt;</code></td>
+<td style="text-align: left;">Activate a license/registration key.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>nimbus env-init</code></td>
-<td style="text-align: left;">Populate CLI-owned secrets in <code>~/.nimbus/.env</code> (idempotent).</td>
+<td style="text-align: left;">Populate CLI-owned secrets in <code>~/.nimbus/.env</code> (idempotent, non-interactive). Does <strong>not</strong> prompt for <code>OPENROUTER_API_KEY</code> — that's user-owned.</td>
 </tr>
 </tbody>
 </table>

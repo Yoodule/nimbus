@@ -296,6 +296,25 @@
   
   
     <li class="md-tabs__item">
+      <a href="../troubleshooting/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  故障排查
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
       <a href="../license/" class="md-tabs__link">
         
   
@@ -644,6 +663,33 @@
     
   
     云
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    故障排查
   
 
     
@@ -1038,7 +1084,7 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>nimbus<span class="w"> </span>upgrade
 </code></pre></div>
 <p>升级到特定版本:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>nimbus<span class="w"> </span>upgrade<span class="w"> </span>--version<span class="w"> </span>v1.0.3
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>nimbus<span class="w"> </span>update<span class="w"> </span>--version<span class="w"> </span>v1.0.3
 </code></pre></div>
 <hr />
 <h2 id="_4">卸载</h2>
@@ -1068,15 +1114,15 @@
 </code></pre></div>
 <p>当前的安装程序会跟踪 GitHub 的 CDN 重定向,检测你的架构,并在资源确实缺失时以可操作的错误快速失败。</p>
 <h3 id="docker">我可以在没有 Docker 的机器上安装吗?</h3>
-<p>可以。CLI 和网关以原生方式运行。捆绑的 MCP 栈(Playwright 浏览器、Postgres Agent 数据库、Qdrant)使用 Docker,但你可以通过 <code>nimbus start --no-deps</code> 跳过它,并通过 <code>mcp.json</code> 让 Nimbus 指向远程 MCP 服务器。</p>
+<p>不可以。Nimbus 需要运行中的 Docker 守护进程 — 网关、Qdrant、Postgres、Redis 以及捆绑的 MCP 服务器都运行在容器中。在 macOS / Windows 上使用 Docker Desktop 或 OrbStack;在 Linux 上使用 Docker Engine。<code>nimbus doctor</code> 会告诉你 Docker 是否不可达。</p>
 <h3 id="_6">下载体积有多大?</h3>
-<p>CLI 压缩包约 30 MB。首次启动时拉取的 Docker 镜像还会再增加约 2 GB(Qdrant、Playwright、Postgres)。如果你的带宽有限,可以使用 <code>--no-deps</code> 启动模式跳过 Docker 拉取。</p>
+<p>CLI 压缩包约 30 MB。首次启动时拉取的 Docker 镜像还会再增加约 2 GB(网关、Qdrant、Postgres、Redis、Playwright/Chromium)。</p>
 <h3 id="oauth">我的 OAuth 令牌存放在哪里?</h3>
-<p>默认情况下存放在内存中 —— 重启时需要重新授权。在 <code>~/.nimbus/.env</code> 中设置 <code>NIMBUS_PERSIST_TOKENS=1</code> 即可在 <code>~/.nimbus/tokens/</code> 下加密保存。</p>
+<p>默认情况下存放在内存中 —— 重启时需要重新授权。网关的 OAuth 客户端负责处理这一流程;在默认安装中,令牌不会持久化到磁盘。</p>
 <h3 id="apple-silicon-rosetta">在 Apple Silicon 上通过 Rosetta 运行可以吗?</h3>
 <p>可以 —— 在安装命令前设置 <code>NIMBUS_HOST_ARCH=amd64</code> 以获取 Intel 版本。我们不提供通用二进制,因为 Gatekeeper 工具会为少数用户额外增加 60 MB 以上;Rosetta 会透明地进行翻译。</p>
 <h3 id="how-do-i-run-multiple-nimbus-instances-on-the-same-host">如何在同一台主机上运行多个 Nimbus 实例?</h3>
-<p>Nimbus 绑定到固定的主机端口(<code>3000</code>、<code>8088</code>、<code>6333</code>、<code>5433</code>、<code>6080</code>、<code>8006</code>、<code>8007</code>、<code>8081</code>),因此默认安装是单实例的。要运行第二个实例,请克隆仓库,在 <code>compose.yaml</code> 中重新映射端口,设置唯一的 <code>NIMBUS_HOME</code>,并设置 <code>COMPOSE_PROJECT_NAME</code> 以避免两个栈发生冲突。详细步骤请参阅下方的<a href="#how-do-i-run-multiple-nimbus-instances-on-the-same-host">多实例部分</a>。</p>
+<p>Nimbus 绑定到固定的主机端口(dashboard <code>3000</code>、网关 <code>8088</code>、noVNC <code>6080</code>、Postgres <code>5433</code>、Redis <code>6379</code>、Qdrant <code>6333</code>/<code>6334</code>),因此默认安装是单实例的。要运行第二个实例,请克隆仓库,在 <code>compose.yaml</code> 中重新映射端口,设置唯一的 <code>NIMBUS_HOME</code>,并设置 <code>COMPOSE_PROJECT_NAME</code> 以避免两个栈发生冲突。详细步骤请参阅下方的<a href="#how-do-i-run-multiple-nimbus-instances-on-the-same-host">多实例部分</a>。</p>
 <h3 id="curl">安装卡住或 curl 失败 —— 怎么办?</h3>
 <p>最常见的原因是公司代理拦截了 TLS。请设置 <code>HTTPS_PROXY</code> 后重试。如果问题出在 CDN,安装脚本接受 <code>NIMBUS_VERSION</code> 以固定到已知可用的发布版本,也可以从 <a href="https://github.com/Yoodule/nimbus/releases">releases 页面</a> 直接下载 tarball 并手动解压到 <code>~/.nimbus/</code> —— 该二进制是自包含的。</p>
 <hr />
