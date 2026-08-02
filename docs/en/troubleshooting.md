@@ -156,7 +156,7 @@ nimbus stop && nimbus start
 
 ### Tokens disappeared after restart
 
-That's by design. By default, OAuth tokens live in memory only — every restart is a fresh re-authorization. This is the safer default for shared / multi-user hosts. If you want persistent tokens, see the [OAuth persistence section](download.md#where-do-my-oauth-tokens-live) in the Download FAQ.
+That's by design. By default, OAuth tokens live in memory only — every restart is a fresh re-authorization. This is the safer default for shared / multi-user hosts.
 
 ---
 

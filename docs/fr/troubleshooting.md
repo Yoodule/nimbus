@@ -157,7 +157,7 @@ nimbus stop && nimbus start
 
 ### Les tokens disparaissent après un redémarrage
 
-C'est voulu. Par défaut, les tokens OAuth vivent uniquement en mémoire — chaque redémarrage est une re-autorisation. C'est le défaut le plus sûr pour les hôtes partagés / multi-utilisateur. Si vous voulez des tokens persistants, consultez la [section de persistance OAuth](download.md#where-do-my-oauth-tokens-live) de la FAQ de téléchargement.
+C'est voulu. Par défaut, les tokens OAuth vivent uniquement en mémoire — chaque redémarrage est une re-autorisation. C'est le défaut le plus sûr pour les hôtes partagés / multi-utilisateur.
 
 ---
 
