@@ -143,16 +143,20 @@ Every release is SLSA-attested by GitHub Actions. You can view the attestation o
 
 ## Upgrade
 
-The CLI upgrades itself in place. Your `mcp.json`, `.env`, OAuth tokens, and the Qdrant index are preserved:
+There are two upgrade paths, for different things:
 
 ```bash
-nimbus upgrade
+nimbus upgrade           # refresh container images (gateway + dashboard)
+nimbus update            # self-update the CLI binary itself
+nimbus update --gateway  # self-update the CLI + pull/restart the gateway container
 ```
 
-To upgrade to a specific version:
+Your `mcp.json`, `.env`, OAuth tokens, and the Qdrant index are preserved across either.
+
+To pin a version during install, set `NIMBUS_VERSION` on the right-hand side of the pipe:
 
 ```bash
-nimbus upgrade --version v1.0.3
+curl -fsSL https://nimbus.yoodule.com/install.sh | NIMBUS_VERSION=v1.0.3 bash
 ```
 
 ---
@@ -205,15 +209,15 @@ The current installer follows GitHub's CDN redirect, detects your architecture, 
 
 ### Can I install on a machine without Docker?
 
-Yes. The CLI and gateway run natively. The bundled MCP stack (Playwright browser, Postgres agent DB, Qdrant) uses Docker, but you can skip it with `nimbus start --no-deps` and point Nimbus at remote MCP servers via `mcp.json` instead.
+No. Nimbus requires a running Docker daemon — the gateway, Qdrant, Postgres, Redis, and the bundled MCP servers all run containerized. On macOS / Windows use Docker Desktop or OrbStack; on Linux use Docker Engine. `nimbus doctor` will tell you if Docker isn't reachable.
 
 ### How big is the download?
 
-The CLI tarball is ~30 MB compressed. The Docker images it pulls on first start add another ~2 GB (Qdrant, Playwright, Postgres). If you're bandwidth-constrained, the `--no-deps` start mode skips the Docker pull.
+The CLI tarball is ~30 MB compressed. The Docker images it pulls on first start add another ~2 GB (gateway, Qdrant, Postgres, Redis, Playwright/Chromium).
 
 ### Where do my OAuth tokens live?
 
-In-memory by default — re-approve on restart. Set `NIMBUS_PERSIST_TOKENS=1` in `~/.nimbus/.env` to encrypt them at rest under `~/.nimbus/tokens/`.
+In-memory by default — re-approve on restart. The gateway's OAuth client manages the dance; tokens are not persisted to disk in the default install.
 
 ### Does this work on Apple Silicon under Rosetta?
 
@@ -221,7 +225,7 @@ Yes — set `NIMBUS_HOST_ARCH=amd64` before the install command to pull the Inte
 
 ### How do I run multiple Nimbus instances on the same host? {#how-do-i-run-multiple-nimbus-instances-on-the-same-host}
 
-Nimbus binds to fixed host ports (`3000`, `8088`, `6333`, `5433`, `6080`, `8006`, `8007`, `8081`), so the default install is single-instance. To run a second, clone the repo, remap ports in `compose.yaml`, set a unique `NIMBUS_HOME`, and set `COMPOSE_PROJECT_NAME` so the two stacks don't collide. Full details in the [Multiple Instances section](#how-do-i-run-multiple-nimbus-instances-on-the-same-host) below.
+Nimbus binds to fixed host ports (`3000` for the dashboard, `8088` for the gateway, `6080` for noVNC, `5433` for Postgres, `6379` for Redis, `6333`/`6334` for Qdrant), so the default install is single-instance. To run a second, clone the repo, remap ports in `compose.yaml`, set a unique `NIMBUS_HOME`, and set `COMPOSE_PROJECT_NAME` so the two stacks don't collide. Full details in the [Multiple Instances section](#how-do-i-run-multiple-nimbus-instances-on-the-same-host) below.
 
 ### The install hangs or curl fails — what now?
 

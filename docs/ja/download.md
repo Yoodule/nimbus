@@ -152,7 +152,7 @@ nimbus upgrade
 特定のバージョンにアップグレードするには:
 
 ```bash
-nimbus upgrade --version v1.0.3
+nimbus update --version v1.0.3
 ```
 
 ---
@@ -205,15 +205,15 @@ curl -fsSL https://raw.githubusercontent.com/Yoodule/nimbus/main/install.sh -o /
 
 ### Docker がないマシンにもインストールできますか?
 
-はい。CLI とゲートウェイはネイティブで動作します。同梱の MCP スタック (Playwright ブラウザー、Postgres エージェント DB、Qdrant) は Docker を使用しますが、`nimbus start --no-deps` でスキップし、`mcp.json` 経由で Nimbus をリモート MCP サーバーに向けることができます。
+いいえ。Nimbus には動作中の Docker デーモンが必要です — ゲートウェイ、Qdrant、Postgres、Redis、バンドルされた MCP サーバーはすべてコンテナで動作します。macOS / Windows では Docker Desktop または OrbStack を使用し、Linux では Docker Engine を使用してください。Docker に到達できない場合は `nimbus doctor` がその旨を伝えます。
 
 ### ダウンロードサイズはどれくらいですか?
 
-CLI の tarball は圧縮状態で約 30 MB です。初回起動時に取得される Docker イメージでさらに約 2 GB (Qdrant、Playwright、Postgres) 追加されます。帯域が限られている場合は、`--no-deps` 起動モードで Docker プル をスキップできます。
+CLI の tarball は圧縮状態で約 30 MB です。初回起動時にプルされる Docker イメージでさらに約 2 GB (ゲートウェイ、Qdrant、Postgres、Redis、Playwright/Chromium) 追加されます。
 
 ### OAuth トークンはどこに保存されますか?
 
-デフォルトではメモリ内 — 再起動時に再承認が必要です。`~/.nimbus/.env` で `NIMBUS_PERSIST_TOKENS=1` を設定すると、`~/.nimbus/tokens/` 配下に暗号化して保存されます。
+デフォルトではメモリ内 — 再起動時には再承認が必要です。ゲートウェイの OAuth クライアントが処理を管理し、デフォルトのインストールではトークンはディスクに永続化されません。
 
 ### Apple Silicon で Rosetta 経由で動作しますか?
 
@@ -221,7 +221,7 @@ CLI の tarball は圧縮状態で約 30 MB です。初回起動時に取得さ
 
 ### 同じホストで Nimbus インスタンスを複数実行するには? {#how-do-i-run-multiple-nimbus-instances-on-the-same-host}
 
-Nimbus は固定のホストポート (`3000`, `8088`, `6333`, `5433`, `6080`, `8006`, `8007`, `8081`) にバインドするため、デフォルトのインストールは単一インスタンスです。2 つ目を実行するには、リポジトリをクローンし、`compose.yaml` でポートを再マッピングし、固有の `NIMBUS_HOME` を設定し、2 つのスタックが衝突しないように `COMPOSE_PROJECT_NAME` を設定してください。詳細は下記の [複数インスタンスセクション](#how-do-i-run-multiple-nimbus-instances-on-the-same-host) を参照してください。
+Nimbus は固定のホストポート (`3000` dashboard、`8088` ゲートウェイ、`6080` noVNC、`5433` Postgres、`6379` Redis、`6333`/`6334` Qdrant) をバインドするため、デフォルトのインストールは単一インスタンスです。2 つ目を実行するには、リポジトリをクローンし、`compose.yaml` でポートを再マッピングし、固有の `NIMBUS_HOME` を設定し、2 つのスタックが衝突しないように `COMPOSE_PROJECT_NAME` を設定してください。詳細は下記の [複数インスタンスセクション](#how-do-i-run-multiple-nimbus-instances-on-the-same-host) を参照してください。
 
 ### インストールがハングする、curl が失敗する場合 — どうすればいいですか?
 

@@ -95,7 +95,7 @@ No quieres otra herramienta. Quieres un empleado — uno que se encargue del tra
 <div style="background: #0a0a0a; border: 1px solid #262626; border-radius: 12px; padding: 24px;">
   <h3 style="color: #ffffff; font-size: 1.15em; margin: 0 0 8px 0;">🗓️ Clasificar tu bandeja de entrada</h3>
   <p style="color: #a3a3a3; font-size: 0.95em; line-height: 1.5; margin: 0;">
-    Cada mañana, Nimbus etiqueta los correos nuevos, redacta respuestas para los evidentes y marca el resto en Slack. Tú solo ves los que te necesitan.
+    Cada mañana, Nimbus etiqueta los correos nuevos, redacta respuestas para los evidentes y marca el resto para tu revisión. Tú solo ves los que te necesitan.
   </p>
 </div>
 
@@ -216,20 +216,17 @@ El CLI `nimbus` controla el ciclo de vida de tu espacio de trabajo local en cont
 | `nimbus start --gateway` | Modo headless. Ejecuta solo el contenedor de la pasarela — omite la pila completa para CI o uso solo MCP remoto. |
 | `nimbus start --fresh` | Borra los volúmenes de datos. Regenera las credenciales de Postgres/Redis y reinicializa el directorio de datos. |
 | `nimbus stop` | Apagado. Termina de forma segura todos los servicios de contenedores y libera los puertos del sistema. |
-| `nimbus upgrade` | Actualiza. Descarga los últimos binarios y actualiza la configuración del wrapper. |
-| `nimbus update` | Actualiza el CLI. Refresca la imagen del contenedor de la pasarela (junto con `--gateway`). |
-| `nimbus uninstall` | Desinstala. Elimina el CLI de Nimbus, los contenedores y la configuración. |
-| `nimbus uninstall --keep-data` | Desinstala pero conserva las bases de datos, claves y configuración. |
-| `nimbus uninstall --purge` | Desinstala y borra todo sin pedir confirmación. |
+| `nimbus upgrade` | Refresca las imágenes de los contenedores. Descarga nuevas imágenes del gateway/dashboard, ejecuta la migración única del esquema de Qdrant si es necesario, y hace `compose up -d --build`. |
+| `nimbus update [--gateway]` | Autoactualiza el **binario del CLI**. Descarga el archivo de la plataforma, verifica la firma SHA256 + minisign y reemplaza atómicamente el binario en ejecución. `--gateway` también descarga y reinicia el contenedor del gateway en la misma ejecución. |
+| `nimbus uninstall` | Desinstala. Elimina el CLI de Nimbus, los contenedores, la configuración y `~/.nimbus/`. |
 | `nimbus doctor` | Diagnostica. Comprueba Docker, desfase de versiones, salud de los contenedores, actualidad de actualizaciones, deriva de credenciales. |
-| `nimbus recover-pg-role` | Repara. Migra el volumen `nimbus_postgres_data` a las credenciales actuales del `.env`. |
-| `nimbus recover-redis-password` | Repara. Rota la contraseña del volumen Redis para que coincida con el `.env` actual. |
 | `nimbus dashboard install` | Instala el companion opcional Agent Dashboard. |
 | `nimbus dashboard uninstall` | Elimina el contenedor del Dashboard y su bloque de servicio. |
 | `nimbus dashboard status` | Muestra si el Dashboard está habilitado y el estado de su contenedor. |
 | `nimbus config <subcomando>` | Gestiona `~/.nimbus/.env` (list, get, set, unset). |
 | `nimbus mcp <subcomando>` | Gestiona `~/.nimbus/mcp.json` (list, get, set, remove). |
-| `nimbus chat "prompt"` | Envía un prompt al dashboard y transmite la respuesta. |
+| `nimbus agent "<prompt>" [--model <id>]` | Envía un prompt al `nimbus_agent` del dashboard y transmite la respuesta. Por defecto `openrouter/free`. |
+| `nimbus activate <key>` | Activa una clave de licencia/registro. |
 | `nimbus env-init` | Rellena los secretos gestionados por el CLI en `~/.nimbus/.env` (idempotente). |
 
 Consulta [`nimbus --help`](download.md) para la referencia completa, o la [página de descarga](download.md) para instrucciones de instalación específicas por plataforma.

@@ -95,7 +95,7 @@
 <div style="background: #0a0a0a; border: 1px solid #262626; border-radius: 12px; padding: 24px;">
   <h3 style="color: #ffffff; font-size: 1.15em; margin: 0 0 8px 0;">🗓️ 整理你的收件箱</h3>
   <p style="color: #a3a3a3; font-size: 0.95em; line-height: 1.5; margin: 0;">
-    每天早上,Nimbus 为新邮件打标签、为明确的内容起草回复,其余的在 Slack 中标记出来。你看到的只是需要你处理的部分。
+    每天早上,Nimbus 为新邮件打标签、为明确的内容起草回复,其余的标记出来供你审阅。你看到的只是需要你处理的部分。
   </p>
 </div>
 
@@ -216,20 +216,17 @@ Nimbus 将所有基于 stdio 和 HTTP 的 MCP 服务器统一在一个接口之�
 | `nimbus start --gateway` | 无头模式。仅运行网关容器 —— 跳过完整堆栈,适用于 CI 或仅使用远程 MCP 的场景。 |
 | `nimbus start --fresh` | 清除数据卷。重新生成 Postgres/Redis 凭据,并重置数据目录。 |
 | `nimbus stop` | 停止。安全关闭所有容器化服务并释放系统端口。 |
-| `nimbus upgrade` | 升级。获取最新二进制并升级包装器的配置。 |
-| `nimbus update` | 更新 CLI。刷新网关容器的镜像(与 `--gateway` 配合使用)。 |
-| `nimbus uninstall` | 卸载。删除 Nimbus CLI、容器和配置。 |
-| `nimbus uninstall --keep-data` | 卸载但保留数据库、密钥和配置。 |
-| `nimbus uninstall --purge` | 卸载并在不确认的情况下清除所有内容。 |
+| `nimbus upgrade` | 刷新容器镜像。拉取最新的 gateway/dashboard 镜像,必要时执行一次性的 Qdrant schema 迁移,然后运行 `compose up -d --build`。 |
+| `nimbus update [--gateway]` | 自更新 **CLI 二进制本身**。下载平台归档,校验 SHA256 + minisign 签名,以原子方式替换正在运行的二进制。`--gateway` 会在同一次执行中拉取并重启网关容器。 |
+| `nimbus uninstall` | 卸载。删除 Nimbus CLI、容器、配置以及 `~/.nimbus/`。 |
 | `nimbus doctor` | 诊断。检查 Docker、版本差异、容器健康状况、更新新旧、凭据漂移。 |
-| `nimbus recover-pg-role` | 修复。将 `nimbus_postgres_data` 卷迁移到当前 `.env` 的凭据。 |
-| `nimbus recover-redis-password` | 修复。轮换 Redis 卷的密码以匹配当前 `.env`。 |
 | `nimbus dashboard install` | 安装可选的 Agent Dashboard 配套组件。 |
 | `nimbus dashboard uninstall` | 移除 Dashboard 容器及其服务块。 |
 | `nimbus dashboard status` | 显示 Dashboard 是否启用及其容器状态。 |
 | `nimbus config <子命令>` | 管理 `~/.nimbus/.env`(list、get、set、unset)。 |
 | `nimbus mcp <子命令>` | 管理 `~/.nimbus/mcp.json`(list、get、set、remove)。 |
-| `nimbus chat "提示词"` | 向 dashboard 发送提示词并以流式获取响应。 |
+| `nimbus agent "<提示词>" [--model <id>]` | 向 dashboard 的 `nimbus_agent` 发送提示词并以流式获取响应。默认使用 `openrouter/free`。 |
+| `nimbus activate <key>` | 激活许可证/注册密钥。 |
 | `nimbus env-init` | 将 CLI 管理的密钥写入 `~/.nimbus/.env`(幂等)。 |
 
 完整参考请参阅 [`nimbus --help`](download.md),各平台安装步骤请参阅 [下载页面](download.md)。

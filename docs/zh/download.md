@@ -152,7 +152,7 @@ nimbus upgrade
 升级到特定版本:
 
 ```bash
-nimbus upgrade --version v1.0.3
+nimbus update --version v1.0.3
 ```
 
 ---
@@ -205,15 +205,15 @@ curl -fsSL https://raw.githubusercontent.com/Yoodule/nimbus/main/install.sh -o /
 
 ### 我可以在没有 Docker 的机器上安装吗?
 
-可以。CLI 和网关以原生方式运行。捆绑的 MCP 栈(Playwright 浏览器、Postgres Agent 数据库、Qdrant)使用 Docker,但你可以通过 `nimbus start --no-deps` 跳过它,并通过 `mcp.json` 让 Nimbus 指向远程 MCP 服务器。
+不可以。Nimbus 需要运行中的 Docker 守护进程 — 网关、Qdrant、Postgres、Redis 以及捆绑的 MCP 服务器都运行在容器中。在 macOS / Windows 上使用 Docker Desktop 或 OrbStack;在 Linux 上使用 Docker Engine。`nimbus doctor` 会告诉你 Docker 是否不可达。
 
 ### 下载体积有多大?
 
-CLI 压缩包约 30 MB。首次启动时拉取的 Docker 镜像还会再增加约 2 GB(Qdrant、Playwright、Postgres)。如果你的带宽有限,可以使用 `--no-deps` 启动模式跳过 Docker 拉取。
+CLI 压缩包约 30 MB。首次启动时拉取的 Docker 镜像还会再增加约 2 GB(网关、Qdrant、Postgres、Redis、Playwright/Chromium)。
 
 ### 我的 OAuth 令牌存放在哪里?
 
-默认情况下存放在内存中 —— 重启时需要重新授权。在 `~/.nimbus/.env` 中设置 `NIMBUS_PERSIST_TOKENS=1` 即可在 `~/.nimbus/tokens/` 下加密保存。
+默认情况下存放在内存中 —— 重启时需要重新授权。网关的 OAuth 客户端负责处理这一流程;在默认安装中,令牌不会持久化到磁盘。
 
 ### 在 Apple Silicon 上通过 Rosetta 运行可以吗?
 
@@ -221,7 +221,7 @@ CLI 压缩包约 30 MB。首次启动时拉取的 Docker 镜像还会再增加�
 
 ### 如何在同一台主机上运行多个 Nimbus 实例? {#how-do-i-run-multiple-nimbus-instances-on-the-same-host}
 
-Nimbus 绑定到固定的主机端口(`3000`、`8088`、`6333`、`5433`、`6080`、`8006`、`8007`、`8081`),因此默认安装是单实例的。要运行第二个实例,请克隆仓库,在 `compose.yaml` 中重新映射端口,设置唯一的 `NIMBUS_HOME`,并设置 `COMPOSE_PROJECT_NAME` 以避免两个栈发生冲突。详细步骤请参阅下方的[多实例部分](#how-do-i-run-multiple-nimbus-instances-on-the-same-host)。
+Nimbus 绑定到固定的主机端口(dashboard `3000`、网关 `8088`、noVNC `6080`、Postgres `5433`、Redis `6379`、Qdrant `6333`/`6334`),因此默认安装是单实例的。要运行第二个实例,请克隆仓库,在 `compose.yaml` 中重新映射端口,设置唯一的 `NIMBUS_HOME`,并设置 `COMPOSE_PROJECT_NAME` 以避免两个栈发生冲突。详细步骤请参阅下方的[多实例部分](#how-do-i-run-multiple-nimbus-instances-on-the-same-host)。
 
 ### 安装卡住或 curl 失败 —— 怎么办?
 

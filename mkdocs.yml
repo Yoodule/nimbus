@@ -99,6 +99,7 @@ plugins:
             Home: 홈
             Download: 다운로드
             Cloud: 클라우드
+            Troubleshooting: 문제 해결
             Official License: 공식 라이선스
             Terms of Service: 서비스 약관
             Privacy Policy: 개인정보처리방침
@@ -109,6 +110,7 @@ plugins:
             Home: Inicio
             Download: Descarga
             Cloud: Nube
+            Troubleshooting: Solución de problemas
             Official License: Licencia oficial
             Terms of Service: Términos de servicio
             Privacy Policy: Política de privacidad
@@ -119,6 +121,7 @@ plugins:
             Home: Accueil
             Download: Téléchargement
             Cloud: Cloud
+            Troubleshooting: Dépannage
             Official License: Licence officielle
             Terms of Service: Conditions d'utilisation
             Privacy Policy: Politique de confidentialité
@@ -129,6 +132,7 @@ plugins:
             Home: ホーム
             Download: ダウンロード
             Cloud: クラウド
+            Troubleshooting: トラブルシューティング
             Official License: 公式ライセンス
             Terms of Service: 利用規約
             Privacy Policy: プライバシーポリシー
@@ -139,6 +143,7 @@ plugins:
             Home: 首页
             Download: 下载
             Cloud: 云
+            Troubleshooting: 故障排查
             Official License: 官方许可
             Terms of Service: 服务条款
             Privacy Policy: 隐私政策
@@ -165,6 +170,7 @@ nav:
   - Home: en/index.md
   - Download: en/download.md
   - Cloud: en/cloud.md
+  - Troubleshooting: en/troubleshooting.md
   - Official License: en/license.md
   - Terms of Service: en/terms_of_service.md
   - Privacy Policy: en/privacy_policy.md

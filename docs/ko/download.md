@@ -152,7 +152,7 @@ nimbus upgrade
 특정 버전으로 업그레이드:
 
 ```bash
-nimbus upgrade --version v1.0.3
+nimbus update --version v1.0.3
 ```
 
 ---
@@ -205,15 +205,15 @@ curl -fsSL https://raw.githubusercontent.com/Yoodule/nimbus/main/install.sh -o /
 
 ### Docker 없이 설치할 수 있나요?
 
-가능합니다. CLI와 게이트웨이는 네이티브로 실행됩니다. 번들된 MCP 스택 (Playwright 브라우저, Postgres 에이전트 DB, Qdrant) 은 Docker를 사용하지만 `nimbus start --no-deps` 로 건너뛰고 대신 `mcp.json` 으로 원격 MCP 서버를 가리키도록 구성할 수 있습니다.
+아니요. Nimbus 는 실행 중인 Docker 데몬이 필요합니다 — 게이트웨이, Qdrant, Postgres, Redis, 번들된 MCP 서버가 모두 컨테이너에서 실행됩니다. macOS / Windows 에서는 Docker Desktop 또는 OrbStack 을, Linux 에서는 Docker Engine 을 사용하세요. Docker 에 접근할 수 없는 경우 `nimbus doctor` 가 알려줍니다.
 
 ### 다운로드 크기는 얼마인가요?
 
-CLI 타르볼은 압축 상태로 약 30 MB입니다. 첫 시작 시 Docker 이미지를 추가로 약 2 GB 가져옵니다 (Qdrant, Playwright, Postgres). 대역폭이 제한적인 경우 `--no-deps` 시작 모드로 Docker 풀을 건너뛸 수 있습니다.
+CLI 타르볼은 압축 상태로 약 30 MB입니다. 첫 시작 시 가져오는 Docker 이미지로 추가로 약 2 GB (게이트웨이, Qdrant, Postgres, Redis, Playwright/Chromium) 가 추가됩니다.
 
 ### OAuth 토큰은 어디에 저장되나요?
 
-기본적으로는 메모리에만 존재 — 재시작 시 다시 승인해야 합니다. `~/.nimbus/.env` 에 `NIMBUS_PERSIST_TOKENS=1` 을 설정하면 `~/.nimbus/tokens/` 아래에 암호화되어 저장됩니다.
+기본적으로는 메모리에만 존재 — 재시작 시 다시 승인해야 합니다. 게이트웨이의 OAuth 클라이언트가 흐름을 관리하며, 기본 설치에서는 토큰이 디스크에 저장되지 않습니다.
 
 ### Apple Silicon에서 Rosetta로 동작하나요?
 
@@ -221,7 +221,7 @@ CLI 타르볼은 압축 상태로 약 30 MB입니다. 첫 시작 시 Docker 이�
 
 ### 한 호스트에서 Nimbus 인스턴스를 여러 개 실행하려면? {#how-do-i-run-multiple-nimbus-instances-on-the-same-host}
 
-Nimbus는 고정 호스트 포트 (`3000`, `8088`, `6333`, `5433`, `6080`, `8006`, `8007`, `8081`) 에 바인딩하므로 기본 설치는 단일 인스턴스입니다. 두 번째 인스턴스를 실행하려면 저장소를 클론하고 `compose.yaml` 에서 포트를 재매핑한 뒤, 고유한 `NIMBUS_HOME` 을 설정하고, 두 스택이 충돌하지 않도록 `COMPOSE_PROJECT_NAME` 을 설정하세요. 자세한 내용은 아래 [다중 인스턴스 섹션](#how-do-i-run-multiple-nimbus-instances-on-the-same-host) 을 참고하세요.
+Nimbus는 고정 호스트 포트 (dashboard `3000`, gateway `8088`, noVNC `6080`, Postgres `5433`, Redis `6379`, Qdrant `6333`/`6334`) 에 바인딩하므로 기본 설치는 단일 인스턴스입니다. 두 번째 인스턴스를 실행하려면 저장소를 클론하고 `compose.yaml` 에서 포트를 재매핑한 뒤, 고유한 `NIMBUS_HOME` 을 설정하고, 두 스택이 충돌하지 않도록 `COMPOSE_PROJECT_NAME` 을 설정하세요. 자세한 내용은 아래 [다중 인스턴스 섹션](#how-do-i-run-multiple-nimbus-instances-on-the-same-host) 을 참고하세요.
 
 ### 설치가 멈추거나 curl 이 실패합니다 — 어떻게 하나요?
 

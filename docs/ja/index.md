@@ -95,7 +95,7 @@
 <div style="background: #0a0a0a; border: 1px solid #262626; border-radius: 12px; padding: 24px;">
   <h3 style="color: #ffffff; font-size: 1.15em; margin: 0 0 8px 0;">🗓️ 受信箱をトリアージ</h3>
   <p style="color: #a3a3a3; font-size: 0.95em; line-height: 1.5; margin: 0;">
-    毎朝、Nimbus が新しいメールにラベルを付け、明らかなものには返信の下書きを作成し、残りは Slack でフラグします。あなたが見るのは対応が必要なものだけです。
+    毎朝、Nimbus が新しいメールにラベルを付け、明らかなものには返信の下書きを作成し、残りは確認用にフラグします。あなたが見るのは対応が必要なものだけです。
   </p>
 </div>
 
@@ -216,20 +216,17 @@ Nimbus ホームディレクトリの `mcp.json` を変更して有効なサー�
 | `nimbus start --gateway` | ヘッドレスモード。ゲートウェイコンテナーのみを実行 ― CI やリモート MCP のみの使用ではフルスタックをスキップします。 |
 | `nimbus start --fresh` | データボリュームを消去。Postgres/Redis の認証情報を再生成し、データディレクトリを再初期化します。 |
 | `nimbus stop` | 停止。すべてのコンテナーサービスを安全に終了し、システムポートを解放します。 |
-| `nimbus upgrade` | アップグレード。最新のバイナリを取得し、ラッパーの設定をアップグレードします。 |
-| `nimbus update` | CLI を更新。ゲートウェイコンテナーのイメージをリフレッシュします（`--gateway` 併用）。 |
-| `nimbus uninstall` | アンインストール。Nimbus CLI、コンテナー、設定を削除します。 |
-| `nimbus uninstall --keep-data` | アンインストールするがデータベース、鍵、設定は保持します。 |
-| `nimbus uninstall --purge` | 確認なしでアンインストールし、すべてを消去します。 |
+| `nimbus upgrade` | コンテナーイメージを更新。最新の gateway/dashboard イメージを取得し、必要に応じて 1 回限りの Qdrant スキーママイグレーションを実行し、`compose up -d --build` を行います。 |
+| `nimbus update [--gateway]` | **CLI バイナリ自体**を自己更新。プラットフォームアーカイブをダウンロードし、SHA256 + minisign 署名を検証して、実行中のバイナリをアトミックに置き換えます。`--gateway` を付けると、同じ実行でゲートウェイコンテナーの pull + 再起動も行います。 |
+| `nimbus uninstall` | アンインストール。Nimbus CLI、コンテナー、設定、および `~/.nimbus/` を削除します。 |
 | `nimbus doctor` | 診断。Docker、バージョン差分、コンテナーの健全性、アップデートの新しさ、認証情報のドリフトを確認します。 |
-| `nimbus recover-pg-role` | 修復。`nimbus_postgres_data` ボリュームを現在の `.env` の認証情報に移行します。 |
-| `nimbus recover-redis-password` | 修復。Redis ボリュームのパスワードを現在の `.env` に一致するようにローテーションします。 |
 | `nimbus dashboard install` | オプションの Agent Dashboard コンパニオンをインストールします。 |
 | `nimbus dashboard uninstall` | Dashboard コンテナーとサービスブロックを削除します。 |
 | `nimbus dashboard status` | Dashboard が有効かどうかとコンテナーの状態を表示します。 |
 | `nimbus config <サブコマンド>` | `~/.nimbus/.env` を管理（list、get、set、unset）。 |
 | `nimbus mcp <サブコマンド>` | `~/.nimbus/mcp.json` を管理（list、get、set、remove）。 |
-| `nimbus chat "プロンプト"` | Dashboard にプロンプトを送信し、応答をストリーミングします。 |
+| `nimbus agent "<プロンプト>" [--model <id>]` | Dashboard の `nimbus_agent` にプロンプトを送信し、応答をストリーミングします。デフォルトは `openrouter/free` です。 |
+| `nimbus activate <key>` | ライセンス / 登録キーを有効化します。 |
 | `nimbus env-init` | CLI が管理するシークレットを `~/.nimbus/.env` に書き込みます（冪等）。 |
 
 完全なリファレンスは [`nimbus --help`](download.md)、プラットフォーム別のインストール手順は [ダウンロードページ](download.md) を参照してください。

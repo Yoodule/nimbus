@@ -152,7 +152,7 @@ nimbus upgrade
 Pour mettre à jour vers une version spécifique :
 
 ```bash
-nimbus upgrade --version v1.0.3
+nimbus update --version v1.0.3
 ```
 
 ---
@@ -205,15 +205,15 @@ L'installateur actuel suit la redirection CDN de GitHub, détecte votre architec
 
 ### Puis-je installer sur une machine sans Docker ?
 
-Oui. Le CLI et la passerelle s'exécutent nativement. La pile MCP incluse (navigateur Playwright, base Postgres pour agents, Qdrant) utilise Docker, mais vous pouvez la sauter avec `nimbus start --no-deps` et pointer Nimbus vers des serveurs MCP distants via `mcp.json`.
+Non. Nimbus nécessite un daemon Docker en cours d'exécution — la passerelle, Qdrant, Postgres, Redis et les serveurs MCP inclus s'exécutent tous en conteneurs. Sur macOS / Windows utilisez Docker Desktop ou OrbStack ; sur Linux utilisez Docker Engine. `nimbus doctor` vous indiquera si Docker n'est pas joignable.
 
 ### Quelle est la taille du téléchargement ?
 
-L'archive du CLI pèse environ 30 Mo compressés. Les images Docker téléchargées au premier démarrage ajoutent environ 2 Go (Qdrant, Playwright, Postgres). Si votre bande passante est limitée, le mode de démarrage `--no-deps` ignore le téléchargement Docker.
+L'archive du CLI pèse environ 30 Mo compressés. Les images Docker récupérées au premier démarrage ajoutent environ 2 Go (passerelle, Qdrant, Postgres, Redis, Playwright/Chromium).
 
 ### Où sont stockés mes tokens OAuth ?
 
-En mémoire par défaut — réautorisez au redémarrage. Définissez `NIMBUS_PERSIST_TOKENS=1` dans `~/.nimbus/.env` pour les chiffrer au repos sous `~/.nimbus/tokens/`.
+En mémoire par défaut — réautorisez au redémarrage. Le client OAuth de la passerelle gère la danse ; les tokens ne sont pas persistés sur le disque dans l'installation par défaut.
 
 ### Cela fonctionne-t-il sur Apple Silicon avec Rosetta ?
 
@@ -221,7 +221,7 @@ Oui — définissez `NIMBUS_HOST_ARCH=amd64` avant la commande d'installation po
 
 ### Comment exécuter plusieurs instances de Nimbus sur le même hôte ? {#how-do-i-run-multiple-nimbus-instances-on-the-same-host}
 
-Nimbus se lie à des ports fixes de l'hôte (`3000`, `8088`, `6333`, `5433`, `6080`, `8006`, `8007`, `8081`), donc l'installation par défaut est mono-instance. Pour en exécuter une seconde, clonez le dépôt, remappez les ports dans `compose.yaml`, définissez un `NIMBUS_HOME` unique et configurez `COMPOSE_PROJECT_NAME` pour éviter les collisions entre les deux piles. Tous les détails dans la [section Instances multiples](#how-do-i-run-multiple-nimbus-instances-on-the-same-host) ci-dessous.
+Nimbus se lie à des ports fixes de l'hôte (`3000` pour le dashboard, `8088` pour la passerelle, `6080` pour noVNC, `5433` pour Postgres, `6379` pour Redis, `6333`/`6334` pour Qdrant), donc l'installation par défaut est mono-instance. Pour en exécuter une seconde, clonez le dépôt, remappez les ports dans `compose.yaml`, définissez un `NIMBUS_HOME` unique et configurez `COMPOSE_PROJECT_NAME` pour éviter les collisions entre les deux piles. Tous les détails dans la [section Instances multiples](#how-do-i-run-multiple-nimbus-instances-on-the-same-host) ci-dessous.
 
 ### L'installation se bloque ou curl échoue — que faire ?
 

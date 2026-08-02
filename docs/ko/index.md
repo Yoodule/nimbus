@@ -95,7 +95,7 @@
 <div style="background: #0a0a0a; border: 1px solid #262626; border-radius: 12px; padding: 24px;">
   <h3 style="color: #ffffff; font-size: 1.15em; margin: 0 0 8px 0;">🗓️ 받은편지함을 분류합니다</h3>
   <p style="color: #a3a3a3; font-size: 0.95em; line-height: 1.5; margin: 0;">
-    매일 아침 Nimbus가 새 이메일을 라벨링하고, 단순 회신은 초안으로 작성하며, 나머지는 Slack에 플래그합니다. 사용자는 직접 봐야 하는 것만 확인합니다.
+    매일 아침 Nimbus가 새 이메일을 라벨링하고, 단순 회신은 초안으로 작성하며, 나머지는 검토용으로 플래그합니다. 사용자는 직접 봐야 하는 것만 확인합니다.
   </p>
 </div>
 
@@ -216,20 +216,17 @@ Nimbus 홈 디렉터리의 `mcp.json` 을 수정해 활성 서버를 구성하�
 | `nimbus start --gateway` | 헤드리스 모드. 게이트웨이 컨테이너만 실행합니다 — CI나 원격 MCP 전용 사용 시 전체 스택을 건너뜁니다. |
 | `nimbus start --fresh` | 데이터 볼륨 초기화. Postgres/Redis 자격 증명을 재생성하고 데이터 디렉터리를 다시 초기화합니다. |
 | `nimbus stop` | 종료. 모든 컨테이너 서비스를 안전하게 종료하고 시스템 포트를 해제합니다. |
-| `nimbus upgrade` | 업그레이드. 최신 바이너리를 가져오고 래퍼 설정을 업그레이드합니다. |
-| `nimbus update` | CLI 업데이트. 게이트웨이 컨테이너 이미지를 새로 고칩니다 (`--gateway` 와 함께 사용). |
-| `nimbus uninstall` | 제거. Nimbus CLI, 컨테이너, 설정을 모두 제거합니다. |
-| `nimbus uninstall --keep-data` | 제거하면서 데이터베이스, 키, 설정은 보존합니다. |
-| `nimbus uninstall --purge` | 확인 없이 모든 것을 제거합니다. |
+| `nimbus upgrade` | 컨테이너 이미지를 새로 고침. 새 gateway/dashboard 이미지를 가져오고, 필요 시 1회성 Qdrant 스키마 마이그레이션을 실행한 뒤 `compose up -d --build` 를 수행합니다. |
+| `nimbus update [--gateway]` | **CLI 바이너리 자체**를 자체 업데이트. 플랫폼 아카이브를 다운로드하고, SHA256 + minisign 서명을 검증한 뒤 실행 중인 바이너리를 원자적으로 교체합니다. `--gateway` 를 함께 사용하면 같은 실행에서 게이트웨이 컨테이너를 풀링하고 재시작합니다. |
+| `nimbus uninstall` | 제거. Nimbus CLI, 컨테이너, 설정, `~/.nimbus/` 를 모두 제거합니다. |
 | `nimbus doctor` | 진단. Docker, 버전 차이, 컨테이너 상태, 업데이트 신선도, 자격 증명 드리프트를 확인합니다. |
-| `nimbus recover-pg-role` | 복구. `nimbus_postgres_data` 볼륨을 현재 `.env` 자격 증명으로 마이그레이션합니다. |
-| `nimbus recover-redis-password` | 복구. Redis 볼륨 비밀번호를 현재 `.env` 와 일치하도록 회전합니다. |
 | `nimbus dashboard install` | 선택 사양인 Agent Dashboard 동반자를 설치합니다. |
 | `nimbus dashboard uninstall` | Dashboard 컨테이너와 서비스 블록을 제거합니다. |
 | `nimbus dashboard status` | Dashboard 활성화 여부와 컨테이너 상태를 표시합니다. |
 | `nimbus config <subcommand>` | `~/.nimbus/.env` 를 관리합니다 (list, get, set, unset). |
 | `nimbus mcp <subcommand>` | `~/.nimbus/mcp.json` 을 관리합니다 (list, get, set, remove). |
-| `nimbus chat "prompt"` | Dashboard에 프롬프트를 보내고 응답을 스트리밍합니다. |
+| `nimbus agent "<prompt>" [--model <id>]` | Dashboard의 `nimbus_agent` 로 프롬프트를 보내고 응답을 스트리밍합니다. 기본값은 `openrouter/free`. |
+| `nimbus activate <key>` | 라이선스/등록 키를 활성화합니다. |
 | `nimbus env-init` | CLI가 관리하는 시크릿을 `~/.nimbus/.env` 에 채워 넣습니다 (멱등). |
 
 전체 레퍼런스는 [`nimbus --help`](download.md) 또는 [Download 페이지](download.md) 의 플랫폼별 설치 안내를 참고하세요.
