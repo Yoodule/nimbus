@@ -208,6 +208,16 @@ nimbus stop && nimbus start
 
 Note the plural: `OPENROUTER_API_KEYS` (comma-separated for multiple keys, with fallback to the singular form). An empty or wrong key pool makes every request leave with no `Authorization` header and the provider returns 401.
 
+To **add** a key to an existing pool without overwriting the others, use `append` (dedup by default; pass `--force` to allow duplicates). To drop a key from the pool, use `remove`:
+
+```bash
+nimbus config append OPENAI_API_KEYS sk-newkey
+nimbus config remove OPENAI_API_KEYS sk-oldkey
+```
+
+!!! note "Added in CLI v1.0.5"
+    `nimbus config append`, `prepend`, and `remove` were introduced in v1.0.5. Earlier releases don't recognize these subcommands — run `nimbus update` first.
+
 ### "Model not found" for a specific model ID
 
 Nimbus defaults to `openrouter/free`. If you pass `--model <id>` and the model doesn't exist on OpenRouter, you'll get a 404. Check the model ID at [openrouter.ai/models](https://openrouter.ai/models) — they change frequently.

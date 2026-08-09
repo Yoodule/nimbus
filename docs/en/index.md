@@ -224,13 +224,24 @@ The `nimbus` CLI controls the lifecycle of your local containerized workspace.
 | `nimbus dashboard install` | Install the optional Agent Dashboard companion. |
 | `nimbus dashboard uninstall` | Remove the Dashboard container and service block. |
 | `nimbus dashboard status` | Show whether the Dashboard is enabled and its container state. |
-| `nimbus config <subcommand>` | Manage `~/.nimbus/.env` (list, get, set, unset). |
+| `nimbus config <subcommand>` | Manage `~/.nimbus/.env` (list, get, set, unset, append, prepend, remove). |
 | `nimbus mcp <subcommand>` | Manage `~/.nimbus/mcp.json` (list, get, set, remove). |
 | `nimbus agent "<prompt>" [--model <id>]` | Send a prompt to the dashboard's `nimbus_agent` and stream the response. Defaults to `openrouter/free`. |
 | `nimbus activate <key>` | Activate a license/registration key. |
 | `nimbus env-init` | Populate CLI-owned secrets in `~/.nimbus/.env` (idempotent, non-interactive). Does **not** prompt for `OPENROUTER_API_KEY` — that's user-owned. |
 
 See [`nimbus --help`](download.md) for the full reference, or the [Download page](download.md) for platform-specific install instructions.
+
+!!! note "Added in v1.0.5 — `nimbus config {append, prepend, remove}`"
+    Three new subcommands for comma-separated values (e.g. `OPENAI_API_KEYS`, `OPENROUTER_API_KEYS`):
+
+    ```bash
+    nimbus config append  OPENAI_API_KEYS sk-newkey    # add to the end (dedups by default)
+    nimbus config prepend OPENAI_API_KEYS sk-priority  # add to the front (dedups by default)
+    nimbus config remove  OPENAI_API_KEYS sk-oldkey    # drop one or many tokens (CSV)
+    ```
+
+    They mirror the gateway's CSV parser exactly (`[a, b, c]` / `a,b` / `a\nb\nc` are all accepted), and `remove` deletes the key entirely when the list becomes empty (matches `unset` semantics). Pass `--force` to bypass dedup. Available in CLI v1.0.5 and later — earlier releases don't recognize these subcommands.
 
 ---
 
