@@ -192,12 +192,12 @@ Configurez vos serveurs actifs en modifiant `mcp.json` dans votre répertoire ho
 }
 ```
 
-La passerelle expose quatre endpoints principaux aux modèles (sous le namespace `nimbus-utility-mcp`) :
+La passerelle expose directement la surface de transport MCP — il n'existe pas de namespace wrapper `nimbus-utility-mcp`. Deux outils suffisent au modèle pour découvrir les serveurs enregistrés et agir dessus :
 
-1. **`list_servers`** — Liste tous les serveurs MCP configurés avec leur état de connexion et le nombre d'outils.
-2. **`find_tools`** — Effectue une recherche sémantique sur tous les serveurs. Votre modèle demande « parcourir linkedin » et ne reçoit que les schémas d'outils pertinents.
-3. **`execute_tool`** — Exécute dynamiquement n'importe quel outil sur n'importe quel serveur enregistré.
-4. **`chain_tools`** — Enchaîne plusieurs étapes séquentiellement (par ex. rechercher → lire → envoyer) en un seul appel API.
+1. **`find_tools`** — Recherche sémantique sur tous les backends MCP configurés (et le catalogue de validateurs, via le discriminateur `kind`). Votre modèle demande « parcourir linkedin » et ne reçoit que les schémas d'outils pertinents au format namespace (`<serveur>_<outil>`), qu'il peut dispatcher via `execute_tool`. Lecture seule.
+2. **`execute_tool`** — Le dispatcher générique. Prend un nom d'outil renvoyé par `find_tools` et ses arguments, transmet l'appel au serveur backend approprié et streame le résultat. Les annotations lecture/écriture dépendent de l'outil en aval — le dispatcher lui-même ne supprime jamais de données utilisateur.
+
+D'autres outils partagent le même transport pour la progression interne de l'agent — `nimbus_agent`, `nimbus_todo_write`, `nimbus_get_task_progress_log` — mais la surface pour parler aux apps listées dans `mcp.json` se résume aux deux ci-dessus.
 
 ---
 

@@ -192,12 +192,12 @@ Configura tus servidores activos modificando `mcp.json` en tu directorio home de
 }
 ```
 
-La pasarela expone cuatro endpoints principales a los modelos (bajo el namespace `nimbus-utility-mcp`):
+La pasarela expone directamente la superficie de transporte MCP — no existe un namespace envoltorio `nimbus-utility-mcp`. Solo dos herramientas bastan para que el modelo descubra los servidores registrados y actúe sobre ellos:
 
-1. **`list_servers`** — Lista todos los servidores MCP configurados con su estado de conexión y número de herramientas.
-2. **`find_tools`** — Busca semánticamente entre todos los servidores. Tu modelo pide "explorar linkedin" y recibe solo los esquemas de herramientas relevantes.
-3. **`execute_tool`** — Ejecuta cualquier herramienta en cualquier servidor registrado de forma dinámica.
-4. **`chain_tools`** — Encadena varios pasos secuencialmente (p. ej. buscar → leer → enviar) en una sola llamada a la API.
+1. **`find_tools`** — Búsqueda semántica en todos los backends MCP configurados (y el catálogo de validadores, mediante el discriminador `kind`). Tu modelo pide "explorar linkedin" y recibe únicamente los esquemas de herramientas relevantes en formato con namespace (`<servidor>_<herramienta>`), que puede despachar a través de `execute_tool`. Solo lectura.
+2. **`execute_tool`** — El despachador genérico. Recibe un nombre de herramienta devuelto por `find_tools` y sus argumentos, reenvía la llamada al servidor backend correspondiente y transmite el resultado en streaming. Las anotaciones de lectura/escritura dependen de la herramienta downstream — el despachador en sí nunca elimina datos del usuario.
+
+Otras herramientas comparten el mismo transporte para el bookkeeping interno del agente — `nimbus_agent`, `nimbus_todo_write`, `nimbus_get_task_progress_log` — pero la superficie para hablar con las apps listadas en `mcp.json` se reduce a las dos anteriores.
 
 ---
 

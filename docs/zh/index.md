@@ -192,12 +192,12 @@ Nimbus 将所有基于 stdio 和 HTTP 的 MCP 服务器统一在一个接口之�
 }
 ```
 
-网关向模型公开四个主要端点(位于 `nimbus-utility-mcp` 命名空间下):
+网关直接暴露 MCP 传输层接口 —— 不存在 `nimbus-utility-mcp` 这样的包装命名空间。模型若要发现并操作已注册的服务器，只需要以下两个工具：
 
-1. **`list_servers`** —— 列出所有已配置的 MCP 后端服务器及其连接状态和工具数量。
-2. **`find_tools`** —— 对所有服务器进行语义搜索。模型请求"浏览 linkedin"时,仅返回相关工具的 schema。
-3. **`execute_tool`** —— 动态执行任何已注册服务器上的任何工具。
-4. **`chain_tools`** —— 在一次 API 调用中按顺序链接多个步骤(例如:搜索 → 读取 → 发送)。
+1. **`find_tools`** —— 对所有已配置的 MCP 后端(以及通过 `kind` 区分器指定的校验器目录)进行语义搜索。当模型请求"浏览 linkedin"时,仅返回命名空间格式的相关工具 schema(`<server>_<tool>`),便于通过 `execute_tool` 直接派发。只读。
+2. **`execute_tool`** —— 通用派发器。接收 `find_tools` 返回的工具名与参数,将调用转发到对应的后端服务器,并以流式方式回传结果。读写注解取决于下游工具,派发器自身永远不会删除用户数据。
+
+代理自身的进度管理工具(`nimbus_agent`、`nimbus_todo_write`、`nimbus_get_task_progress_log`)也位于同一传输层,但与 `mcp.json` 中列出的应用进行交互的接口就收敛于上述两个工具。
 
 ---
 

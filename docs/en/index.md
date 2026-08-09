@@ -193,12 +193,12 @@ Configure your active servers by modifying `mcp.json` in your Nimbus home direct
 }
 ```
 
-The gateway exposes four main endpoints to models (under the namespace `nimbus-utility-mcp`):
+The gateway exposes the MCP transport surface directly — there is no `nimbus-utility-mcp` wrapper namespace. Two tools do all the work the model needs to discover and act on registered servers:
 
-1. **`list_servers`** — Lists all configured MCP backend servers with their connection status and tool count.
-2. **`find_tools`** — Searches across all servers semantically. Your model asks for "browse linkedin" and gets only the relevant tool schemas.
-3. **`execute_tool`** — Executes any tool on any registered server dynamically.
-4. **`chain_tools`** — Chains multiple steps together sequentially (e.g. search → read → send) in a single API roundtrip.
+1. **`find_tools`** — Semantic search across all configured MCP backends (and the validator catalog, via the `kind` discriminator). Your model asks for "browse linkedin" and gets back only the relevant namespaced tool schemas (`<server>_<tool>`) it can dispatch against. Read-only.
+2. **`execute_tool`** — The generic dispatcher. Takes a tool name returned by `find_tools` and the arguments, fans the call out to the right backend server, and streams the result back. Read/write annotations depend on the downstream tool — the dispatcher itself never deletes user data.
+
+Other tools live on the same transport for the agent's own bookkeeping — `nimbus_agent`, `nimbus_todo_write`, `nimbus_get_task_progress_log` — but the two above are the surface area for talking to the apps in `mcp.json`.
 
 ---
 
