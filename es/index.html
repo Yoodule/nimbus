@@ -1027,13 +1027,12 @@
 <a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">  </span><span class="p">}</span>
 <a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="p">}</span>
 </code></pre></div>
-<p>La pasarela expone cuatro endpoints principales a los modelos (bajo el namespace <code>nimbus-utility-mcp</code>):</p>
+<p>La pasarela expone directamente la superficie de transporte MCP — no existe un namespace envoltorio <code>nimbus-utility-mcp</code>. Solo dos herramientas bastan para que el modelo descubra los servidores registrados y actúe sobre ellos:</p>
 <ol>
-<li><strong><code>list_servers</code></strong> — Lista todos los servidores MCP configurados con su estado de conexión y número de herramientas.</li>
-<li><strong><code>find_tools</code></strong> — Busca semánticamente entre todos los servidores. Tu modelo pide "explorar linkedin" y recibe solo los esquemas de herramientas relevantes.</li>
-<li><strong><code>execute_tool</code></strong> — Ejecuta cualquier herramienta en cualquier servidor registrado de forma dinámica.</li>
-<li><strong><code>chain_tools</code></strong> — Encadena varios pasos secuencialmente (p. ej. buscar → leer → enviar) en una sola llamada a la API.</li>
+<li><strong><code>find_tools</code></strong> — Búsqueda semántica en todos los backends MCP configurados (y el catálogo de validadores, mediante el discriminador <code>kind</code>). Tu modelo pide "explorar linkedin" y recibe únicamente los esquemas de herramientas relevantes en formato con namespace (<code>&lt;servidor&gt;_&lt;herramienta&gt;</code>), que puede despachar a través de <code>execute_tool</code>. Solo lectura.</li>
+<li><strong><code>execute_tool</code></strong> — El despachador genérico. Recibe un nombre de herramienta devuelto por <code>find_tools</code> y sus argumentos, reenvía la llamada al servidor backend correspondiente y transmite el resultado en streaming. Las anotaciones de lectura/escritura dependen de la herramienta downstream — el despachador en sí nunca elimina datos del usuario.</li>
 </ol>
+<p>Otras herramientas comparten el mismo transporte para el bookkeeping interno del agente — <code>nimbus_agent</code>, <code>nimbus_todo_write</code>, <code>nimbus_get_task_progress_log</code> — pero la superficie para hablar con las apps listadas en <code>mcp.json</code> se reduce a las dos anteriores.</p>
 <hr />
 <h2 id="referencia-del-cli">Referencia del CLI</h2>
 <p style="color: #a3a3a3; font-size: 0.95em; margin: 0 0 16px 0;">
@@ -1099,7 +1098,7 @@
 </tr>
 <tr>
 <td style="text-align: left;"><code>nimbus config &lt;subcomando&gt;</code></td>
-<td style="text-align: left;">Gestiona <code>~/.nimbus/.env</code> (list, get, set, unset).</td>
+<td style="text-align: left;">Gestiona <code>~/.nimbus/.env</code> (list, get, set, unset, append, prepend, remove).</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>nimbus mcp &lt;subcomando&gt;</code></td>
@@ -1120,6 +1119,15 @@
 </tbody>
 </table>
 <p>Consulta <a href="download/"><code>nimbus --help</code></a> para la referencia completa, o la <a href="download/">página de descarga</a> para instrucciones de instalación específicas por plataforma.</p>
+<div class="admonition note">
+<p class="admonition-title">Añadido en v1.0.5 — <code>nimbus config {append, prepend, remove}</code></p>
+<p>Tres nuevos subcomandos para valores separados por comas (p. ej. <code>OPENAI_API_KEYS</code>, <code>OPENROUTER_API_KEYS</code>).</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>nimbus<span class="w"> </span>config<span class="w"> </span>append<span class="w">  </span>OPENAI_API_KEYS<span class="w"> </span>sk-newkey<span class="w">    </span><span class="c1"># añade al final (deduplica por defecto)</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>nimbus<span class="w"> </span>config<span class="w"> </span>prepend<span class="w"> </span>OPENAI_API_KEYS<span class="w"> </span>sk-priority<span class="w">  </span><span class="c1"># añade al inicio (deduplica por defecto)</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>nimbus<span class="w"> </span>config<span class="w"> </span>remove<span class="w">  </span>OPENAI_API_KEYS<span class="w"> </span>sk-oldkey<span class="w">    </span><span class="c1"># elimina uno o varios tokens (CSV)</span>
+</code></pre></div>
+<p>Reflejan exactamente el analizador CSV del gateway (se aceptan <code>[a, b, c]</code> / <code>a,b</code> / <code>a\nb\nc</code>), y <code>remove</code> elimina la clave por completo cuando la lista queda vacía (consistente con <code>unset</code>). Usa <code>--force</code> para permitir duplicados. Disponible en la CLI v1.0.5 y posteriores — las versiones anteriores no reconocen estos subcomandos.</p>
+</div>
 <hr />
 <h2 id="listo-para-darle-a-tu-agente-un-runtime-real">¿Listo para darle a tu agente un runtime real?</h2>
 <div style="text-align: center; margin: 48px 0 24px 0; padding: 32px; background: #0a0a0a; border: 1px solid #262626; border-radius: 12px;">

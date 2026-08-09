@@ -1027,13 +1027,12 @@
 <a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">  </span><span class="p">}</span>
 <a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="p">}</span>
 </code></pre></div>
-<p>게이트웨이는 모델에 네 가지 주요 엔드포인트를 노출합니다 (<code>nimbus-utility-mcp</code> 네임스페이스 아래).</p>
+<p>게이트웨이는 MCP 트랜스포트 인터페이스를 직접 노출합니다 — <code>nimbus-utility-mcp</code> 같은 래퍼 네임스페이스는 존재하지 않습니다. 모델이 등록된 서버를 찾고 동작하기 위해 필요한 도구는 다음 두 가지뿐입니다:</p>
 <ol>
-<li><strong><code>list_servers</code></strong> — 구성된 모든 MCP 백엔드 서버를 연결 상태와 도구 수와 함께 나열합니다.</li>
-<li><strong><code>find_tools</code></strong> — 모든 서버를 시맨틱하게 검색합니다. 모델이 "browse linkedin"을 요청하면 관련 도구 스키마만 반환합니다.</li>
-<li><strong><code>execute_tool</code></strong> — 등록된 모든 서버의 모든 도구를 동적으로 실행합니다.</li>
-<li><strong><code>chain_tools</code></strong> — 여러 단계를 한 번의 API 호출로 순차적으로 체이닝합니다 (예: 검색 → 읽기 → 보내기).</li>
+<li><strong><code>find_tools</code></strong> — 구성된 MCP 백엔드 전체(및 <code>kind</code> 디스크리미네이터를 통한 검증기 카탈로그)를 시맨틱하게 검색합니다. 모델이 "browse linkedin"을 요청하면, 디스패치 가능한 네임스페이스 형식의 관련 도구 스키마(<code>&lt;server&gt;_&lt;tool&gt;</code>)만 반환됩니다. 읽기 전용.</li>
+<li><strong><code>execute_tool</code></strong> — 범용 디스패처입니다. <code>find_tools</code>가 반환한 도구 이름과 인수를 받아 적절한 백엔드 서버로 호출을 전달하고 결과를 스트리밍으로 돌려줍니다. 읽기/쓰기 어노테이션은 하위 도구에 따라 달라지지만, 디스패처 자체는 사용자 데이터를 삭제하지 않습니다.</li>
 </ol>
+<p>에이전트의 자체 진행 상황 추적용으로 같은 트랜스포트 위에 <code>nimbus_agent</code>, <code>nimbus_todo_write</code>, <code>nimbus_get_task_progress_log</code>이 함께 존재하지만, <code>mcp.json</code>에 나열된 앱과 통신하기 위한 노출면은 위의 두 도구로 집약됩니다.</p>
 <hr />
 <h2 id="cli">CLI 레퍼런스</h2>
 <p style="color: #a3a3a3; font-size: 0.95em; margin: 0 0 16px 0;">
@@ -1099,7 +1098,7 @@
 </tr>
 <tr>
 <td style="text-align: left;"><code>nimbus config &lt;subcommand&gt;</code></td>
-<td style="text-align: left;"><code>~/.nimbus/.env</code> 를 관리합니다 (list, get, set, unset).</td>
+<td style="text-align: left;"><code>~/.nimbus/.env</code> 를 관리합니다 (list, get, set, unset, append, prepend, remove).</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>nimbus mcp &lt;subcommand&gt;</code></td>
@@ -1120,6 +1119,15 @@
 </tbody>
 </table>
 <p>전체 레퍼런스는 <a href="download/"><code>nimbus --help</code></a> 또는 <a href="download/">Download 페이지</a> 의 플랫폼별 설치 안내를 참고하세요.</p>
+<div class="admonition note">
+<p class="admonition-title">v1.0.5 에서 추가 — <code>nimbus config {append, prepend, remove}</code></p>
+<p>콤마로 구분된 값(예: <code>OPENAI_API_KEYS</code>, <code>OPENROUTER_API_KEYS</code>)을 다루기 위한 새로운 서브커맨드 3 개가 추가되었습니다.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>nimbus<span class="w"> </span>config<span class="w"> </span>append<span class="w">  </span>OPENAI_API_KEYS<span class="w"> </span>sk-newkey<span class="w">    </span><span class="c1"># 끝에 추가 (기본적으로 중복 제거)</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>nimbus<span class="w"> </span>config<span class="w"> </span>prepend<span class="w"> </span>OPENAI_API_KEYS<span class="w"> </span>sk-priority<span class="w">  </span><span class="c1"># 앞에 추가 (기본적으로 중복 제거)</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>nimbus<span class="w"> </span>config<span class="w"> </span>remove<span class="w">  </span>OPENAI_API_KEYS<span class="w"> </span>sk-oldkey<span class="w">    </span><span class="c1"># 하나 또는 여러 토큰 제거 (CSV)</span>
+</code></pre></div>
+<p>게이트웨이 측 CSV 파서(<code>[a, b, c]</code> / <code>a,b</code> / <code>a\nb\nc</code> 모두 지원)와 정확히 일치하며, <code>remove</code> 로 리스트가 비게 되면 키 자체가 삭제됩니다(<code>unset</code> 과 동일). 중복을 허용하려면 <code>--force</code> 를 사용하세요. CLI v1.0.5 이상에서 사용 가능 — 이전 릴리스에서는 인식되지 않습니다.</p>
+</div>
 <hr />
 <h2 id="_1">에이전트에 진짜 런타임을 부여할 준비가 되셨나요?</h2>
 <div style="text-align: center; margin: 48px 0 24px 0; padding: 32px; background: #0a0a0a; border: 1px solid #262626; border-radius: 12px;">

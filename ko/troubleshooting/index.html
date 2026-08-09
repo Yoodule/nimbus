@@ -1474,30 +1474,38 @@
 <a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
 </code></pre></div>
 <p><strong>복수형</strong> 임에 주의하세요: <code>OPENROUTER_API_KEYS</code> (복수 키는 쉼표로 구분, 단수형으로 폴백). 비어 있거나 잘못된 키 풀은 모든 요청을 <code>Authorization</code> 헤더 없이 보내게 만들어 공급자가 401 을 반환합니다.</p>
+<p>기존 키 풀을 덮어쓰지 않고 새 키를 <strong>추가</strong> 하려면 <code>append</code> 를 (기본적으로 중복 제거됨. 중복을 허용하려면 <code>--force</code>), 키 풀에서 키를 빼려면 <code>remove</code> 를 사용하세요:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>nimbus<span class="w"> </span>config<span class="w"> </span>append<span class="w"> </span>OPENAI_API_KEYS<span class="w"> </span>sk-newkey
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>nimbus<span class="w"> </span>config<span class="w"> </span>remove<span class="w"> </span>OPENAI_API_KEYS<span class="w"> </span>sk-oldkey
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">CLI v1.0.5 에서 추가</p>
+<p><code>nimbus config append</code> / <code>prepend</code> / <code>remove</code> 는 v1.0.5 에서 도입되었습니다. 이전 릴리스에서는 인식되지 않습니다 — 먼저 <code>nimbus update</code> 를 실행하세요.</p>
+</div>
 <h3 id="id-model-not-found">특정 모델 ID 에서 "Model not found"</h3>
 <p>Nimbus 의 기본값은 <code>openrouter/free</code> 입니다. <code>--model &lt;id&gt;</code> 를 전달했는데 해당 모델이 OpenRouter 에 존재하지 않으면 404 가 옵니다. <a href="https://openrouter.ai/models">openrouter.ai/models</a> 에서 모델 ID 를 확인하세요 — 자주 바뀝니다.</p>
 <p>Ollama 모델의 경우 라우팅 접두사는 <code>ollama/&lt;model-name&gt;</code> 입니다 (예: <code>ollama/llama3.1</code>). 접두사 없는 bare ID 는 OpenRouter 로 간주됩니다.</p>
 <h3 id="_6">임베딩 실패</h3>
 <p>임베딩의 기본값은 <code>nvidia/llama-nemotron-embed-vl-1b-v2:free</code> (2048-dim, 무료 등급) 입니다. 이 모델을 사용할 수 없거나 rate limit 이 걸렸다면 폴백을 설정하세요:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>nimbus<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>EMBEDDING_MODEL<span class="w"> </span>openai/text-embedding-3-small
-<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>nimbus<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>EMBEDDING_MODEL<span class="w"> </span>openai/text-embedding-3-small
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
 </code></pre></div>
 <p>다음 시작 시 모든 도구 설명이 Qdrant 에 재수집됩니다 — 콜드 캐시에서는 1 분 정도의 인덱싱 시간을 예상하세요.</p>
 <hr />
 <h2 id="_7">복구</h2>
 <h3 id="nimbus-was-installed-by-a-different-version">"Nimbus was installed by a different version"</h3>
 <p>이전 설치가 <code>.env</code> 와 더 이상 맞지 않는 자격 증명으로 Postgres / Redis 볼륨을 동결시켜 둔 경우입니다. 해결책:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
 </code></pre></div>
 <p><code>start</code> 가 불일치를 자동 감지하고 현재 <code>.env</code> 에 맞게 role/password 를 재초기화합니다. 이전 <code>recover-pg-role</code> / <code>recover-redis-password</code> 서브커맨드는 더 이상 없습니다.</p>
 <h3 id="_8">모두 지우고 처음부터 다시 시작</h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>nimbus<span class="w"> </span>uninstall
-<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://nimbus.yoodule.com/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
-<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>nimbus<span class="w"> </span>start
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>nimbus<span class="w"> </span>uninstall
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://nimbus.yoodule.com/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>nimbus<span class="w"> </span>start
 </code></pre></div>
 <p>이 명령은 CLI, 모든 컨테이너, 모든 명명된 볼륨, <code>~/.nimbus/</code> 를 제거합니다. OAuth 토큰, <code>.env</code>, Qdrant 에 저장된 도구 설명을 잃게 됩니다. 첫 실행 시 재승인하세요.</p>
 <h3 id="cli">CLI 의 이전 버전으로 롤백하고 싶습니다</h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>nimbus<span class="w"> </span>update<span class="w"> </span>--version<span class="w"> </span>v1.0.1
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>nimbus<span class="w"> </span>update<span class="w"> </span>--version<span class="w"> </span>v1.0.1
 </code></pre></div>
 <p>(필요한 버전을 지정하세요.) CLI 자체 업데이트는 <code>nimbus update</code> 와 같은 atomic replace + SHA256 + minisign 경로를 특정 릴리스에 고정한 방식으로 사용합니다.</p>
 <hr />

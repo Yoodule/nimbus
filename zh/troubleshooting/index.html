@@ -1474,30 +1474,38 @@
 <a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
 </code></pre></div>
 <p>注意复数形式:<code>OPENROUTER_API_KEYS</code>(多个密钥用逗号分隔,在缺失时回退到单数形式)。空或错误的密钥池会让每个请求都不带 <code>Authorization</code> 头发出,提供商返回 401。</p>
+<p>如需在<strong>不覆盖</strong>现有密钥的前提下<strong>添加</strong>新密钥,请使用 <code>append</code>(默认去重,加 <code>--force</code> 允许重复);从密钥池中移除某项请使用 <code>remove</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>nimbus<span class="w"> </span>config<span class="w"> </span>append<span class="w"> </span>OPENAI_API_KEYS<span class="w"> </span>sk-newkey
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>nimbus<span class="w"> </span>config<span class="w"> </span>remove<span class="w"> </span>OPENAI_API_KEYS<span class="w"> </span>sk-oldkey
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">CLI v1.0.5 新增</p>
+<p><code>nimbus config append</code> / <code>prepend</code> / <code>remove</code> 在 v1.0.5 引入。旧版本无法识别——请先执行 <code>nimbus update</code>。</p>
+</div>
 <h3 id="id-model-not-found">特定模型 ID 提示 "Model not found"</h3>
 <p>Nimbus 默认使用 <code>openrouter/free</code>。如果你传入了 <code>--model &lt;id&gt;</code>,但该模型在 OpenRouter 上不存在,你会收到 404。请在 <a href="https://openrouter.ai/models">openrouter.ai/models</a> 上核对模型 ID —— 它们经常变化。</p>
 <p>对于 Ollama 模型,路由前缀是 <code>ollama/&lt;model-name&gt;</code>(例如 <code>ollama/llama3.1</code>)。没有前缀的裸 ID 会被视为 OpenRouter。</p>
 <h3 id="_6">嵌入失败</h3>
 <p>嵌入默认使用 <code>nvidia/llama-nemotron-embed-vl-1b-v2:free</code>(2048 维,免费层)。如果该模型不可用或被限流,请设置一个回退:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>nimbus<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>EMBEDDING_MODEL<span class="w"> </span>openai/text-embedding-3-small
-<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>nimbus<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>EMBEDDING_MODEL<span class="w"> </span>openai/text-embedding-3-small
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
 </code></pre></div>
 <p>下次启动时会将所有工具描述重新摄取到 Qdrant —— 冷缓存下预计需要约 1 分钟的索引时间。</p>
 <hr />
 <h2 id="_7">恢复</h2>
 <h3 id="nimbus-was-installed-by-a-different-version">"Nimbus was installed by a different version"</h3>
 <p>这意味着之前的安装将 Postgres 或 Redis 卷冻结在了与当前 <code>.env</code> 不再匹配的凭据上。解决方法:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
 </code></pre></div>
 <p><code>start</code> 会自动检测不匹配,并根据当前 <code>.env</code> 重新初始化角色 / 密码。旧的 <code>recover-pg-role</code> / <code>recover-redis-password</code> 子命令已不存在。</p>
 <h3 id="_8">清除一切并重新开始</h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>nimbus<span class="w"> </span>uninstall
-<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://nimbus.yoodule.com/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
-<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>nimbus<span class="w"> </span>start
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>nimbus<span class="w"> </span>uninstall
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://nimbus.yoodule.com/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>nimbus<span class="w"> </span>start
 </code></pre></div>
 <p>这会删除 CLI、所有容器、所有命名卷,以及 <code>~/.nimbus/</code>。你将丢失 OAuth 令牌、<code>.env</code> 和 Qdrant 中存储的所有工具描述。首次启动时需要重新授权。</p>
 <h3 id="cli">我想回滚到之前的 CLI 版本</h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>nimbus<span class="w"> </span>update<span class="w"> </span>--version<span class="w"> </span>v1.0.1
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>nimbus<span class="w"> </span>update<span class="w"> </span>--version<span class="w"> </span>v1.0.1
 </code></pre></div>
 <p>(或者你需要的版本。)CLI 的自我更新使用与 <code>nimbus update</code> 相同的原子替换 + SHA256 + minisign 路径,只是被钉在了指定的版本上。</p>
 <hr />

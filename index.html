@@ -1028,13 +1028,12 @@
 <a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">  </span><span class="p">}</span>
 <a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="p">}</span>
 </code></pre></div>
-<p>The gateway exposes four main endpoints to models (under the namespace <code>nimbus-utility-mcp</code>):</p>
+<p>The gateway exposes the MCP transport surface directly — there is no <code>nimbus-utility-mcp</code> wrapper namespace. Two tools do all the work the model needs to discover and act on registered servers:</p>
 <ol>
-<li><strong><code>list_servers</code></strong> — Lists all configured MCP backend servers with their connection status and tool count.</li>
-<li><strong><code>find_tools</code></strong> — Searches across all servers semantically. Your model asks for "browse linkedin" and gets only the relevant tool schemas.</li>
-<li><strong><code>execute_tool</code></strong> — Executes any tool on any registered server dynamically.</li>
-<li><strong><code>chain_tools</code></strong> — Chains multiple steps together sequentially (e.g. search → read → send) in a single API roundtrip.</li>
+<li><strong><code>find_tools</code></strong> — Semantic search across all configured MCP backends (and the validator catalog, via the <code>kind</code> discriminator). Your model asks for "browse linkedin" and gets back only the relevant namespaced tool schemas (<code>&lt;server&gt;_&lt;tool&gt;</code>) it can dispatch against. Read-only.</li>
+<li><strong><code>execute_tool</code></strong> — The generic dispatcher. Takes a tool name returned by <code>find_tools</code> and the arguments, fans the call out to the right backend server, and streams the result back. Read/write annotations depend on the downstream tool — the dispatcher itself never deletes user data.</li>
 </ol>
+<p>Other tools live on the same transport for the agent's own bookkeeping — <code>nimbus_agent</code>, <code>nimbus_todo_write</code>, <code>nimbus_get_task_progress_log</code> — but the two above are the surface area for talking to the apps in <code>mcp.json</code>.</p>
 <hr />
 <h2 id="cli-reference">CLI Reference</h2>
 <p style="color: #a3a3a3; font-size: 0.95em; margin: 0 0 16px 0;">
@@ -1100,7 +1099,7 @@
 </tr>
 <tr>
 <td style="text-align: left;"><code>nimbus config &lt;subcommand&gt;</code></td>
-<td style="text-align: left;">Manage <code>~/.nimbus/.env</code> (list, get, set, unset).</td>
+<td style="text-align: left;">Manage <code>~/.nimbus/.env</code> (list, get, set, unset, append, prepend, remove).</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>nimbus mcp &lt;subcommand&gt;</code></td>
@@ -1121,6 +1120,15 @@
 </tbody>
 </table>
 <p>See <a href="download/"><code>nimbus --help</code></a> for the full reference, or the <a href="download/">Download page</a> for platform-specific install instructions.</p>
+<div class="admonition note">
+<p class="admonition-title">Added in v1.0.5 — <code>nimbus config {append, prepend, remove}</code></p>
+<p>Three new subcommands for comma-separated values (e.g. <code>OPENAI_API_KEYS</code>, <code>OPENROUTER_API_KEYS</code>):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>nimbus<span class="w"> </span>config<span class="w"> </span>append<span class="w">  </span>OPENAI_API_KEYS<span class="w"> </span>sk-newkey<span class="w">    </span><span class="c1"># add to the end (dedups by default)</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>nimbus<span class="w"> </span>config<span class="w"> </span>prepend<span class="w"> </span>OPENAI_API_KEYS<span class="w"> </span>sk-priority<span class="w">  </span><span class="c1"># add to the front (dedups by default)</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>nimbus<span class="w"> </span>config<span class="w"> </span>remove<span class="w">  </span>OPENAI_API_KEYS<span class="w"> </span>sk-oldkey<span class="w">    </span><span class="c1"># drop one or many tokens (CSV)</span>
+</code></pre></div>
+<p>They mirror the gateway's CSV parser exactly (<code>[a, b, c]</code> / <code>a,b</code> / <code>a\nb\nc</code> are all accepted), and <code>remove</code> deletes the key entirely when the list becomes empty (matches <code>unset</code> semantics). Pass <code>--force</code> to bypass dedup. Available in CLI v1.0.5 and later — earlier releases don't recognize these subcommands.</p>
+</div>
 <hr />
 <h2 id="ready-to-give-your-agent-a-real-runtime">Ready to give your agent a real runtime?</h2>
 <div style="text-align: center; margin: 48px 0 24px 0; padding: 32px; background: #0a0a0a; border: 1px solid #262626; border-radius: 12px;">

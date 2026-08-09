@@ -1027,13 +1027,12 @@
 <a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">  </span><span class="p">}</span>
 <a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="p">}</span>
 </code></pre></div>
-<p>网关向模型公开四个主要端点(位于 <code>nimbus-utility-mcp</code> 命名空间下):</p>
+<p>网关直接暴露 MCP 传输层接口 —— 不存在 <code>nimbus-utility-mcp</code> 这样的包装命名空间。模型若要发现并操作已注册的服务器，只需要以下两个工具：</p>
 <ol>
-<li><strong><code>list_servers</code></strong> —— 列出所有已配置的 MCP 后端服务器及其连接状态和工具数量。</li>
-<li><strong><code>find_tools</code></strong> —— 对所有服务器进行语义搜索。模型请求"浏览 linkedin"时,仅返回相关工具的 schema。</li>
-<li><strong><code>execute_tool</code></strong> —— 动态执行任何已注册服务器上的任何工具。</li>
-<li><strong><code>chain_tools</code></strong> —— 在一次 API 调用中按顺序链接多个步骤(例如:搜索 → 读取 → 发送)。</li>
+<li><strong><code>find_tools</code></strong> —— 对所有已配置的 MCP 后端(以及通过 <code>kind</code> 区分器指定的校验器目录)进行语义搜索。当模型请求"浏览 linkedin"时,仅返回命名空间格式的相关工具 schema(<code>&lt;server&gt;_&lt;tool&gt;</code>),便于通过 <code>execute_tool</code> 直接派发。只读。</li>
+<li><strong><code>execute_tool</code></strong> —— 通用派发器。接收 <code>find_tools</code> 返回的工具名与参数,将调用转发到对应的后端服务器,并以流式方式回传结果。读写注解取决于下游工具,派发器自身永远不会删除用户数据。</li>
 </ol>
+<p>代理自身的进度管理工具(<code>nimbus_agent</code>、<code>nimbus_todo_write</code>、<code>nimbus_get_task_progress_log</code>)也位于同一传输层,但与 <code>mcp.json</code> 中列出的应用进行交互的接口就收敛于上述两个工具。</p>
 <hr />
 <h2 id="cli">CLI 参考</h2>
 <p style="color: #a3a3a3; font-size: 0.95em; margin: 0 0 16px 0;">
@@ -1099,7 +1098,7 @@
 </tr>
 <tr>
 <td style="text-align: left;"><code>nimbus config &lt;子命令&gt;</code></td>
-<td style="text-align: left;">管理 <code>~/.nimbus/.env</code>(list、get、set、unset)。</td>
+<td style="text-align: left;">管理 <code>~/.nimbus/.env</code>(list、get、set、unset、append、prepend、remove)。</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>nimbus mcp &lt;子命令&gt;</code></td>
@@ -1120,6 +1119,15 @@
 </tbody>
 </table>
 <p>完整参考请参阅 <a href="download/"><code>nimbus --help</code></a>,各平台安装步骤请参阅 <a href="download/">下载页面</a>。</p>
+<div class="admonition note">
+<p class="admonition-title">v1.0.5 新增 — <code>nimbus config {append, prepend, remove}</code></p>
+<p>新增 3 个子命令,用于处理逗号分隔的值(如 <code>OPENAI_API_KEYS</code>、<code>OPENROUTER_API_KEYS</code>)。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>nimbus<span class="w"> </span>config<span class="w"> </span>append<span class="w">  </span>OPENAI_API_KEYS<span class="w"> </span>sk-newkey<span class="w">    </span><span class="c1"># 追加到末尾(默认去重)</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>nimbus<span class="w"> </span>config<span class="w"> </span>prepend<span class="w"> </span>OPENAI_API_KEYS<span class="w"> </span>sk-priority<span class="w">  </span><span class="c1"># 插入到开头(默认去重)</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>nimbus<span class="w"> </span>config<span class="w"> </span>remove<span class="w">  </span>OPENAI_API_KEYS<span class="w"> </span>sk-oldkey<span class="w">    </span><span class="c1"># 删除一个或多个 token(支持 CSV)</span>
+</code></pre></div>
+<p>与网关侧的 CSV 解析器严格一致(<code>[a, b, c]</code> / <code>a,b</code> / <code>a\nb\nc</code> 均可),<code>remove</code> 使列表清空时会同时删除该键(与 <code>unset</code> 行为一致)。需要保留重复项请加 <code>--force</code>。CLI v1.0.5 及以上版本可用——旧版本不识别这些子命令。</p>
+</div>
 <hr />
 <h2 id="agent">准备好为你的 Agent 提供一个真正的运行时了吗?</h2>
 <div style="text-align: center; margin: 48px 0 24px 0; padding: 32px; background: #0a0a0a; border: 1px solid #262626; border-radius: 12px;">

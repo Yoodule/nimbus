@@ -1027,13 +1027,12 @@
 <a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">  </span><span class="p">}</span>
 <a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="p">}</span>
 </code></pre></div>
-<p>ゲートウェイは 4 つの主要エンドポイントをモデルに公開します（<code>nimbus-utility-mcp</code> 名前空間下）：</p>
+<p>ゲートウェイは MCP トランスポート面を直接公開します — <code>nimbus-utility-mcp</code> のようなラッパー名前空間は存在しません。モデルが登録済みサーバーを見つけ、実際に操作するために必要なツールは次の 2 つです：</p>
 <ol>
-<li><strong><code>list_servers</code></strong> ― 設定されているすべての MCP バックエンドサーバーを接続状態とツール数とともに一覧表示します。</li>
-<li><strong><code>find_tools</code></strong> ― すべてのサーバーをセマンティックに検索します。モデルが「browse linkedin」と要求すると、関連するツールスキーマのみを返します。</li>
-<li><strong><code>execute_tool</code></strong> ― 登録された任意のサーバーの任意のツールを動的に実行します。</li>
-<li><strong><code>chain_tools</code></strong> ― 複数のステップを順次連結（例：検索 → 読み取り → 送信）し、1 回の API ラウンドトリップで実行します。</li>
+<li><strong><code>find_tools</code></strong> ― 設定済みの MCP バックエンド全体（および <code>kind</code> ディスクリミネーター経由のバリデーターカタログ）をセマンティック検索します。モデルが「browse linkedin」と要求すると、関連ツールスキーマ（<code>&lt;server&gt;_&lt;tool&gt;</code> の名前空間形式）だけが返され、それを <code>execute_tool</code> でディスパッチできます。読み取り専用。</li>
+<li><strong><code>execute_tool</code></strong> ― 汎用ディスパッチャー。<code>find_tools</code> が返したツール名と引数を受け取り、適切なバックエンドサーバーに呼び出しを転送して結果をストリーミングで返します。読み取り／書き込みのアノテーションは下流ツールに依存しますが、ディスパッチャー自身がユーザーデータを削除することはありません。</li>
 </ol>
+<p>エージェント自身の進行管理用に、同じトランスポート上に <code>nimbus_agent</code>、<code>nimbus_todo_write</code>、<code>nimbus_get_task_progress_log</code> も存在しますが、<code>mcp.json</code> に列挙されたアプリと連携するための表面は上記の 2 つに集約されます。</p>
 <hr />
 <h2 id="cli">CLI リファレンス</h2>
 <p style="color: #a3a3a3; font-size: 0.95em; margin: 0 0 16px 0;">
@@ -1099,7 +1098,7 @@
 </tr>
 <tr>
 <td style="text-align: left;"><code>nimbus config &lt;サブコマンド&gt;</code></td>
-<td style="text-align: left;"><code>~/.nimbus/.env</code> を管理（list、get、set、unset）。</td>
+<td style="text-align: left;"><code>~/.nimbus/.env</code> を管理（list、get、set、unset、append、prepend、remove）。</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>nimbus mcp &lt;サブコマンド&gt;</code></td>
@@ -1120,6 +1119,15 @@
 </tbody>
 </table>
 <p>完全なリファレンスは <a href="download/"><code>nimbus --help</code></a>、プラットフォーム別のインストール手順は <a href="download/">ダウンロードページ</a> を参照してください。</p>
+<div class="admonition note">
+<p class="admonition-title">v1.0.5 で追加 — <code>nimbus config {append, prepend, remove}</code></p>
+<p>カンマ区切り値（例：<code>OPENAI_API_KEYS</code>、<code>OPENROUTER_API_KEYS</code>）を扱うための新しい 3 つのサブコマンドが追加されました。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>nimbus<span class="w"> </span>config<span class="w"> </span>append<span class="w">  </span>OPENAI_API_KEYS<span class="w"> </span>sk-newkey<span class="w">    </span><span class="c1"># 末尾に追加（既定で重複除去）</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>nimbus<span class="w"> </span>config<span class="w"> </span>prepend<span class="w"> </span>OPENAI_API_KEYS<span class="w"> </span>sk-priority<span class="w">  </span><span class="c1"># 先頭に追加（既定で重複除去）</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>nimbus<span class="w"> </span>config<span class="w"> </span>remove<span class="w">  </span>OPENAI_API_KEYS<span class="w"> </span>sk-oldkey<span class="w">    </span><span class="c1"># 1 つまたは複数のトークンを削除（CSV 可）</span>
+</code></pre></div>
+<p>ゲートウェイ側の CSV パーサー（<code>[a, b, c]</code> / <code>a,b</code> / <code>a\nb\nc</code> のすべてに対応）と完全に一致し、<code>remove</code> でリストが空になった場合はキーごと削除されます（<code>unset</code> と同じ動作）。重複を許可するには <code>--force</code> を指定してください。CLI v1.0.5 以降で利用可能 — 旧バージョンでは認識されません。</p>
+</div>
 <hr />
 <h2 id="_3">エージェントに本物のランタイムを与える準備はできましたか？</h2>
 <div style="text-align: center; margin: 48px 0 24px 0; padding: 32px; background: #0a0a0a; border: 1px solid #262626; border-radius: 12px;">

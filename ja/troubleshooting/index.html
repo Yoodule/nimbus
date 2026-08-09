@@ -1474,30 +1474,38 @@
 <a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
 </code></pre></div>
 <p><strong>複数形</strong> に注意してください：<code>OPENROUTER_API_KEYS</code>（複数キー用にカンマ区切り、単数形へのフォールバックあり）。空のキー、または間違ったキープールでは、すべてのリクエストが <code>Authorization</code> ヘッダなしで送信され、プロバイダは 401 を返します。</p>
+<p>既存のキー一覧を上書きせずに新しいキーを <strong>追加</strong> する場合は <code>append</code> を（既定で重複除去されます。重複を許可するには <code>--force</code> を指定）、キー一覧から削除する場合は <code>remove</code> を使用してください：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>nimbus<span class="w"> </span>config<span class="w"> </span>append<span class="w"> </span>OPENAI_API_KEYS<span class="w"> </span>sk-newkey
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>nimbus<span class="w"> </span>config<span class="w"> </span>remove<span class="w"> </span>OPENAI_API_KEYS<span class="w"> </span>sk-oldkey
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">CLI v1.0.5 で追加</p>
+<p><code>nimbus config append</code> / <code>prepend</code> / <code>remove</code> は v1.0.5 で導入されました。旧バージョンでは認識されません — 先に <code>nimbus update</code> を実行してください。</p>
+</div>
 <h3 id="id-model-not-found">特定のモデル ID で「Model not found」</h3>
 <p>Nimbus のデフォルトは <code>openrouter/free</code> です。<code>--model &lt;id&gt;</code> を渡したモデルが OpenRouter に存在しない場合、404 が返ります。モデル ID は <a href="https://openrouter.ai/models">openrouter.ai/models</a> で確認してください — 頻繁に変更されます。</p>
 <p>Ollama モデルの場合、ルーティングプレフィックスは <code>ollama/&lt;model-name&gt;</code>（例：<code>ollama/llama3.1</code>）です。プレフィックスなしのベア ID は OpenRouter とみなされます。</p>
 <h3 id="_6">埋め込みの失敗</h3>
 <p>埋め込みのデフォルトは <code>nvidia/llama-nemotron-embed-vl-1b-v2:free</code>（2048-dim、フリーティア）です。このモデルが利用できない、またはレート制限されている場合は、フォールバックを設定してください：</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>nimbus<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>EMBEDDING_MODEL<span class="w"> </span>openai/text-embedding-3-small
-<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>nimbus<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>EMBEDDING_MODEL<span class="w"> </span>openai/text-embedding-3-small
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
 </code></pre></div>
 <p>これにより、次回起動時にすべてのツール説明が Qdrant に再取り込みされます — コールドキャッシュでは 1 分のインデックス作成時間を予期してください。</p>
 <hr />
 <h2 id="_7">復旧</h2>
 <h3 id="nimbus-was-installed-by-a-different-version">「Nimbus was installed by a different version」</h3>
 <p>以前のインストールが、<code>.env</code> と一致しなくなった認証情報で Postgres または Redis ボリュームを凍結したままだったことを意味します。修正は：</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
 </code></pre></div>
 <p><code>start</code> は不一致を自動検出し、現在の <code>.env</code> に対してロール / パスワードを再初期化します。古い <code>recover-pg-role</code> / <code>recover-redis-password</code> サブコマンドは廃止されました。</p>
 <h3 id="_8">すべてを消去してやり直す</h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>nimbus<span class="w"> </span>uninstall
-<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://nimbus.yoodule.com/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
-<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>nimbus<span class="w"> </span>start
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>nimbus<span class="w"> </span>uninstall
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://nimbus.yoodule.com/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>nimbus<span class="w"> </span>start
 </code></pre></div>
 <p>これで CLI、すべてのコンテナー、すべての名前付きボリューム、<code>~/.nimbus/</code> が削除されます。OAuth トークン、<code>.env</code>、Qdrant に保存されたツール説明は失われます。初回起動時に再認可してください。</p>
 <h3 id="cli">CLI の以前のバージョンにロールバックしたい</h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>nimbus<span class="w"> </span>update<span class="w"> </span>--version<span class="w"> </span>v1.0.1
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>nimbus<span class="w"> </span>update<span class="w"> </span>--version<span class="w"> </span>v1.0.1
 </code></pre></div>
 <p>（または必要なバージョン。）CLI の自己更新は、<code>nimbus update</code> と同じアトミック置換 + SHA256 + minisign パスを、特定のリリースに固定して使用します。</p>
 <hr />

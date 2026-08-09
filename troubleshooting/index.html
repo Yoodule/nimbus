@@ -1474,30 +1474,38 @@
 <a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
 </code></pre></div>
 <p>Note the plural: <code>OPENROUTER_API_KEYS</code> (comma-separated for multiple keys, with fallback to the singular form). An empty or wrong key pool makes every request leave with no <code>Authorization</code> header and the provider returns 401.</p>
+<p>To <strong>add</strong> a key to an existing pool without overwriting the others, use <code>append</code> (dedup by default; pass <code>--force</code> to allow duplicates). To drop a key from the pool, use <code>remove</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>nimbus<span class="w"> </span>config<span class="w"> </span>append<span class="w"> </span>OPENAI_API_KEYS<span class="w"> </span>sk-newkey
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>nimbus<span class="w"> </span>config<span class="w"> </span>remove<span class="w"> </span>OPENAI_API_KEYS<span class="w"> </span>sk-oldkey
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Added in CLI v1.0.5</p>
+<p><code>nimbus config append</code>, <code>prepend</code>, and <code>remove</code> were introduced in v1.0.5. Earlier releases don't recognize these subcommands — run <code>nimbus update</code> first.</p>
+</div>
 <h3 id="model-not-found-for-a-specific-model-id">"Model not found" for a specific model ID</h3>
 <p>Nimbus defaults to <code>openrouter/free</code>. If you pass <code>--model &lt;id&gt;</code> and the model doesn't exist on OpenRouter, you'll get a 404. Check the model ID at <a href="https://openrouter.ai/models">openrouter.ai/models</a> — they change frequently.</p>
 <p>For Ollama models, the routing prefix is <code>ollama/&lt;model-name&gt;</code> (e.g. <code>ollama/llama3.1</code>). Bare IDs without the prefix are assumed to be OpenRouter.</p>
 <h3 id="embeddings-failing">Embeddings failing</h3>
 <p>Embeddings default to <code>nvidia/llama-nemotron-embed-vl-1b-v2:free</code> (2048-dim, free tier). If that model is unavailable or rate-limited, set a fallback:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>nimbus<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>EMBEDDING_MODEL<span class="w"> </span>openai/text-embedding-3-small
-<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>nimbus<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>EMBEDDING_MODEL<span class="w"> </span>openai/text-embedding-3-small
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
 </code></pre></div>
 <p>This re-ingests every tool description into Qdrant on the next start — expect a minute of indexing time on a cold cache.</p>
 <hr />
 <h2 id="recovery">Recovery</h2>
 <h3 id="nimbus-was-installed-by-a-different-version">"Nimbus was installed by a different version"</h3>
 <p>Means a prior install left a Postgres or Redis volume frozen under credentials that no longer match your <code>.env</code>. The fix:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
 </code></pre></div>
 <p><code>start</code> auto-detects the mismatch and re-initializes the role/password against the live <code>.env</code>. The earlier <code>recover-pg-role</code> / <code>recover-redis-password</code> subcommands are gone.</p>
 <h3 id="wipe-everything-and-start-fresh">Wipe everything and start fresh</h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>nimbus<span class="w"> </span>uninstall
-<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://nimbus.yoodule.com/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
-<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>nimbus<span class="w"> </span>start
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>nimbus<span class="w"> </span>uninstall
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://nimbus.yoodule.com/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>nimbus<span class="w"> </span>start
 </code></pre></div>
 <p>This removes the CLI, all containers, all named volumes, and <code>~/.nimbus/</code>. You'll lose OAuth tokens, <code>.env</code>, and any tool descriptions stored in Qdrant. Re-authorize on first launch.</p>
 <h3 id="i-want-to-roll-back-to-a-previous-cli-version">I want to roll back to a previous CLI version</h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>nimbus<span class="w"> </span>update<span class="w"> </span>--version<span class="w"> </span>v1.0.1
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>nimbus<span class="w"> </span>update<span class="w"> </span>--version<span class="w"> </span>v1.0.1
 </code></pre></div>
 <p>(Or whichever version you need.) The CLI self-update uses the same atomic replace + SHA256 + minisign path as <code>nimbus update</code>, just pinned to a specific release.</p>
 <hr />

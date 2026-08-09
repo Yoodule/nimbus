@@ -1475,30 +1475,38 @@
 <a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
 </code></pre></div>
 <p>Nota el plural: <code>OPENROUTER_API_KEYS</code> (separadas por comas para múltiples claves, con fallback a la forma singular). Un pool de claves vacío o incorrecto hace que cada petición salga sin cabecera <code>Authorization</code> y el proveedor devuelva 401.</p>
+<p>Para <strong>añadir</strong> una clave a un pool existente sin sobrescribir las demás, usa <code>append</code> (deduplica por defecto; pasa <code>--force</code> para permitir duplicados). Para quitar una clave del pool, usa <code>remove</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>nimbus<span class="w"> </span>config<span class="w"> </span>append<span class="w"> </span>OPENAI_API_KEYS<span class="w"> </span>sk-newkey
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>nimbus<span class="w"> </span>config<span class="w"> </span>remove<span class="w"> </span>OPENAI_API_KEYS<span class="w"> </span>sk-oldkey
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Añadido en CLI v1.0.5</p>
+<p><code>nimbus config append</code>, <code>prepend</code> y <code>remove</code> se introdujeron en v1.0.5. Las versiones anteriores no reconocen estos subcomandos — ejecuta primero <code>nimbus update</code>.</p>
+</div>
 <h3 id="model-not-found-para-un-id-de-modelo-concreto">"Model not found" para un ID de modelo concreto</h3>
 <p>Nimbus usa por defecto <code>openrouter/free</code>. Si pasas <code>--model &lt;id&gt;</code> y el modelo no existe en OpenRouter, obtendrás un 404. Verifica el ID del modelo en <a href="https://openrouter.ai/models">openrouter.ai/models</a> — cambian con frecuencia.</p>
 <p>Para modelos Ollama, el prefijo de enrutamiento es <code>ollama/&lt;nombre-del-modelo&gt;</code> (por ejemplo <code>ollama/llama3.1</code>). Los IDs sin prefijo se asumen como OpenRouter.</p>
 <h3 id="fallos-de-embeddings">Fallos de embeddings</h3>
 <p>Las embeddings usan por defecto <code>nvidia/llama-nemotron-embed-vl-1b-v2:free</code> (2048-dim, tier gratuito). Si ese modelo no está disponible o está limitado por tasa, establece un fallback:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>nimbus<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>EMBEDDING_MODEL<span class="w"> </span>openai/text-embedding-3-small
-<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>nimbus<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>EMBEDDING_MODEL<span class="w"> </span>openai/text-embedding-3-small
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
 </code></pre></div>
 <p>Esto reingerirá cada descripción de herramienta en Qdrant en el siguiente arranque — espera un minuto de indexación en caché fría.</p>
 <hr />
 <h2 id="recuperacion">Recuperación</h2>
 <h3 id="nimbus-was-installed-by-a-different-version">"Nimbus was installed by a different version"</h3>
 <p>Significa que una instalación previa dejó un volumen de Postgres o Redis congelado bajo credenciales que ya no coinciden con tu <code>.env</code>. La solución:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
 </code></pre></div>
 <p><code>start</code> autodetecta el desajuste y reinicializa el rol/contraseña contra el <code>.env</code> actual. Los antiguos subcomandos <code>recover-pg-role</code> / <code>recover-redis-password</code> ya no existen.</p>
 <h3 id="borrar-todo-y-empezar-de-cero">Borrar todo y empezar de cero</h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>nimbus<span class="w"> </span>uninstall
-<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://nimbus.yoodule.com/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
-<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>nimbus<span class="w"> </span>start
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>nimbus<span class="w"> </span>uninstall
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://nimbus.yoodule.com/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>bash
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>nimbus<span class="w"> </span>start
 </code></pre></div>
 <p>Esto elimina el CLI, todos los contenedores, todos los volúmenes con nombre y <code>~/.nimbus/</code>. Perderás los tokens OAuth, <code>.env</code> y cualquier descripción de herramienta almacenada en Qdrant. Reautoriza en el primer arranque.</p>
 <h3 id="quiero-volver-a-una-version-anterior-del-cli">Quiero volver a una versión anterior del CLI</h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>nimbus<span class="w"> </span>update<span class="w"> </span>--version<span class="w"> </span>v1.0.1
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>nimbus<span class="w"> </span>update<span class="w"> </span>--version<span class="w"> </span>v1.0.1
 </code></pre></div>
 <p>(O la versión que necesites.) El self-update del CLI usa el mismo reemplazo atómico + SHA256 + minisign que <code>nimbus update</code>, simplemente fijado a un release concreto.</p>
 <hr />
