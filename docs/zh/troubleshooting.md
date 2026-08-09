@@ -208,6 +208,16 @@ nimbus stop && nimbus start
 
 注意复数形式:`OPENROUTER_API_KEYS`(多个密钥用逗号分隔,在缺失时回退到单数形式)。空或错误的密钥池会让每个请求都不带 `Authorization` 头发出,提供商返回 401。
 
+如需在**不覆盖**现有密钥的前提下**添加**新密钥,请使用 `append`(默认去重,加 `--force` 允许重复);从密钥池中移除某项请使用 `remove`:
+
+```bash
+nimbus config append OPENAI_API_KEYS sk-newkey
+nimbus config remove OPENAI_API_KEYS sk-oldkey
+```
+
+!!! note "CLI v1.0.5 新增"
+    `nimbus config append` / `prepend` / `remove` 在 v1.0.5 引入。旧版本无法识别——请先执行 `nimbus update`。
+
 ### 特定模型 ID 提示 "Model not found"
 
 Nimbus 默认使用 `openrouter/free`。如果你传入了 `--model <id>`,但该模型在 OpenRouter 上不存在,你会收到 404。请在 [openrouter.ai/models](https://openrouter.ai/models) 上核对模型 ID —— 它们经常变化。

@@ -209,6 +209,16 @@ nimbus stop && nimbus start
 
 Notez le pluriel : `OPENROUTER_API_KEYS` (séparées par des virgules pour plusieurs clés, avec repli sur la forme singulière). Un pool de clés vide ou incorrect fait que chaque requête part sans en-tête `Authorization` et le fournisseur renvoie 401.
 
+Pour **ajouter** une clé à un pool existant sans écraser les autres, utilisez `append` (dédoublonne par défaut ; passez `--force` pour autoriser les doublons). Pour retirer une clé du pool, utilisez `remove` :
+
+```bash
+nimbus config append OPENAI_API_KEYS sk-newkey
+nimbus config remove OPENAI_API_KEYS sk-oldkey
+```
+
+!!! note "Ajouté en CLI v1.0.5"
+    `nimbus config append`, `prepend` et `remove` ont été introduits en v1.0.5. Les versions antérieures ne reconnaissent pas ces sous-commandes — exécutez d'abord `nimbus update`.
+
 ### « Model not found » pour un ID de modèle précis
 
 Nimbus utilise par défaut `openrouter/free`. Si vous passez `--model <id>` et que le modèle n'existe pas sur OpenRouter, vous obtenez un 404. Vérifiez l'ID du modèle sur [openrouter.ai/models](https://openrouter.ai/models) — ils changent fréquemment.

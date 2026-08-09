@@ -208,6 +208,16 @@ nimbus stop && nimbus start
 
 **복수형** 임에 주의하세요: `OPENROUTER_API_KEYS` (복수 키는 쉼표로 구분, 단수형으로 폴백). 비어 있거나 잘못된 키 풀은 모든 요청을 `Authorization` 헤더 없이 보내게 만들어 공급자가 401 을 반환합니다.
 
+기존 키 풀을 덮어쓰지 않고 새 키를 **추가** 하려면 `append` 를 (기본적으로 중복 제거됨. 중복을 허용하려면 `--force`), 키 풀에서 키를 빼려면 `remove` 를 사용하세요:
+
+```bash
+nimbus config append OPENAI_API_KEYS sk-newkey
+nimbus config remove OPENAI_API_KEYS sk-oldkey
+```
+
+!!! note "CLI v1.0.5 에서 추가"
+    `nimbus config append` / `prepend` / `remove` 는 v1.0.5 에서 도입되었습니다. 이전 릴리스에서는 인식되지 않습니다 — 먼저 `nimbus update` 를 실행하세요.
+
 ### 특정 모델 ID 에서 "Model not found"
 
 Nimbus 의 기본값은 `openrouter/free` 입니다. `--model <id>` 를 전달했는데 해당 모델이 OpenRouter 에 존재하지 않으면 404 가 옵니다. [openrouter.ai/models](https://openrouter.ai/models) 에서 모델 ID 를 확인하세요 — 자주 바뀝니다.

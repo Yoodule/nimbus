@@ -223,13 +223,24 @@ El CLI `nimbus` controla el ciclo de vida de tu espacio de trabajo local en cont
 | `nimbus dashboard install` | Instala el companion opcional Agent Dashboard. |
 | `nimbus dashboard uninstall` | Elimina el contenedor del Dashboard y su bloque de servicio. |
 | `nimbus dashboard status` | Muestra si el Dashboard está habilitado y el estado de su contenedor. |
-| `nimbus config <subcomando>` | Gestiona `~/.nimbus/.env` (list, get, set, unset). |
+| `nimbus config <subcomando>` | Gestiona `~/.nimbus/.env` (list, get, set, unset, append, prepend, remove). |
 | `nimbus mcp <subcomando>` | Gestiona `~/.nimbus/mcp.json` (list, get, set, remove). |
 | `nimbus agent "<prompt>" [--model <id>]` | Envía un prompt al `nimbus_agent` del dashboard y transmite la respuesta. Por defecto `openrouter/free`. |
 | `nimbus activate <key>` | Activa una clave de licencia/registro. |
 | `nimbus env-init` | Rellena los secretos gestionados por el CLI en `~/.nimbus/.env` (idempotente). |
 
 Consulta [`nimbus --help`](download.md) para la referencia completa, o la [página de descarga](download.md) para instrucciones de instalación específicas por plataforma.
+
+!!! note "Añadido en v1.0.5 — `nimbus config {append, prepend, remove}`"
+    Tres nuevos subcomandos para valores separados por comas (p. ej. `OPENAI_API_KEYS`, `OPENROUTER_API_KEYS`).
+
+    ```bash
+    nimbus config append  OPENAI_API_KEYS sk-newkey    # añade al final (deduplica por defecto)
+    nimbus config prepend OPENAI_API_KEYS sk-priority  # añade al inicio (deduplica por defecto)
+    nimbus config remove  OPENAI_API_KEYS sk-oldkey    # elimina uno o varios tokens (CSV)
+    ```
+
+    Reflejan exactamente el analizador CSV del gateway (se aceptan `[a, b, c]` / `a,b` / `a\nb\nc`), y `remove` elimina la clave por completo cuando la lista queda vacía (consistente con `unset`). Usa `--force` para permitir duplicados. Disponible en la CLI v1.0.5 y posteriores — las versiones anteriores no reconocen estos subcomandos.
 
 ---
 

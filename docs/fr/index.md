@@ -223,13 +223,24 @@ Le CLI `nimbus` contrôle le cycle de vie de votre espace de travail local en co
 | `nimbus dashboard install` | Installe le companion Agent Dashboard optionnel. |
 | `nimbus dashboard uninstall` | Supprime le conteneur du Dashboard et son bloc de service. |
 | `nimbus dashboard status` | Indique si le Dashboard est activé et l'état de son conteneur. |
-| `nimbus config <sous-commande>` | Gère `~/.nimbus/.env` (list, get, set, unset). |
+| `nimbus config <sous-commande>` | Gère `~/.nimbus/.env` (list, get, set, unset, append, prepend, remove). |
 | `nimbus mcp <sous-commande>` | Gère `~/.nimbus/mcp.json` (list, get, set, remove). |
 | `nimbus agent "<prompt>" [--model <id>]` | Envoie un prompt au `nimbus_agent` du dashboard et diffuse la réponse en streaming. Par défaut `openrouter/free`. |
 | `nimbus activate <key>` | Active une clé de licence/d'enregistrement. |
 | `nimbus env-init` | Renseigne les secrets gérés par le CLI dans `~/.nimbus/.env` (idempotent). |
 
 Consultez [`nimbus --help`](download.md) pour la référence complète, ou la [page de téléchargement](download.md) pour les instructions spécifiques à chaque plateforme.
+
+!!! note "Ajouté en v1.0.5 — `nimbus config {append, prepend, remove}`"
+    Trois nouvelles sous-commandes pour les valeurs séparées par des virgules (par ex. `OPENAI_API_KEYS`, `OPENROUTER_API_KEYS`).
+
+    ```bash
+    nimbus config append  OPENAI_API_KEYS sk-newkey    # ajoute à la fin (dédoublonne par défaut)
+    nimbus config prepend OPENAI_API_KEYS sk-priority  # ajoute au début (dédoublonne par défaut)
+    nimbus config remove  OPENAI_API_KEYS sk-oldkey    # supprime un ou plusieurs tokens (CSV)
+    ```
+
+    Elles correspondent exactement au parseur CSV de la passerelle (`[a, b, c]` / `a,b` / `a\nb\nc` acceptés), et `remove` supprime entièrement la clé lorsque la liste devient vide (cohérent avec `unset`). Passez `--force` pour autoriser les doublons. Disponible en CLI v1.0.5 et ultérieur — les versions antérieures ne reconnaissent pas ces sous-commandes.
 
 ---
 

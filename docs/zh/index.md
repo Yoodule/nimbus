@@ -223,13 +223,24 @@ Nimbus 将所有基于 stdio 和 HTTP 的 MCP 服务器统一在一个接口之�
 | `nimbus dashboard install` | 安装可选的 Agent Dashboard 配套组件。 |
 | `nimbus dashboard uninstall` | 移除 Dashboard 容器及其服务块。 |
 | `nimbus dashboard status` | 显示 Dashboard 是否启用及其容器状态。 |
-| `nimbus config <子命令>` | 管理 `~/.nimbus/.env`(list、get、set、unset)。 |
+| `nimbus config <子命令>` | 管理 `~/.nimbus/.env`(list、get、set、unset、append、prepend、remove)。 |
 | `nimbus mcp <子命令>` | 管理 `~/.nimbus/mcp.json`(list、get、set、remove)。 |
 | `nimbus agent "<提示词>" [--model <id>]` | 向 dashboard 的 `nimbus_agent` 发送提示词并以流式获取响应。默认使用 `openrouter/free`。 |
 | `nimbus activate <key>` | 激活许可证/注册密钥。 |
 | `nimbus env-init` | 将 CLI 管理的密钥写入 `~/.nimbus/.env`(幂等)。 |
 
 完整参考请参阅 [`nimbus --help`](download.md),各平台安装步骤请参阅 [下载页面](download.md)。
+
+!!! note "v1.0.5 新增 — `nimbus config {append, prepend, remove}`"
+    新增 3 个子命令,用于处理逗号分隔的值(如 `OPENAI_API_KEYS`、`OPENROUTER_API_KEYS`)。
+
+    ```bash
+    nimbus config append  OPENAI_API_KEYS sk-newkey    # 追加到末尾(默认去重)
+    nimbus config prepend OPENAI_API_KEYS sk-priority  # 插入到开头(默认去重)
+    nimbus config remove  OPENAI_API_KEYS sk-oldkey    # 删除一个或多个 token(支持 CSV)
+    ```
+
+    与网关侧的 CSV 解析器严格一致(`[a, b, c]` / `a,b` / `a\nb\nc` 均可),`remove` 使列表清空时会同时删除该键(与 `unset` 行为一致)。需要保留重复项请加 `--force`。CLI v1.0.5 及以上版本可用——旧版本不识别这些子命令。
 
 ---
 

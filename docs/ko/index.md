@@ -223,13 +223,24 @@ Nimbus 홈 디렉터리의 `mcp.json` 을 수정해 활성 서버를 구성하�
 | `nimbus dashboard install` | 선택 사양인 Agent Dashboard 동반자를 설치합니다. |
 | `nimbus dashboard uninstall` | Dashboard 컨테이너와 서비스 블록을 제거합니다. |
 | `nimbus dashboard status` | Dashboard 활성화 여부와 컨테이너 상태를 표시합니다. |
-| `nimbus config <subcommand>` | `~/.nimbus/.env` 를 관리합니다 (list, get, set, unset). |
+| `nimbus config <subcommand>` | `~/.nimbus/.env` 를 관리합니다 (list, get, set, unset, append, prepend, remove). |
 | `nimbus mcp <subcommand>` | `~/.nimbus/mcp.json` 을 관리합니다 (list, get, set, remove). |
 | `nimbus agent "<prompt>" [--model <id>]` | Dashboard의 `nimbus_agent` 로 프롬프트를 보내고 응답을 스트리밍합니다. 기본값은 `openrouter/free`. |
 | `nimbus activate <key>` | 라이선스/등록 키를 활성화합니다. |
 | `nimbus env-init` | CLI가 관리하는 시크릿을 `~/.nimbus/.env` 에 채워 넣습니다 (멱등). |
 
 전체 레퍼런스는 [`nimbus --help`](download.md) 또는 [Download 페이지](download.md) 의 플랫폼별 설치 안내를 참고하세요.
+
+!!! note "v1.0.5 에서 추가 — `nimbus config {append, prepend, remove}`"
+    콤마로 구분된 값(예: `OPENAI_API_KEYS`, `OPENROUTER_API_KEYS`)을 다루기 위한 새로운 서브커맨드 3 개가 추가되었습니다.
+
+    ```bash
+    nimbus config append  OPENAI_API_KEYS sk-newkey    # 끝에 추가 (기본적으로 중복 제거)
+    nimbus config prepend OPENAI_API_KEYS sk-priority  # 앞에 추가 (기본적으로 중복 제거)
+    nimbus config remove  OPENAI_API_KEYS sk-oldkey    # 하나 또는 여러 토큰 제거 (CSV)
+    ```
+
+    게이트웨이 측 CSV 파서(`[a, b, c]` / `a,b` / `a\nb\nc` 모두 지원)와 정확히 일치하며, `remove` 로 리스트가 비게 되면 키 자체가 삭제됩니다(`unset` 과 동일). 중복을 허용하려면 `--force` 를 사용하세요. CLI v1.0.5 이상에서 사용 가능 — 이전 릴리스에서는 인식되지 않습니다.
 
 ---
 
