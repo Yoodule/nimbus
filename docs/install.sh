@@ -621,6 +621,22 @@ GROQ_API_KEYS=
 OPENROUTER_API_KEYS=
 OLLAMA_API_KEYS=
 
+# --- Authentication — registration mode ---
+# NIMBUS_SIGN_UP_MODE controls who can self-register via /sign-up.
+# Three values:
+#   open             — anyone can sign up. Public-facing deployments.
+#   closed           — no one can sign up. Admin mints via CLI / SQL.
+#   first_user_only  — first signup becomes admin, then sign-up locks.
+#                      This is the default if the line is missing or set
+#                      to anything else. The reason: a fresh install
+#                      bootstraps cleanly (first signup creates the
+#                      admin), and then self-registration is locked so
+#                      a random visitor can't mint an account on a
+#                      public deployment.
+# Default value pre-filled below — leaving the line commented out is
+# equivalent. After changing, run `nimbus restart`.
+NIMBUS_SIGN_UP_MODE=first_user_only
+
 # --- Structural defaults (runtime needs these) ---
 GATEWAY_PORT=8088
 QDRANT_URL=http://qdrant:6333
