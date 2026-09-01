@@ -576,8 +576,8 @@ printf "  Fetching latest release... "
 # UPWORK_API_KEY_NAME, UPWORK_ACCOUNT_TYPE, UPWORK_PERMISSIONS are
 # read by servers/upwork-mcp/config/upwork_config.py and mcp.json.
 # EXA_API_KEY, NIMBUS_API_KEY are read by compose.yaml / dashboard.
-# POLYGON_RPC_URL, POLYMARKET_PRIVATE_KEY, NOTION_TOKEN are read by
-# mcp.json.
+# GITHUB_PERSONAL_ACCESS_TOKEN, POLYGON_RPC_URL, POLYMARKET_PRIVATE_KEY, NOTION_TOKEN
+# are read by mcp.json.
 # NIMBUS_RUN_MODE is intentionally OMITTED — `nimbus start` always
 # writes the literal value `docker` to ~/.nimbus/.env (main.rs:2305),
 # and the only reader is the Python gateway's load_dotenv precedence
@@ -589,6 +589,7 @@ UPWORK_CLIENT_SECRET=
 UPWORK_API_KEY_NAME=
 UPWORK_ACCOUNT_TYPE=
 UPWORK_PERMISSIONS=
+GITHUB_PERSONAL_ACCESS_TOKEN=
 EXA_API_KEY=
 NIMBUS_API_KEY=
 POLYGON_RPC_URL=
