@@ -904,7 +904,7 @@
 <p>默认值是 <code>first_user_only</code>，因为它是唯一可以无需手动干预就能完成引导的模式：新安装接受第一次注册（通过 Better Auth 的 admin 插件成为管理员），然后关闭。想要开放注册的运维人员只需设置一次 <code>NIMBUS_SIGN_UP_MODE=open</code>，之后安装就会持续接受注册。</p>
 <h3 id="_4">如何修改</h3>
 <p>使用 <code>nimbus config</code> CLI —— 它是 <code>~/.nimbus/.env</code> 的轻量封装，自动处理引号，无需手动编辑文件：</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>nimbus<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>NIMBUS_SIGN_UP_MODE<span class="w"> </span>open<span class="w">        </span><span class="c1"># 或 &quot;closed&quot;，或 &quot;first_user_only&quot;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>nimbus<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>NIMBUS_SIGN_UP_MODE<span class="w"> </span>open<span class="w">        </span><span class="c1"># 或 "closed"，或 "first_user_only"</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
 </code></pre></div>
 <p>三步搞定。需要重启，让仪表板在下次启动时加载新值。</p>

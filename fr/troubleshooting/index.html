@@ -1446,10 +1446,10 @@
 </code></pre></div>
 <p>Cherchez l'erreur précise. S'il s'agit d'un échec d'authentification Postgres ou Redis, votre <code>.env</code> a fait tourner les identifiants mais le volume nommé conserve les anciens. Récupération :</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>nimbus<span class="w"> </span>stop
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="c1"># Mettez le volume obsolète de côté pour que l&#39;init se ré-exécute proprement.</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="c1"># Mettez le volume obsolète de côté pour que l'init se ré-exécute proprement.</span>
 <a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="c1"># nimbus start régénère des identifiants frais sur un volume neuf ;</span>
-<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="c1"># l&#39;ancien est préservé en -corrupt-&lt;timestamp&gt; au cas où vous auriez besoin</span>
-<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="c1"># de l&#39;inspecter.</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="c1"># l'ancien est préservé en -corrupt-&lt;timestamp&gt; au cas où vous auriez besoin</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="c1"># de l'inspecter.</span>
 <a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>docker<span class="w"> </span>volume<span class="w"> </span>rm<span class="w"> </span>nimbus_postgres_data
 <a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>nimbus<span class="w"> </span>start
 </code></pre></div>

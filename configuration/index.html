@@ -904,7 +904,7 @@
 <p>The default is <code>first_user_only</code> because it's the only mode that bootstraps without manual intervention: a fresh install accepts the first signup (which becomes admin via Better Auth's admin plugin), then closes. Operators who want open registration set <code>NIMBUS_SIGN_UP_MODE=open</code> once and the install keeps accepting sign-ups from then on.</p>
 <h3 id="how-to-change-it">How to change it</h3>
 <p>Use the <code>nimbus config</code> CLI — it's a thin wrapper around <code>~/.nimbus/.env</code> that handles quoting and avoids hand-editing the file:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>nimbus<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>NIMBUS_SIGN_UP_MODE<span class="w"> </span>open<span class="w">        </span><span class="c1"># or &quot;closed&quot;, or &quot;first_user_only&quot;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>nimbus<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>NIMBUS_SIGN_UP_MODE<span class="w"> </span>open<span class="w">        </span><span class="c1"># or "closed", or "first_user_only"</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
 </code></pre></div>
 <p>Three commands, restart required so the dashboard picks up the new value on next boot.</p>

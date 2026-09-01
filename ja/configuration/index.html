@@ -904,7 +904,7 @@
 <p>デフォルトが <code>first_user_only</code> なのは、手動操作なしでブートストラップできる唯一のモードだからです。新規インストールは最初の登録を許可し（Better Auth の admin プラグインによって管理者になります）、その時点で閉じます。公開登録を有効にしたい場合は一度 <code>NIMBUS_SIGN_UP_MODE=open</code> を設定すれば、それ以降は登録を受け付け続けます。</p>
 <h3 id="_3">変更方法</h3>
 <p><code>nimbus config</code> CLI を使用してください — クォートの処理も自動で行われ、ファイルを手で編集する必要がない <code>~/.nimbus/.env</code> の薄いラッパーです：</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>nimbus<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>NIMBUS_SIGN_UP_MODE<span class="w"> </span>open<span class="w">        </span><span class="c1"># または &quot;closed&quot;、&quot;first_user_only&quot;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>nimbus<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>NIMBUS_SIGN_UP_MODE<span class="w"> </span>open<span class="w">        </span><span class="c1"># または "closed"、"first_user_only"</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
 </code></pre></div>
 <p>3コマンドで完了します。ダッシュボードが次の起動時に新しい値を読み込むよう、再起動が必要です。</p>

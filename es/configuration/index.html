@@ -904,7 +904,7 @@
 <p>El valor predeterminado es <code>first_user_only</code> porque es el único modo que se inicia sin intervención manual: una instalación nueva acepta el primer registro (que se convierte en administrador mediante el plugin admin de Better Auth) y luego se cierra. Los operadores que quieran registro abierto definen <code>NIMBUS_SIGN_UP_MODE=open</code> una vez y la instalación seguirá aceptando registros a partir de entonces.</p>
 <h3 id="como-cambiarlo">Cómo cambiarlo</h3>
 <p>Usa la CLI <code>nimbus config</code>: es una capa delgada sobre <code>~/.nimbus/.env</code> que gestiona las comillas y evita la edición manual:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>nimbus<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>NIMBUS_SIGN_UP_MODE<span class="w"> </span>open<span class="w">        </span><span class="c1"># o &quot;closed&quot;, o &quot;first_user_only&quot;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>nimbus<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>NIMBUS_SIGN_UP_MODE<span class="w"> </span>open<span class="w">        </span><span class="c1"># o "closed", o "first_user_only"</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>nimbus<span class="w"> </span>stop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>nimbus<span class="w"> </span>start
 </code></pre></div>
 <p>Tres comandos, requiere reiniciar para que el dashboard cargue el nuevo valor en el próximo arranque.</p>
