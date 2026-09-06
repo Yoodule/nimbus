@@ -534,7 +534,7 @@ printf "  Fetching latest release... "
     # file already exists (dev re-installs, existing users).
     #
     # We do NOT generate real values for any secret. Only structural
-    # defaults (GATEWAY_PORT, QDRANT_URL, EMBEDDING_MODEL, NIMBUS_DOMAIN,
+    # defaults (GATEWAY_PORT, QDRANT_URL, NIMBUS_DOMAIN,
     # NIMBUS_GATEWAY_URL) get non-empty values — the rest are empty
     # placeholders the user can populate.
     #
@@ -641,7 +641,6 @@ NIMBUS_SIGN_UP_MODE=first_user_only
 # --- Structural defaults (runtime needs these) ---
 GATEWAY_PORT=8088
 QDRANT_URL=http://qdrant:6333
-EMBEDDING_MODEL=nvidia/llama-nemotron-embed-vl-1b-v2:free
 NIMBUS_DOMAIN=localhost
 NIMBUS_GATEWAY_URL=http://localhost:8088/mcp
 NIMBUS_ENV_EOF
