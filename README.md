@@ -13,5 +13,4 @@ nimbus start
 ### 2. Deploy on Railway
 If you prefer a managed PaaS, you can deploy the entire Nimbus stack (Gateway, Dashboard, Postgres, Redis, Qdrant) directly to Railway with one click.
 
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/610ec918-07f3-4f3d-9e6a-bd4c87a44efd)
-*(Note: Replace 610ec918-07f3-4f3d-9e6a-bd4c87a44efd with the ID generated after publishing your template)*
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.com/template/nimbus-agent-247-employee)
