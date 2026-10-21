@@ -765,9 +765,10 @@ elif [ "$NIMBUS_DOCKER_OK" = "no-daemon" ]; then
     echo ""
 fi
 echo ""
-echo -e "  ${CYAN}Two ways to use Nimbus:${NC}"
-echo -e "  ${CYAN}  1.${NC} Just the gateway (headless, MCP-only): run ${BOLD}nimbus start${NC} and say ${BOLD}N${NC} to the dashboard prompt."
-echo -e "  ${CYAN}  2.${NC} Full stack (gateway + agent dashboard): run ${BOLD}nimbus start${NC} and accept the dashboard prompt."
+echo -e "  ${CYAN}Three ways to use Nimbus:${NC}"
+echo -e "  ${CYAN}  1.${NC} Just the gateway (headless, MCP-only): run ${BOLD}nimbus start${NC} and say ${BOLD}N${NC} to the dashboard and desktop prompts."
+echo -e "  ${CYAN}  2.${NC} Gateway + Dashboard: run ${BOLD}nimbus start${NC} and accept the dashboard prompt, but decline the desktop."
+echo -e "  ${CYAN}  3.${NC} Full stack (including Desktop): run ${BOLD}nimbus start${NC} and accept both prompts."
 echo -e "  ${CYAN}Re-run later with: ${BOLD}nimbus dashboard install${NC} (or ${BOLD}nimbus dashboard uninstall${NC} to remove)."
 echo ""
 
