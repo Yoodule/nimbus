@@ -640,6 +640,8 @@ NIMBUS_SIGN_UP_MODE=first_user_only
 
 # --- Structural defaults (runtime needs these) ---
 GATEWAY_PORT=8088
+# Gateway HTTP auth: required (secure default) | log | off
+GATEWAY_AUTH_MODE=required
 QDRANT_URL=http://qdrant:6333
 NIMBUS_DOMAIN=localhost
 NIMBUS_GATEWAY_URL=http://localhost:8088/mcp
