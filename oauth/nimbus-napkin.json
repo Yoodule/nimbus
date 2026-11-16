@@ -4,8 +4,7 @@
   "client_uri": "https://nimbus.yoodule.com",
   "redirect_uris": [
     "http://localhost/callback",
-    "http://127.0.0.1/callback",
-    "https://gorgeous-salmon-63058-8088.preview.box.upstash.com/proxy/8093/callback"
+    "http://127.0.0.1/callback"
   ],
   "grant_types": [
     "authorization_code",
